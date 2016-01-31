@@ -10,7 +10,7 @@
         <!-- TextLayout Colors -->
         <item name="android:textColorHint">#fff</item>
         <item name="colorControlNormal">#fff</item>
-        <item name="colorControlActivated">#FFC107a</item>
+        <item name="colorControlActivated">#FFC107</item>
         <item name="colorControlHighlight">#fff</item>
 
     </style>
