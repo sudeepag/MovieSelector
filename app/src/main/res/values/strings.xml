@@ -9,7 +9,8 @@
     <string name="action_sign_in_loading">Signing in...</string>
     <string name="error_invalid_email">This email address is invalid</string>
     <string name="error_invalid_password">This password is too short</string>
-    <string name="error_incorrect_password">Username or password is incorrect</string>
+    <string name="error_empty_password">Password cannot be empty</string>
+    <string name="error_incorrect_password">Username or Password is incorrect</string>
     <string name="error_field_required">This field is required</string>
     <string name="permission_rationale">"Contacts permissions are needed for providing email
         completions."
