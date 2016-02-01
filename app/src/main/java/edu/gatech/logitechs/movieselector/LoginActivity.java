@@ -120,7 +120,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         } else {
             new AlertDialog.Builder(LoginActivity.this)
                     .setTitle(R.string.app_name)
-                    .setMessage("Are you sure you want to exit?")
+                    .setMessage(R.string.prompt_exit)
                     .setPositiveButton("Yes",
                             new DialogInterface.OnClickListener() {
                                 @TargetApi(11)
