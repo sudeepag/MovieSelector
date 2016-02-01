@@ -9,4 +9,5 @@
     <string name="action_sign_in">登录</string>
     <string name="error_field_required">需填入此项</string>
     <string name="error_invalid_email">邮箱格式错误</string>
+    <string name="action_sign_in_loading">登录中...</string>
 </resources>
