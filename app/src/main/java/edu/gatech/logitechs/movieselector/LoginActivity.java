@@ -4,11 +4,13 @@ import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.annotation.TargetApi;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Typeface;
 import android.support.annotation.NonNull;
 import android.support.design.widget.Snackbar;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.app.LoaderManager.LoaderCallbacks;
 
@@ -26,7 +28,6 @@ import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.view.Window;
 import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.ArrayAdapter;
@@ -68,6 +69,9 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
     private View mProgressView;
     private View mLoginFormView;
 
+    //tracking variables
+    boolean isLoading;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -104,6 +108,33 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
 
         mLoginFormView = findViewById(R.id.login_form);
         mProgressView = findViewById(R.id.login_progress);
+
+        isLoading = false;
+    }
+
+    @Override
+    public void onBackPressed() {
+        if (isLoading) {
+            //system loading pressed back button -> do cancel async task action;
+            mAuthTask.cancel(true);
+        } else {
+            new AlertDialog.Builder(LoginActivity.this)
+                    .setTitle(R.string.app_name)
+                    .setMessage("Are you sure you want to exit?")
+                    .setPositiveButton("Yes",
+                            new DialogInterface.OnClickListener() {
+                                @TargetApi(11)
+                                public void onClick(DialogInterface dialog, int id) {
+                                    System.exit(0);
+                                }
+                            })
+                    .setNegativeButton("No", new DialogInterface.OnClickListener() {
+                        @TargetApi(11)
+                        public void onClick(DialogInterface dialog, int id) {
+                            dialog.cancel();
+                        }
+                    }).show();
+        }
     }
 
     private void populateAutoComplete() {
@@ -232,6 +263,9 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         // On Honeycomb MR2 we have the ViewPropertyAnimator APIs, which allow
         // for very easy animations. If available, use these APIs to fade-in
         // the progress spinner.
+
+        isLoading = show;
+
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB_MR2) {
             int shortAnimTime = getResources().getInteger(android.R.integer.config_longAnimTime);
 
