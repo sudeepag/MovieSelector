@@ -9,4 +9,12 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="edu.gatech.logitechs.movieselector.MainActivity">
 
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center_horizontal"
+        android:text="What's up dude?\n\nTheres no going back :-p"
+        android:textSize="50sp"
+        android:layout_marginTop="300px"/>
+
 </RelativeLayout>
