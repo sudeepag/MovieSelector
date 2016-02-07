@@ -19,7 +19,7 @@ public class UserManager {
 
     /**
      * Method to add user to database of users
-     *
+     * a
      * @return true is email is unique and was added properly, false otherwise
      */
     public boolean addUser(User user) {
