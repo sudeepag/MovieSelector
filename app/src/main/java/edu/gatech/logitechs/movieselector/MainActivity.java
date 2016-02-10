@@ -1,7 +1,11 @@
 package edu.gatech.logitechs.movieselector;
 
 import android.annotation.TargetApi;
+import android.app.ProgressDialog;
 import android.content.DialogInterface;
+import android.content.Intent;
+import android.graphics.Bitmap;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
@@ -52,23 +56,7 @@ public class MainActivity extends AppCompatActivity
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
         } else {
-            new AlertDialog.Builder(MainActivity.this)
-                    .setTitle(R.string.app_name)
-                    .setMessage(R.string.prompt_exit)
-                    .setPositiveButton("Yes",
-                            new DialogInterface.OnClickListener() {
-                                @TargetApi(11)
-                                public void onClick(DialogInterface dialog, int id) {
-                                    //TODO IMPLEMENT HOW TO GO BACK TO THE PREVIOUS SCREEN
-                                    dialog.cancel();
-                                }
-                            })
-                    .setNegativeButton("No", new DialogInterface.OnClickListener() {
-                        @TargetApi(11)
-                        public void onClick(DialogInterface dialog, int id) {
-                            dialog.cancel();
-                        }
-                    }).show();
+            logoutAction();
 //            TODO original code below check whether need to do this??
 //            super.onBackPressed();
         }
@@ -113,12 +101,34 @@ public class MainActivity extends AppCompatActivity
         } else if (id == R.id.nav_share) {
 
         } else if (id == R.id.nav_log_out) {
-            //TODO do your log out here!!
-            Log.d("GG", "Logout clicked");
+            logoutAction();
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
     }
+
+    private void logoutAction() {
+        new AlertDialog.Builder(MainActivity.this)
+                .setTitle(R.string.app_name)
+                .setMessage(R.string.prompt_logout)
+        .setPositiveButton("Yes",
+                new DialogInterface.OnClickListener() {
+                    @TargetApi(11)
+                    public void onClick(DialogInterface dialog, int id) {
+                        Intent myIntent = new Intent(MainActivity.this, LoginActivity.class);
+                        myIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);// clear back stack
+                        startActivity(myIntent);
+                        finish();
+                    }
+                })
+        .setNegativeButton("No", new DialogInterface.OnClickListener() {
+            @TargetApi(11)
+            public void onClick(DialogInterface dialog, int id) {
+                dialog.cancel();
+            }
+        }).show();
+    }
+
 }

@@ -17,6 +17,7 @@
         completions."
     </string>
     <string name="prompt_exit">Are you sure you want to exit?</string>
+    <string name="prompt_logout">Are you sure you want to logout?</string>
     <string name="title_activity_main">MainActivity</string>
 
     <string name="navigation_drawer_open">Open navigation drawer</string>
