@@ -12,7 +12,8 @@
         <item name="colorControlNormal">#fff</item>
         <item name="colorControlActivated">#FFC107</item>
         <item name="colorControlHighlight">#fff</item>
-        <item name="android:statusBarColor">@color/colorPrimaryDark</item>
+
+        <item name="android:windowTranslucentStatus">true</item>
 
     </style>
 
