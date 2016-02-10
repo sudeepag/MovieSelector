@@ -11,7 +11,7 @@ public class UserManager {
     static Map<String, User> userList = new HashMap<>();
 
     public UserManager() {
-        userList.put("Bob", new User("Bob", "1234"));
+        userList.put("bob@email.com", new User("bob@email.com", "12345"));
     }
     public Map<String, User> getUserList() {
         return userList;
