@@ -3,20 +3,56 @@ package edu.gatech.logitechs.movieselector;
 /**
  * Created by matth_000 on 2/7/2016.
  */
+import com.firebase.client.ChildEventListener;
+import com.firebase.client.DataSnapshot;
+import com.firebase.client.Firebase;
+import com.firebase.client.FirebaseError;
+
 import java.util.HashMap;
 import java.util.Map;
 
 public class UserManager {
 
-    static Map<String, User> userList = new HashMap<>();
+    private static Map<String, User> userList = new HashMap<>();
+    private static Firebase ref = new Firebase("https://muvee.firebaseio.com/");
+
+
+
 
     public UserManager() {
         userList.put("bob@email.com", new User("bob@email.com", "12345"));
+        Firebase userRef = ref.child("users");
+        userRef.addChildEventListener(new ChildEventListener() {
+            // Retrieve new posts as they are added to the database
+            @Override
+            public void onChildAdded(DataSnapshot snapshot, String previousChildKey) {
+                User newUser = snapshot.getValue(User.class);
+                userList.put(newUser.getEmail(), newUser);
+
+            }
+            public void onChildRemoved(DataSnapshot snapshot) {
+                User newUser = snapshot.getValue(User.class);
+                userList.remove(newUser.getEmail());
+            }
+            public void onChildChanged(DataSnapshot snapshot, String previousChildKey) {
+                User newUser = snapshot.getValue(User.class);
+                userList.put(newUser.getEmail(), newUser);
+            }
+            public void onChildMoved(DataSnapshot snapshot, String previousChildKey) {
+                User newUser = snapshot.getValue(User.class);
+                userList.put(newUser.getEmail(), newUser);
+            }
+            public void onCancelled(FirebaseError firebaseError) {
+                System.out.println("The read failed: " + firebaseError.getMessage());
+            }
+            //... ChildEventListener also defines onChildChanged, onChildRemoved,
+            //    onChildMoved and onCanceled, covered in later sections.
+        });
     }
+
     public Map<String, User> getUserList() {
         return userList;
     }
-
     /**
      * Method to add user to database of users
      * ab
@@ -29,6 +65,34 @@ public class UserManager {
                 return false;
             }
         }
+        Firebase userRef = ref.child("users").child(newEmail);
+        userRef.setValue(user);
+        userRef.addChildEventListener(new ChildEventListener() {
+            // Retrieve new posts as they are added to the database
+            @Override
+            public void onChildAdded(DataSnapshot snapshot, String previousChildKey) {
+                User newUser = snapshot.getValue(User.class);
+                userList.put(newUser.getEmail(), newUser);
+
+            }
+            public void onChildRemoved(DataSnapshot snapshot) {
+                User newUser = snapshot.getValue(User.class);
+                userList.remove(newUser.getEmail());
+            }
+            public void onChildChanged(DataSnapshot snapshot, String previousChildKey) {
+                User newUser = snapshot.getValue(User.class);
+                userList.put(newUser.getEmail(), newUser);
+            }
+            public void onChildMoved(DataSnapshot snapshot, String previousChildKey) {
+                User newUser = snapshot.getValue(User.class);
+                userList.put(newUser.getEmail(), newUser);
+            }
+            public void onCancelled(FirebaseError firebaseError) {
+                System.out.println("The read failed: " + firebaseError.getMessage());
+            }
+            //... ChildEventListener also defines onChildChanged, onChildRemoved,
+            //    onChildMoved and onCanceled, covered in later sections.
+        });
         userList.put(newEmail, user);
         return true;
     }
