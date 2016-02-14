@@ -17,11 +17,13 @@ public class UserManager {
     private static Firebase ref = new Firebase("https://muvee.firebaseio.com/");
 
 
-
-
+    /**
+     * cunstructor for user manager
+     * creates listener for added changed or deleted user values that updates list of users
+     */
     public UserManager() {
         userList.put("bob@email.com", new User("bob@email.com", "12345"));
-        Firebase userRef = ref.child("users");
+        Firebase userRef = ref.child("User");
         userRef.addChildEventListener(new ChildEventListener() {
             // Retrieve new posts as they are added to the database
             @Override
@@ -55,7 +57,7 @@ public class UserManager {
     }
     /**
      * Method to add user to database of users
-     * ab
+     *
      * @return true is email is unique and was added properly, false otherwise
      */
     public boolean addUser(User user) {
@@ -65,35 +67,8 @@ public class UserManager {
                 return false;
             }
         }
-        Firebase userRef = ref.child("users").child(newEmail);
+        Firebase userRef = ref.child("User").child(""+newEmail.hashCode());
         userRef.setValue(user);
-        userRef.addChildEventListener(new ChildEventListener() {
-            // Retrieve new posts as they are added to the database
-            @Override
-            public void onChildAdded(DataSnapshot snapshot, String previousChildKey) {
-                User newUser = snapshot.getValue(User.class);
-                userList.put(newUser.getEmail(), newUser);
-
-            }
-            public void onChildRemoved(DataSnapshot snapshot) {
-                User newUser = snapshot.getValue(User.class);
-                userList.remove(newUser.getEmail());
-            }
-            public void onChildChanged(DataSnapshot snapshot, String previousChildKey) {
-                User newUser = snapshot.getValue(User.class);
-                userList.put(newUser.getEmail(), newUser);
-            }
-            public void onChildMoved(DataSnapshot snapshot, String previousChildKey) {
-                User newUser = snapshot.getValue(User.class);
-                userList.put(newUser.getEmail(), newUser);
-            }
-            public void onCancelled(FirebaseError firebaseError) {
-                System.out.println("The read failed: " + firebaseError.getMessage());
-            }
-            //... ChildEventListener also defines onChildChanged, onChildRemoved,
-            //    onChildMoved and onCanceled, covered in later sections.
-        });
-        userList.put(newEmail, user);
         return true;
     }
 
