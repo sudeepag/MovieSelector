@@ -32,12 +32,13 @@
 
     <string-array name="majors_list">
         <item>Choose a Major</item>
-        <item>Drop Down List 1</item>
-        <item>Drop Down List 2</item>
-        <item>Drop Down List 3</item>
-        <item>Drop Down List 5</item>
-        <item>Drop Down List 6</item>
-        <item>Drop Down List 7</item>
-        <item>Drop Down List 8</item>
+        <item>Computer Science</item>
+        <item>Electrical Engineering</item>
+        <item>Mechanical Engineering</item>
+        <item>Industrial and Systems Engineering</item>
+        <item>Math</item>
+        <item>Physics</item>
+        <item>Chemistry</item>
+        <item>Chemical Engineering</item>
     </string-array>
 </resources>
