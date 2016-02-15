@@ -331,9 +331,10 @@ public class UserRegistration extends AppCompatActivity implements LoaderCallbac
             }
 
             UserManager manager = new UserManager();
-            return true;  //TODO HERE YOU MUST ADD THE USER AND AUTHENTICATE
-                            //IF THIS RETURNS TRUE, SUCESS = TRUE
-            //return manager.authenticateUser(mEmail, mPassword);
+            // Create the user
+            manager.addUser(new User(mEmail, mPassword));
+            // Authenticate the user
+            return manager.authenticateUser(mEmail, mPassword);
         }
 
 
