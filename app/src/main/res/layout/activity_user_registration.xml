@@ -55,10 +55,11 @@
 
     </LinearLayout>
 
-    <LinearLayout
+    <ScrollView
         android:id="@+id/signup_form"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:scrollbars="none">
 
         <LinearLayout
             android:id="@+id/email_login_form"
@@ -134,7 +135,7 @@
             <TextView android:id="@+id/login_link"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="24dp"
+                android:layout_marginBottom="48dp"
                 android:textColor="#E0E0E0"
                 android:layout_marginTop="25dp"
                 android:text="Already a member? Login"
@@ -142,5 +143,5 @@
                 android:textSize="16dip"/>
 
         </LinearLayout>
-    </LinearLayout>
+    </ScrollView>
 </LinearLayout>

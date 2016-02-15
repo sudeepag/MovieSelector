@@ -305,6 +305,7 @@ public class UserRegistration extends AppCompatActivity implements LoaderCallbac
         int ADDRESS = 0;
         int IS_PRIMARY = 1;
     }
+
     /**
      * Represents an asynchronous login/registration task used to authenticate
      * the user.
