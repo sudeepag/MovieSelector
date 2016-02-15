@@ -24,4 +24,7 @@
     <string name="navigation_drawer_close">Close navigation drawer</string>
 
     <string name="action_settings">Settings</string>
+    <string name="prompt_confirm_password">Confirm Password</string>
+    <string name="action_sign_up">Sign Up</string>
+    <string name="error_password_mismatch">Passwords are not the same</string>
 </resources>

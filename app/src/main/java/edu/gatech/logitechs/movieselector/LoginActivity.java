@@ -76,6 +76,19 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         TextView tv = (TextView) findViewById(R.id.welcome_text);
         tv.setTypeface(tf);
 
+        TextView linkSignup = (TextView) findViewById(R.id.signup_link);
+
+        linkSignup.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+                // Start the Signup activity
+                Intent intent = new Intent(getApplicationContext(), UserRegistration.class);
+                //startActivityForResult(intent, REQUEST_SIGNUP);
+                LoginActivity.this.startActivity(intent);
+            }
+        });
+
         // Set up the login form.
         mEmailView = (AutoCompleteTextView) findViewById(R.id.email);
         populateAutoComplete();
