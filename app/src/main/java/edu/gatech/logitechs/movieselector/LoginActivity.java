@@ -7,6 +7,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.graphics.Color;
 import android.graphics.Typeface;
 import android.support.annotation.NonNull;
 import android.support.design.widget.Snackbar;
@@ -25,6 +26,7 @@ import android.os.Bundle;
 import android.provider.ContactsContract;
 import android.text.TextUtils;
 import android.view.KeyEvent;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.inputmethod.EditorInfo;
@@ -39,6 +41,8 @@ import com.firebase.client.Firebase;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import android.view.View.OnTouchListener;
 
 import static android.Manifest.permission.READ_CONTACTS;
 
@@ -76,7 +80,23 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         TextView tv = (TextView) findViewById(R.id.welcome_text);
         tv.setTypeface(tf);
 
-        TextView linkSignup = (TextView) findViewById(R.id.signup_link);
+        final TextView linkSignup = (TextView) findViewById(R.id.signup_link);
+        linkSignup.setOnTouchListener(new OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                // change the background color
+                switch (event.getAction() & MotionEvent.ACTION_MASK) {
+
+                    case MotionEvent.ACTION_DOWN:
+                        linkSignup.setTextColor(Color.rgb(189, 189, 189));
+                        break;
+                    case MotionEvent.ACTION_UP:
+                        linkSignup.setTextColor(Color.rgb(224, 224, 224));
+                        break;
+                }
+                return false;
+            }
+        });
 
         linkSignup.setOnClickListener(new View.OnClickListener() {
 

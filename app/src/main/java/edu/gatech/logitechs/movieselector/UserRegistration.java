@@ -8,15 +8,16 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.graphics.Color;
 import android.graphics.Typeface;
 import android.os.Build;
 import android.provider.ContactsContract;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.KeyEvent;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
@@ -91,7 +92,7 @@ public class UserRegistration extends AppCompatActivity implements LoaderCallbac
             }
         });
 
-        TextView linkCancel = (TextView) findViewById(R.id.login_link);
+        final TextView linkCancel = (TextView) findViewById(R.id.login_link);
         linkCancel.setOnClickListener(new View.OnClickListener() {
 
             @Override
@@ -101,6 +102,22 @@ public class UserRegistration extends AppCompatActivity implements LoaderCallbac
                 intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 startActivity(intent);
                 finish();
+            }
+        });
+        linkCancel.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                // change the background color
+                switch (event.getAction() & MotionEvent.ACTION_MASK) {
+
+                    case MotionEvent.ACTION_DOWN:
+                        linkCancel.setTextColor(Color.rgb(189, 189, 189));
+                        break;
+                    case MotionEvent.ACTION_UP:
+                        linkCancel.setTextColor(Color.rgb(224, 224, 224));
+                        break;
+                }
+                return false;
             }
         });
 
