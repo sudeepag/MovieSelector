@@ -59,7 +59,8 @@
         android:id="@+id/signup_form"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:scrollbars="none">
+        android:scrollbars="none"
+        android:overScrollMode="never">
 
         <LinearLayout
             android:id="@+id/email_login_form"
@@ -123,6 +124,14 @@
 
             </android.support.design.widget.TextInputLayout>
 
+            <Spinner
+                android:id="@+id/drop_majors"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:entries="@array/majors_list"
+                android:layout_marginTop="14dp"
+                android:dropDownSelector="#fff"/>
+
             <Button
                 android:id="@+id/email_sign_up_button"
                 style="?android:textAppearanceSmall"
@@ -135,7 +144,7 @@
             <TextView android:id="@+id/login_link"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="48dp"
+                android:layout_marginBottom="96dp"
                 android:textColor="#E0E0E0"
                 android:layout_marginTop="25dp"
                 android:text="Already a member? Login"

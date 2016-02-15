@@ -338,7 +338,6 @@ public class UserRegistration extends AppCompatActivity implements LoaderCallbac
             return manager.authenticateUser(mEmail, mPassword);
         }
 
-
         @Override
         protected void onPostExecute(final Boolean success) {
             mAuthTask = null;

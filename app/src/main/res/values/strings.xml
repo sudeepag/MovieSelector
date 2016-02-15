@@ -29,4 +29,15 @@
     <string name="error_password_mismatch">Passwords are not the same</string>
     <string name="action_sign_up_loading">Creating Account...</string>
     <string name="prompt_registration_error">Registration failed please try again...</string>
+
+    <string-array name="majors_list">
+        <item>Choose a Major</item>
+        <item>Drop Down List 1</item>
+        <item>Drop Down List 2</item>
+        <item>Drop Down List 3</item>
+        <item>Drop Down List 5</item>
+        <item>Drop Down List 6</item>
+        <item>Drop Down List 7</item>
+        <item>Drop Down List 8</item>
+    </string-array>
 </resources>
