@@ -41,4 +41,5 @@
         <item>Chemistry</item>
         <item>Chemical Engineering</item>
     </string-array>
+    <string name="prompt_profile_description">Write something about yourself</string>
 </resources>

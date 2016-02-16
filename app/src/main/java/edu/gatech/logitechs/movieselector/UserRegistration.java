@@ -49,6 +49,7 @@ public class UserRegistration extends AppCompatActivity implements LoaderCallbac
     private AutoCompleteTextView mEmailView;
     private EditText mPasswordView;
     private EditText mConfirmPasswordView;
+    private EditText mDescriptionView;
     private Spinner mMajorsView;
     private View mProgressView;
     private View mSignupFormView;
@@ -73,7 +74,8 @@ public class UserRegistration extends AppCompatActivity implements LoaderCallbac
         //populateAutoComplete();
         mPasswordView = (EditText) findViewById(R.id.password);
         mConfirmPasswordView = (EditText) findViewById(R.id.confirm_password);
-        mConfirmPasswordView.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+        mDescriptionView = (EditText) findViewById(R.id.profile_description);
+        mDescriptionView.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             @Override
             public boolean onEditorAction(TextView textView, int id, KeyEvent keyEvent) {
                 if (id == R.id.login || id == EditorInfo.IME_ACTION_DONE) {
@@ -151,6 +153,7 @@ public class UserRegistration extends AppCompatActivity implements LoaderCallbac
         String password = mPasswordView.getText().toString();
         String confirmPassword = mConfirmPasswordView.getText().toString();
         String major = mMajorsView.getSelectedItem().toString();
+        String description = mDescriptionView.getText().toString();
 
         boolean cancel = false;
         View focusView = null;
@@ -221,7 +224,7 @@ public class UserRegistration extends AppCompatActivity implements LoaderCallbac
             showProgress(true);
 
             //start authentication
-            mAuthTask = new UserLoginTask(email, password, major);
+            mAuthTask = new UserLoginTask(email, password, major, description);
             mAuthTask.execute((Void) null);
         }
     }
@@ -339,11 +342,13 @@ public class UserRegistration extends AppCompatActivity implements LoaderCallbac
         private final String mEmail;
         private final String mPassword;
         private final String mMajor;
+        private final String mDescription;
 
-        UserLoginTask(String email, String password, String major) {
+        UserLoginTask(String email, String password, String major, String descrption) {
             mEmail = email;
             mPassword = password;
             mMajor = major;
+            mDescription = descrption;
         }
 
         @Override
@@ -359,7 +364,7 @@ public class UserRegistration extends AppCompatActivity implements LoaderCallbac
 
             UserManager manager = new UserManager();
             // Create the user
-            manager.addUser(new User(mEmail, mPassword, mMajor));
+            manager.addUser(new User(mEmail, mPassword, mMajor, mDescription));
             // Authenticate the user
             return manager.authenticateUser(mEmail, mPassword);
         }
