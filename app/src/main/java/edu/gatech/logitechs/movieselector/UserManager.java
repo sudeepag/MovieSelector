@@ -22,7 +22,7 @@ public class UserManager {
      * creates listener for added changed or deleted user values that updates list of users
      */
     public UserManager() {
-        userList.put("bob@email.com", new User("bob@email.com", "12345","Computer Science"));
+        userList.put("bob@email.com", new User("bob@email.com", "12345","Computer Science", "asdasdasd"));
         Firebase userRef = ref.child("User");
         userRef.addChildEventListener(new ChildEventListener() {
             // Retrieve new posts as they are added to the database

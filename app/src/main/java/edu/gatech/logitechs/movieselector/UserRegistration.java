@@ -161,6 +161,11 @@ public class UserRegistration extends AppCompatActivity implements LoaderCallbac
         TextView majorErrorText = (TextView)mMajorsView.getSelectedView();
         majorErrorText.setError(null);
 
+//        //checks if description was written
+//        if (description.length() > 0) {
+//
+//        }
+
         //checks if major was picked
         if (!isMajorValid(major)) {
             majorErrorText.setError("You must choose a major");
