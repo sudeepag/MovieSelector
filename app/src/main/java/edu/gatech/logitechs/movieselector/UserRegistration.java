@@ -295,6 +295,10 @@ public class UserRegistration extends AppCompatActivity implements LoaderCallbac
         mEmailView.setAdapter(adapter);
     }
 
+    public void transition() {
+        Intent myIntent = new Intent(this,MainActivity.class);
+        this.startActivity(myIntent);
+    }
 
     private interface ProfileQuery {
         String[] PROJECTION = {
@@ -305,6 +309,8 @@ public class UserRegistration extends AppCompatActivity implements LoaderCallbac
         int ADDRESS = 0;
         int IS_PRIMARY = 1;
     }
+
+
     /**
      * Represents an asynchronous login/registration task used to authenticate
      * the user.
@@ -332,8 +338,7 @@ public class UserRegistration extends AppCompatActivity implements LoaderCallbac
 
             UserManager manager = new UserManager();
             // Create the user
-            manager.addUser(new User(mEmail, mPassword));
-            // Authenticate the user
+            manager.addUser(new User(mEmail, mPassword), UserRegistration.this);
             return manager.authenticateUser(mEmail, mPassword);
         }
 
@@ -346,8 +351,7 @@ public class UserRegistration extends AppCompatActivity implements LoaderCallbac
             if (success) {
                 finish();
                 //go onto next activity if suceess
-                Intent myIntent = new Intent(UserRegistration.this,MainActivity.class);
-                UserRegistration.this.startActivity(myIntent);
+
             } else {
                 new AlertDialog.Builder(UserRegistration.this)
                         .setTitle(R.string.app_name)
