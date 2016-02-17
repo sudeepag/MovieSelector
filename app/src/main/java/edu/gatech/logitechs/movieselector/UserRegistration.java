@@ -380,7 +380,7 @@ public class UserRegistration extends AppCompatActivity implements LoaderCallbac
 
             UserManager manager = new UserManager();
             // Create the user
-            manager.addUser(new User(mEmail, mPassword, mMajor, mDescription));
+            manager.addUser(new User(mEmail, mPassword, mMajor, mDescription), UserRegistration.this);
             // Authenticate the user
             return manager.authenticateUser(mEmail, mPassword);
         }

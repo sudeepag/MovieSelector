@@ -62,7 +62,7 @@ public class UserManager {
      *
      * @return true is email is unique and was added properly, false otherwise
      */
-    public void addUser(User user, final UserRegistration context) {
+    public void addUser(final User user, final UserRegistration context) {
         String newEmail = user.getEmail();
         for (User curr : userList.values()) {
             if (curr.getEmail().equals(newEmail)) {
@@ -76,6 +76,21 @@ public class UserManager {
             @Override
             public void onSuccess(Map<String, Object> result) {
                 context.transition();
+                ref.authWithPassword(user.getEmail(), user.getPassword(),
+                        new Firebase.AuthResultHandler() {
+                            @Override
+                            public void onAuthenticated(AuthData authData) {
+                                // Authentication just completed successfully :)
+                                Map<String, Object> map = new HashMap<String, Object>();
+                                map.put("data", user);
+                                ref.child("users").child(authData.getUid()).setValue(map);
+                            }
+
+                            @Override
+                            public void onAuthenticationError(FirebaseError error) {
+                                // Something went wrong :(
+                            }
+                        });
                 System.out.println("Successfully created user account with uid: " + result.get("uid"));
 
             }
