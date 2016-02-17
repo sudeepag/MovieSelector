@@ -17,13 +17,17 @@ public class User {
     }
 
     /**
-     * User constructor: requires only minimum information
-     * @param email  user's email; also used for username
-     * @param password user's password
+     * constructor for user
+     * @param email String of user email
+     * @param password String of user password
+     * @param major String of user major
+     * @param description String of user description
      */
-    public User(String email, String password) {
+    public User(String email, String password, String major, String description) {
         this.email = email;
         this.password = password;
+        this.major = major;
+        this.description = description;
     }
 
     /**
@@ -85,15 +89,18 @@ public class User {
         return major.getMajorString();
     }
 
+
     /**
-     * @return User's email as a string
+     * get the email of the user
+     * @return String representation of user email
      */
     public String getEmail() {
         return email;
     }
 
-    /**
-     * @return User's password as a string
+
+     * get the password of the user
+     * @return String representation of user password
      */
     public String getPassword() {
         return password;
@@ -102,6 +109,26 @@ public class User {
     /**
      * @param password User's password
      */
+    /**
+     * get the major of the user
+     * @return String representation of the user major
+     */
+    public String getMajor() {
+        return major;
+    }
+
+    /**
+     * get the description of the user
+     * @return String representation of the user description
+     */
+    public String getDescription() {
+        return description;
+    }
+
+    /**
+     * set the password of the user
+     * @param password String of user password
+     */
     public void setPassword(String password) {
         this.password = password;
     }
@@ -109,7 +136,27 @@ public class User {
     /**
      * @param email User's email
      */
+    /**
+     * set the email of the user
+     * @param email String of user email
+     */
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    /**
+     * set the major of the user
+     * @param major String of the major
+     */
+    public void setMajor(String major) {
+        this.major = major;
+    }
+
+    /**
+     * set the description of the user
+     * @param description String of the description
+     */
+    public void setDescription(String description) {
+        this.description = description;
     }
 }
