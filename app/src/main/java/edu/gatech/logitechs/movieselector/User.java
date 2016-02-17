@@ -7,13 +7,23 @@ public class User {
     private String email;
     private String password;
     private String description;
-    private Majors major;
+    private Majors majorEnum;
+    private String major;
 
     /**
      * User constructor. Only here because requried for use by FireBase
      */
     public User() {
         super();
+    }
+
+    /**
+     * Chained constructor for user containing only essential user information 
+     * @param email String of user email
+     * @param password String of user password
+     */
+    public User(String email, String password) {
+        this(email, password, null, null);
     }
 
     /**
@@ -30,17 +40,6 @@ public class User {
         this.description = description;
     }
 
-    /**
-     * Setter for description
-     * @param description  user's description of themselves
-     */
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
-    public String getDescription() {
-        return description;
-    }
 
     /**
      * Setter for the major of a given user
@@ -48,23 +47,23 @@ public class User {
      * @param name  takes in UPPERCASE, abbreviated name of major
      * @return true if the major was added correctly, false if major was not member of enum
      */
-    public boolean setMajor(String name) {
+    public boolean setMajorEnum(String name) {
         try {
             if (Majors.valueOf(name) instanceof Majors) {
                 if (Majors.CS == Majors.valueOf(name)) {
-                    this.major = Majors.CS;
+                    this.majorEnum = Majors.CS;
                 } else if (Majors.EE == Majors.valueOf(name)) {
-                    this.major = Majors.EE;
+                    this.majorEnum = Majors.EE;
                 } else if (Majors.ISYE == Majors.valueOf(name)) {
-                    this.major = Majors.ISYE;
+                    this.majorEnum = Majors.ISYE;
                 } else if (Majors.MATH == Majors.valueOf(name)) {
-                    this.major = Majors.MATH;
+                    this.majorEnum = Majors.MATH;
                 } else if (Majors.PHYS == Majors.valueOf(name)) {
-                    this.major = Majors.PHYS;
+                    this.majorEnum = Majors.PHYS;
                 } else if (Majors.CHEM == Majors.valueOf(name)) {
-                    this.major = Majors.CHEM;
+                    this.majorEnum = Majors.CHEM;
                 } else if (Majors.CHEME == Majors.valueOf(name)) {
-                    this.major = Majors.CHEME;
+                    this.majorEnum = Majors.CHEME;
                 } else {
                     return false;
                 }
@@ -76,17 +75,10 @@ public class User {
     }
 
     /**
-     * @return User's major as a member of the Majors enuum
-     */
-    public Majors getMajor() {
-        return major;
-    }
-
-    /**
      * @return User's major as a string
      */
     public String getMajorString() {
-        return major.getMajorString();
+        return majorEnum.getMajorString();
     }
 
 
@@ -99,6 +91,7 @@ public class User {
     }
 
 
+     /**
      * get the password of the user
      * @return String representation of user password
      */
@@ -106,9 +99,6 @@ public class User {
         return password;
     }
 
-    /**
-     * @param password User's password
-     */
     /**
      * get the major of the user
      * @return String representation of the user major
@@ -133,9 +123,6 @@ public class User {
         this.password = password;
     }
 
-    /**
-     * @param email User's email
-     */
     /**
      * set the email of the user
      * @param email String of user email
