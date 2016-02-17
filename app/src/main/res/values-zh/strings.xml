@@ -11,4 +11,8 @@
     <string name="error_invalid_email">邮箱格式错误</string>
     <string name="action_sign_in_loading">登录中...</string>
     <string name="prompt_exit">确定要退出吗？</string>
+    <string name="action_sign_out">注销</string>
+    <string name="action_settings">设置</string>
+    <string name="error_empty_password"></string>
+    <string name="prompt_logout">确定要注销吗？</string>
 </resources>
