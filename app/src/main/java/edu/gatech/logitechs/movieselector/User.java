@@ -17,15 +17,19 @@ public class User {
     }
 
     /**
-     * User
-     * @param email
-     * @param password
+     * User constructor: requires only minimum information
+     * @param email  user's email; also used for username
+     * @param password user's password
      */
     public User(String email, String password) {
         this.email = email;
         this.password = password;
     }
 
+    /**
+     * Setter for description
+     * @param description  user's description of themselves
+     */
     public void setDescription(String description) {
         this.description = description;
     }
@@ -67,26 +71,44 @@ public class User {
         return true;
     }
 
+    /**
+     * @return User's major as a member of the Majors enuum
+     */
     public Majors getMajor() {
         return major;
     }
 
+    /**
+     * @return User's major as a string
+     */
     public String getMajorString() {
         return major.getMajorString();
     }
 
+    /**
+     * @return User's email as a string
+     */
     public String getEmail() {
         return email;
     }
 
+    /**
+     * @return User's password as a string
+     */
     public String getPassword() {
         return password;
     }
 
+    /**
+     * @param password User's password
+     */
     public void setPassword(String password) {
         this.password = password;
     }
 
+    /**
+     * @param email User's email
+     */
     public void setEmail(String email) {
         this.email = email;
     }

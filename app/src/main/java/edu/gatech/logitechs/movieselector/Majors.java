@@ -8,10 +8,17 @@ public enum Majors {
 
     private String majorString;
 
+    /**
+     * Constructor for Major enum; provides alternative string representation to the name
+     * @param major  String interpretation of a major
+     */
     Majors(String major) {
         this.majorString = major;
     }
 
+    /**
+     * @return String interpretation of a major
+     */
     public String getMajorString() {
         return majorString;
     }
