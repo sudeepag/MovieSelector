@@ -136,7 +136,7 @@ public class UserRegistration extends AppCompatActivity implements LoaderCallbac
     }
 
     /**
-     * Attempts to sign in or register the account specified by the login form.
+     * Attempts to sign up.
      * If there are form errors (invalid email, missing fields, etc.), the
      * errors are presented and no actual login attempt is made.
      */
@@ -339,7 +339,7 @@ public class UserRegistration extends AppCompatActivity implements LoaderCallbac
     }
 
     /**
-     * Represents an asynchronous login/registration task used to authenticate
+     * Represents an asynchronous registration task used to authenticate
      * the user.
      */
     public class UserLoginTask extends AsyncTask<Void, Void, Boolean> {
@@ -349,6 +349,13 @@ public class UserRegistration extends AppCompatActivity implements LoaderCallbac
         private final String mMajor;
         private final String mDescription;
 
+        /**
+         * The parameters for the userlogintask
+         * @param email String of the users email
+         * @param password String of the password of the user
+         * @param major String of the user's major
+         * @param descrption String of a short description of the user
+         */
         UserLoginTask(String email, String password, String major, String descrption) {
             mEmail = email;
             mPassword = password;
