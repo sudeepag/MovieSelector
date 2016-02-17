@@ -29,4 +29,17 @@
     <string name="error_password_mismatch">Passwords are not the same</string>
     <string name="action_sign_up_loading">Creating Account...</string>
     <string name="prompt_registration_error">Registration failed please try again...</string>
+
+    <string-array name="majors_list">
+        <item>Choose a Major</item>
+        <item>Computer Science</item>
+        <item>Electrical Engineering</item>
+        <item>Mechanical Engineering</item>
+        <item>Industrial and Systems Engineering</item>
+        <item>Math</item>
+        <item>Physics</item>
+        <item>Chemistry</item>
+        <item>Chemical Engineering</item>
+    </string-array>
+    <string name="prompt_profile_description">Write something about yourself</string>
 </resources>

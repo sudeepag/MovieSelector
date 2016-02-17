@@ -55,10 +55,12 @@
 
     </LinearLayout>
 
-    <LinearLayout
+    <ScrollView
         android:id="@+id/signup_form"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:scrollbars="none"
+        android:overScrollMode="never">
 
         <LinearLayout
             android:id="@+id/email_login_form"
@@ -113,8 +115,7 @@
                     android:layout_height="wrap_content"
                     android:hint="@string/prompt_confirm_password"
                     android:imeActionId="@+id/login"
-                    android:imeActionLabel="@string/action_sign_up"
-                    android:imeOptions="actionDone"
+                    android:imeOptions="actionNext"
                     android:inputType="textPassword"
                     android:maxLines="1"
                     android:singleLine="true"
@@ -122,6 +123,34 @@
 
             </android.support.design.widget.TextInputLayout>
 
+            <Spinner
+                android:id="@+id/drop_majors"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15dp"
+                android:background="@android:drawable/btn_dropdown"
+                android:dropDownSelector="#fff"/>
+
+            <android.support.design.widget.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <!-- TODO not sure how to make the enter key stop after 4 lines-->
+                <EditText
+                    android:id="@+id/profile_description"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/prompt_profile_description"
+                    android:imeActionId="@+id/login"
+                    android:imeActionLabel="@string/action_sign_up"
+                    android:imeOptions="actionDone"
+                    android:inputType="textMultiLine"
+                    android:maxLines="4"
+                    android:gravity="top|left"
+                    android:singleLine="true"
+                    android:textColor="#fff"/>
+
+
+            </android.support.design.widget.TextInputLayout>
             <Button
                 android:id="@+id/email_sign_up_button"
                 style="?android:textAppearanceSmall"
@@ -134,13 +163,15 @@
             <TextView android:id="@+id/login_link"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="24dp"
+                android:layout_marginBottom="96dp"
                 android:textColor="#E0E0E0"
                 android:layout_marginTop="25dp"
+                android:imeActionLabel="@string/action_sign_up"
+                android:imeOptions="actionDone"
                 android:text="Already a member? Login"
                 android:gravity="center"
                 android:textSize="16dip"/>
 
         </LinearLayout>
-    </LinearLayout>
+    </ScrollView>
 </LinearLayout>
