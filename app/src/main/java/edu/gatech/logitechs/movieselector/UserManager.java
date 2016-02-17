@@ -52,6 +52,10 @@ public class UserManager {
         });
     }
 
+    /**
+     * Gets the userList
+     * @return returns a map of the users
+     */
     public Map<String, User> getUserList() {
         return userList;
     }
