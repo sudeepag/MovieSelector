@@ -10,6 +10,7 @@ import com.firebase.client.ChildEventListener;
 import com.firebase.client.DataSnapshot;
 import com.firebase.client.Firebase;
 import com.firebase.client.FirebaseError;
+import com.firebase.client.ValueEventListener;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -17,6 +18,7 @@ import java.util.Map;
 public class UserManager {
 
     private static Firebase ref = new Firebase("https://muvee.firebaseio.com/");
+    public static User currentUser;
 
 
     /**
@@ -58,6 +60,31 @@ public class UserManager {
      *
      * @return true is email is unique and was added properly, false otherwise
      */
+    public static User getCurrentUser() {
+        return currentUser;
+    }
+
+    public static void updatedCurrentUser(User user) {
+        Map<String, Object> map = new HashMap<String, Object>();
+        map.put("data", user);
+        ref.child("users").child(user.getUID()).setValue(map);
+        Firebase userRef = ref.child("users");
+        userRef = userRef.child(currentUser.getUID());
+        userRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot snapshot) {
+                for (DataSnapshot dataSnapshot : snapshot.getChildren())
+                    currentUser = dataSnapshot.getValue(User.class);
+            }
+
+            @Override
+            public void onCancelled(FirebaseError firebaseError) {
+                System.out.println("The read failed: " + firebaseError.getMessage());
+            }
+        });
+
+    }
+
     public void addUser(final User user, final UserRegistration context, final Runnable runnable) {
         String newEmail = user.getEmail();
 
@@ -85,8 +112,8 @@ public class UserManager {
                                 // Something went wrong :(
                             }
                         });
-                System.out.println("Successfully created user account with uid: " + result.get("uid"));
-
+                currentUser = user;
+                user.setUID((String) result.get("uid"));
             }
             @Override
             public void onError(FirebaseError firebaseError) {
@@ -109,6 +136,20 @@ public class UserManager {
         userRef.authWithPassword(email, pass, new Firebase.AuthResultHandler() {
             @Override
             public void onAuthenticated(AuthData authData) {
+                Firebase userRef = ref.child("users");
+                userRef = userRef.child(authData.getUid());
+                userRef.addValueEventListener(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(DataSnapshot snapshot) {
+                        for (DataSnapshot dataSnapshot: snapshot.getChildren())
+                            currentUser = dataSnapshot.getValue(User.class);
+                    }
+
+                    @Override
+                    public void onCancelled(FirebaseError firebaseError) {
+                        System.out.println("The read failed: " + firebaseError.getMessage());
+                    }
+                });
                 context.transition();
                 context.finish();
 

@@ -9,6 +9,7 @@ public class User {
     private String description;
    // private Majors majorEnum;
     private String major;
+    private String UID;
 
     /**
      * User constructor. Only here because requried for use by FireBase
@@ -97,6 +98,14 @@ public class User {
      */
     public String getPassword() {
         return password;
+    }
+
+    public String getUID() {
+        return UID;
+    }
+
+    public void setUID(String UID) {
+        this.UID = UID;
     }
 
     /**

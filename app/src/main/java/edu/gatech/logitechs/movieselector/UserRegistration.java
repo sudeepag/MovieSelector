@@ -57,7 +57,6 @@ public class UserRegistration extends AppCompatActivity implements LoaderCallbac
     /**
      * Keep track of the login task to ensure we can cancel it if requested.
      */
-    private UserLoginTask mAuthTask = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -141,9 +140,6 @@ public class UserRegistration extends AppCompatActivity implements LoaderCallbac
      * errors are presented and no actual login attempt is made.
      */
     private void attemptSignUp() {
-        if (mAuthTask != null) {
-            return;
-        }
         // Reset errors.
         mEmailView.setError(null);
         mPasswordView.setError(null);
@@ -365,74 +361,4 @@ public class UserRegistration extends AppCompatActivity implements LoaderCallbac
      * Represents an asynchronous registration task used to authenticate
      * the user.
      */
-    public class UserLoginTask extends AsyncTask<Void, Void, Boolean> {
-
-        private final String mEmail;
-        private final String mPassword;
-        private final String mMajor;
-        private final String mDescription;
-
-        /**
-         * The parameters for the userlogintask
-         * @param email String of the users email
-         * @param password String of the password of the user
-         * @param major String of the user's major
-         * @param descrption String of a short description of the user
-         */
-        UserLoginTask(String email, String password, String major, String descrption) {
-            mEmail = email;
-            mPassword = password;
-            mMajor = major;
-            mDescription = descrption;
-        }
-
-        @Override
-        protected Boolean doInBackground(Void... params) {
-            // TODO: attempt authentication against a network service.
-
-            UserManager manager = new UserManager();
-            // Create the user
-
-            manager.addUser(new User(mEmail, mPassword, mMajor, mDescription), UserRegistration.this, new Runnable() {
-                @Override
-                public void run() {
-                    mPasswordView.setError(getString(R.string.error_incorrect_password));
-                    mPasswordView.requestFocus();
-                }
-            });
-            // Authenticate the user
-            return true;
-        }
-
-
-        @Override
-        protected void onPostExecute(final Boolean success) {
-            mAuthTask = null;
-            showProgress(false);
-
-            if (success) {
-                //go onto next activity if suceess
-
-            } else {
-                new AlertDialog.Builder(UserRegistration.this)
-                        .setTitle(R.string.app_name)
-                        .setMessage(R.string.prompt_registration_error)
-                        .setPositiveButton("Okay",
-                                new DialogInterface.OnClickListener() {
-                                    @TargetApi(11)
-                                    public void onClick(DialogInterface dialog, int id) {
-                                        dialog.cancel();
-                                    }
-                                })
-                        .show();
-                mEmailView.requestFocus();
-            }
-        }
-
-        @Override
-        protected void onCancelled() {
-            mAuthTask = null;
-            showProgress(false);
-        }
-    }
 }

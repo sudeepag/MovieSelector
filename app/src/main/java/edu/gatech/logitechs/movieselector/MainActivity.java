@@ -48,6 +48,12 @@ public class MainActivity extends AppCompatActivity
 
     @Override
     public void onBackPressed() {
+        User user = UserManager.getCurrentUser();
+        UserManager.currentUser = null;
+        user.setMajor("chicken");
+        UserManager.updatedCurrentUser(user);
+        user = null;
+        user = UserManager.getCurrentUser();
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
