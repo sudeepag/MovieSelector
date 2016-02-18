@@ -10,7 +10,7 @@
     <!-- NOTE: EditTextPreference accepts EditText attributes. -->
     <!-- NOTE: EditTextPreference's summary should be set to its value by the activity code. -->
     <EditTextPreference
-        android:capitalize="words"
+        android:capitalize="none"
         android:defaultValue="@string/pref_default_display_name"
         android:inputType="textCapWords"
         android:key="change_email"
@@ -19,14 +19,16 @@
         android:singleLine="true"
         android:title="@string/pref_title_edit_email" />
 
-    <ListPreference
-        android:capitalize="words"
+    <EditTextPreference
+        android:capitalize="none"
+        android:id="@+id/edit_psw"
         android:defaultValue="@string/pref_default_display_password"
-        android:inputType="textCapWords"
+        android:inputType="textPassword"
         android:key="change_password"
         android:maxLines="1"
         android:selectAllOnFocus="true"
         android:singleLine="true"
+        android:password="true"
         android:title="@string/pref_title_change_password" />
     <!-- NOTE: Hide buttons to simplify the UI. Users can touch outside the dialog to
          dismiss it. -->
@@ -40,14 +42,14 @@
         android:positiveButtonText="@null"
         android:title="@string/pref_title_change_major" />
 
-    <ListPreference
+    <EditTextPreference
         android:capitalize="words"
         android:defaultValue="@string/pref_default_display_name"
-        android:inputType="textCapWords"
+        android:inputType="textCapWords|textMultiLine"
         android:key="change_description"
         android:maxLines="4"
         android:selectAllOnFocus="true"
-        android:singleLine="true"
+        android:singleLine="false"
         android:title="@string/pref_title_change_description" />
 
 </PreferenceScreen>
