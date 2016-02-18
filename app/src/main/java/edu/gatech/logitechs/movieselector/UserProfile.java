@@ -4,6 +4,7 @@ package edu.gatech.logitechs.movieselector;
 import android.annotation.TargetApi;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.media.Ringtone;
 import android.media.RingtoneManager;
@@ -23,7 +24,10 @@ import android.view.MenuItem;
 import android.support.v4.app.NavUtils;
 import android.widget.EditText;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * A {@link PreferenceActivity} that presents a set of application settings. On
@@ -125,6 +129,24 @@ public class UserProfile extends AppCompatPreferenceActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setupActionBar();
+
+        UserManager manager = new UserManager();
+        User currUser = manager.getCurrentUser();
+        String[] majors = getResources().getStringArray(R.array.pref_example_list_titles);
+
+        Map<String, Integer> majorToInt = new HashMap<>();
+
+        for (int i = 0; i < majors.length; i++) {
+            majorToInt.put(majors[i],i);
+        }
+
+        SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(UserProfile.this);
+        SharedPreferences.Editor editor = sp.edit();
+        editor.putString("change_email", currUser.getEmail());
+        editor.putString("change_password", currUser.getPassword());
+        editor.putString("change_major", String.valueOf(majorToInt.get(currUser.getMajor())));
+        editor.putString("change_description", currUser.getDescription());
+        editor.commit();
     }
 
     /**
@@ -191,6 +213,18 @@ public class UserProfile extends AppCompatPreferenceActivity {
             bindPreferenceSummaryToValue(findPreference("change_password"));
             bindPreferenceSummaryToValue(findPreference("change_major"));
             bindPreferenceSummaryToValue(findPreference("change_description"));
+
+//            SharedPreferences sp = getPreferenceScreen().getSharedPreferences();
+
+//            EditTextPreference change_email_pref = (EditTextPreference) findPreference("change_email");
+//            change_email_pref.setSummary(sp.getString("change_email", "FERRK UUUU"));
+
+
+
+//            EditText edit = ((EditTextPreference) findPreference("change_password")).getEditText();
+//            String pref = edit.getTransformationMethod().getTransformation(objValue.toString(), edit).toString();
+//            prePreference.setSummary(pref);
+
         }
 
         @Override

@@ -48,12 +48,12 @@ public class MainActivity extends AppCompatActivity
 
     @Override
     public void onBackPressed() {
-        User user = UserManager.getCurrentUser();
-        UserManager.currentUser = null;
-        user.setMajor("chicken");
-        UserManager.updatedCurrentUser(user);
-        user = null;
-        user = UserManager.getCurrentUser();
+//        User user = UserManager.getCurrentUser();
+//        UserManager.currentUser = null;
+//        user.setMajor("chicken");
+//        UserManager.updatedCurrentUser(user);
+//        user = null;
+//        user = UserManager.getCurrentUser();
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
@@ -120,6 +120,14 @@ public class MainActivity extends AppCompatActivity
                 new DialogInterface.OnClickListener() {
                     @TargetApi(11)
                     public void onClick(DialogInterface dialog, int id) {
+
+//                        User user = UserManager.getCurrentUser();
+//                        UserManager.currentUser = null;
+//                        user.setMajor("chicken");
+//                        UserManager.updatedCurrentUser(user);
+//                        user = null;
+//                        user = UserManager.getCurrentUser();
+
                         Intent myIntent = new Intent(MainActivity.this, LoginActivity.class);
                         myIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);// clear back stack
                         startActivity(myIntent);
