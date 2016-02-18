@@ -229,8 +229,10 @@ public class UserRegistration extends AppCompatActivity implements LoaderCallbac
             showProgress(true);
 
             //start authentication
-            mAuthTask = new UserLoginTask(email, password, major, description);
-            mAuthTask.execute((Void) null);
+            UserManager manager = new UserManager();
+            manager.addUser(new User(email, password, major, description), UserRegistration.this);
+//            mAuthTask = new UserLoginTask(email, password, major, description);
+//            mAuthTask.execute((Void) null);
         }
     }
     private boolean isEmailValid(String email) {
@@ -371,18 +373,12 @@ public class UserRegistration extends AppCompatActivity implements LoaderCallbac
         protected Boolean doInBackground(Void... params) {
             // TODO: attempt authentication against a network service.
 
-            try {
-                // Simulate network access.
-                Thread.sleep(1000);
-            } catch (InterruptedException e) {
-                return false;
-            }
-
             UserManager manager = new UserManager();
             // Create the user
+
             manager.addUser(new User(mEmail, mPassword, mMajor, mDescription), UserRegistration.this);
             // Authenticate the user
-            return manager.authenticateUser(mEmail, mPassword);
+            return true;
         }
 
 
@@ -392,7 +388,6 @@ public class UserRegistration extends AppCompatActivity implements LoaderCallbac
             showProgress(false);
 
             if (success) {
-                finish();
                 //go onto next activity if suceess
 
             } else {

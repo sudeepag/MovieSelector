@@ -64,18 +64,13 @@ public class UserManager {
      */
     public void addUser(final User user, final UserRegistration context) {
         String newEmail = user.getEmail();
-        for (User curr : userList.values()) {
-            if (curr.getEmail().equals(newEmail)) {
-                return;
-            }
-        }
+
         Firebase userRef = ref.child("User");
 //        userRef.setValue(user);
 //        return true;
         userRef.createUser(user.getEmail(), user.getPassword(), new Firebase.ValueResultHandler<Map<String, Object>>() {
             @Override
             public void onSuccess(Map<String, Object> result) {
-                context.transition();
                 ref.authWithPassword(user.getEmail(), user.getPassword(),
                         new Firebase.AuthResultHandler() {
                             @Override
@@ -84,10 +79,13 @@ public class UserManager {
                                 Map<String, Object> map = new HashMap<String, Object>();
                                 map.put("data", user);
                                 ref.child("users").child(authData.getUid()).setValue(map);
+                                context.transition();
+                                context.finish();
                             }
 
                             @Override
                             public void onAuthenticationError(FirebaseError error) {
+                                System.out.println("Error2");
                                 // Something went wrong :(
                             }
                         });
@@ -97,6 +95,7 @@ public class UserManager {
             @Override
             public void onError(FirebaseError firebaseError) {
                 System.out.println(firebaseError.getMessage());
+                System.out.println("Error2");
                 // there was an error
             }
         });
