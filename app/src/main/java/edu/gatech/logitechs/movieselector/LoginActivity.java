@@ -141,6 +141,11 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         isLoading = false;
     }
 
+    public void transition() {
+        Intent myIntent = new Intent(this,MainActivity.class);
+        this.startActivity(myIntent);
+    }
+
     @Override
     public void onBackPressed() {
         if (isLoading) {
@@ -274,8 +279,17 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
             showProgress(true);
 
             //start authentication
-            mAuthTask = new UserLoginTask(email, password);
-            mAuthTask.execute((Void) null);
+            UserManager manager = new UserManager();
+            manager.authenticateUser(email, password, LoginActivity.this, new Runnable() {
+                @Override
+                public void run() {
+                    showProgress(false);
+                    mPasswordView.setError(getString(R.string.error_incorrect_password));
+                    mPasswordView.requestFocus();
+                }
+            });
+//            mAuthTask = new UserLoginTask(email, password);
+//            mAuthTask.execute((Void) null);
         }
     }
 
@@ -408,7 +422,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
             }
 
             UserManager manager = new UserManager();
-            return manager.authenticateUser(mEmail, mPassword);
+            return true;
         }
 
         @Override

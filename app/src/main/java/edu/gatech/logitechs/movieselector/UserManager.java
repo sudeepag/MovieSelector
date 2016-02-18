@@ -62,7 +62,7 @@ public class UserManager {
      *
      * @return true is email is unique and was added properly, false otherwise
      */
-    public void addUser(final User user, final UserRegistration context) {
+    public void addUser(final User user, final UserRegistration context, final Runnable runnable) {
         String newEmail = user.getEmail();
 
         Firebase userRef = ref.child("User");
@@ -85,7 +85,7 @@ public class UserManager {
 
                             @Override
                             public void onAuthenticationError(FirebaseError error) {
-                                System.out.println("Error2");
+                                runnable.run();
                                 // Something went wrong :(
                             }
                         });
@@ -107,19 +107,21 @@ public class UserManager {
      *
      * @return true if the input email and password match, false otherwise
      */
-    public boolean authenticateUser(String email, String pass) {
+    public void authenticateUser(String email, String pass, final LoginActivity context, final Runnable runnable) {
         Firebase userRef = ref.child("User");
         userRef.authWithPassword(email, pass, new Firebase.AuthResultHandler() {
             @Override
             public void onAuthenticated(AuthData authData) {
+                context.transition();
+                context.finish();
 
             }
             @Override
             public void onAuthenticationError(FirebaseError firebaseError) {
+                runnable.run();
                 // there was an error
             }
         });
-        return true;
 //        User curr = userList.get(email);
 //        if (curr == null) {
 //            return false;

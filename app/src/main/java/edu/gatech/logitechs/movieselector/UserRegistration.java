@@ -230,7 +230,14 @@ public class UserRegistration extends AppCompatActivity implements LoaderCallbac
 
             //start authentication
             UserManager manager = new UserManager();
-            manager.addUser(new User(email, password, major, description), UserRegistration.this);
+            manager.addUser(new User(email, password, major, description), UserRegistration.this, new Runnable() {
+                @Override
+                public void run() {
+                    showProgress(false);
+                    mPasswordView.setError(getString(R.string.error_incorrect_password));
+                    mPasswordView.requestFocus();
+                }
+            });
 //            mAuthTask = new UserLoginTask(email, password, major, description);
 //            mAuthTask.execute((Void) null);
         }
@@ -376,7 +383,13 @@ public class UserRegistration extends AppCompatActivity implements LoaderCallbac
             UserManager manager = new UserManager();
             // Create the user
 
-            manager.addUser(new User(mEmail, mPassword, mMajor, mDescription), UserRegistration.this);
+            manager.addUser(new User(mEmail, mPassword, mMajor, mDescription), UserRegistration.this, new Runnable() {
+                @Override
+                public void run() {
+                    mPasswordView.setError(getString(R.string.error_incorrect_password));
+                    mPasswordView.requestFocus();
+                }
+            });
             // Authenticate the user
             return true;
         }
