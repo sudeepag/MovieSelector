@@ -20,7 +20,7 @@
 
     <header
         android:fragment="edu.gatech.logitechs.movieselector.UserProfile$EditProfilePreferenceFragment"
-        android:icon="@drawable/ic_sync_black_24dp"
+        android:icon="@drawable/ic_menu_face"
         android:title="@string/pref_header_edit_profile" />
 
 </preference-headers>
