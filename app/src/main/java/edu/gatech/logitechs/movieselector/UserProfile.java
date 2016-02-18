@@ -266,11 +266,6 @@ public class UserProfile extends AppCompatPreferenceActivity {
         }
     }
 
-    /**
-     * This fragment shows data and sync preferences only. It is used when the
-     * activity is showing a two-pane settings UI.
-     */
-    @TargetApi(Build.VERSION_CODES.HONEYCOMB)
     public static class EditProfilePreferenceFragment extends PreferenceFragment {
         @Override
         public void onCreate(Bundle savedInstanceState) {
@@ -282,7 +277,10 @@ public class UserProfile extends AppCompatPreferenceActivity {
             // to their values. When their values change, their summaries are
             // updated to reflect the new value, per the Android Design
             // guidelines.
-            bindPreferenceSummaryToValue(findPreference("edit_profile"));
+            bindPreferenceSummaryToValue(findPreference("change_email"));
+            bindPreferenceSummaryToValue(findPreference("change_password"));
+            bindPreferenceSummaryToValue(findPreference("change_major"));
+            bindPreferenceSummaryToValue(findPreference("change_description"));
         }
 
         @Override
