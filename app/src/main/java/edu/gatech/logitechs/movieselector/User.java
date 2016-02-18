@@ -6,14 +6,24 @@ package edu.gatech.logitechs.movieselector;
 public class User {
     private String email;
     private String password;
-    private String major;
     private String description;
+    private Majors majorEnum;
+    private String major;
 
     /**
-     * construr for user
+     * User constructor. Only here because requried for use by FireBase
      */
     public User() {
         super();
+    }
+
+    /**
+     * Chained constructor for user containing only essential user information 
+     * @param email String of user email
+     * @param password String of user password
+     */
+    public User(String email, String password) {
+        this(email, password, null, null);
     }
 
     /**
@@ -30,6 +40,48 @@ public class User {
         this.description = description;
     }
 
+
+    /**
+     * Setter for the major of a given user
+     *
+     * @param name  takes in UPPERCASE, abbreviated name of major
+     * @return true if the major was added correctly, false if major was not member of enum
+     */
+    public boolean setMajorEnum(String name) {
+        try {
+            if (Majors.valueOf(name) instanceof Majors) {
+                if (Majors.CS == Majors.valueOf(name)) {
+                    this.majorEnum = Majors.CS;
+                } else if (Majors.EE == Majors.valueOf(name)) {
+                    this.majorEnum = Majors.EE;
+                } else if (Majors.ISYE == Majors.valueOf(name)) {
+                    this.majorEnum = Majors.ISYE;
+                } else if (Majors.MATH == Majors.valueOf(name)) {
+                    this.majorEnum = Majors.MATH;
+                } else if (Majors.PHYS == Majors.valueOf(name)) {
+                    this.majorEnum = Majors.PHYS;
+                } else if (Majors.CHEM == Majors.valueOf(name)) {
+                    this.majorEnum = Majors.CHEM;
+                } else if (Majors.CHEME == Majors.valueOf(name)) {
+                    this.majorEnum = Majors.CHEME;
+                } else {
+                    return false;
+                }
+            }
+        } catch (Exception e) {
+            return false;
+        }
+        return true;
+    }
+
+    /**
+     * @return User's major as a string
+     */
+    public String getMajorString() {
+        return majorEnum.getMajorString();
+    }
+
+
     /**
      * get the email of the user
      * @return String representation of user email
@@ -38,7 +90,8 @@ public class User {
         return email;
     }
 
-    /**
+
+     /**
      * get the password of the user
      * @return String representation of user password
      */
