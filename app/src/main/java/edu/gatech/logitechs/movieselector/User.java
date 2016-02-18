@@ -7,7 +7,7 @@ public class User {
     private String email;
     private String password;
     private String description;
-    private Majors majorEnum;
+   // private Majors majorEnum;
     private String major;
 
     /**
@@ -47,39 +47,39 @@ public class User {
      * @param name  takes in UPPERCASE, abbreviated name of major
      * @return true if the major was added correctly, false if major was not member of enum
      */
-    public boolean setMajorEnum(String name) {
-        try {
-            if (Majors.valueOf(name) instanceof Majors) {
-                if (Majors.CS == Majors.valueOf(name)) {
-                    this.majorEnum = Majors.CS;
-                } else if (Majors.EE == Majors.valueOf(name)) {
-                    this.majorEnum = Majors.EE;
-                } else if (Majors.ISYE == Majors.valueOf(name)) {
-                    this.majorEnum = Majors.ISYE;
-                } else if (Majors.MATH == Majors.valueOf(name)) {
-                    this.majorEnum = Majors.MATH;
-                } else if (Majors.PHYS == Majors.valueOf(name)) {
-                    this.majorEnum = Majors.PHYS;
-                } else if (Majors.CHEM == Majors.valueOf(name)) {
-                    this.majorEnum = Majors.CHEM;
-                } else if (Majors.CHEME == Majors.valueOf(name)) {
-                    this.majorEnum = Majors.CHEME;
-                } else {
-                    return false;
-                }
-            }
-        } catch (Exception e) {
-            return false;
-        }
-        return true;
-    }
+//    public boolean setMajorEnum(String name) {
+//        try {
+//            if (Majors.valueOf(name) instanceof Majors) {
+//                if (Majors.CS == Majors.valueOf(name)) {
+//                    this.majorEnum = Majors.CS;
+//                } else if (Majors.EE == Majors.valueOf(name)) {
+//                    this.majorEnum = Majors.EE;
+//                } else if (Majors.ISYE == Majors.valueOf(name)) {
+//                    this.majorEnum = Majors.ISYE;
+//                } else if (Majors.MATH == Majors.valueOf(name)) {
+//                    this.majorEnum = Majors.MATH;
+//                } else if (Majors.PHYS == Majors.valueOf(name)) {
+//                    this.majorEnum = Majors.PHYS;
+//                } else if (Majors.CHEM == Majors.valueOf(name)) {
+//                    this.majorEnum = Majors.CHEM;
+//                } else if (Majors.CHEME == Majors.valueOf(name)) {
+//                    this.majorEnum = Majors.CHEME;
+//                } else {
+//                    return false;
+//                }
+//            }
+//        } catch (Exception e) {
+//            return false;
+//        }
+//        return true;
+//    }
 
     /**
      * @return User's major as a string
      */
-    public String getMajorString() {
-        return majorEnum.getMajorString();
-    }
+ //   public String getMajorString() {
+//        return majorEnum.getMajorString();
+//    }
 
 
     /**

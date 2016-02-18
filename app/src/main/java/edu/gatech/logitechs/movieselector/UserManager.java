@@ -16,7 +16,6 @@ import java.util.Map;
 
 public class UserManager {
 
-    private static Map<String, User> userList = new HashMap<>();
     private static Firebase ref = new Firebase("https://muvee.firebaseio.com/");
 
 
@@ -54,9 +53,6 @@ public class UserManager {
 //        });
     }
 
-    public Map<String, User> getUserList() {
-        return userList;
-    }
     /**
      * Method to add user to database of users
      *
@@ -96,6 +92,7 @@ public class UserManager {
             public void onError(FirebaseError firebaseError) {
                 System.out.println(firebaseError.getMessage());
                 System.out.println("Error2");
+                runnable.run();
                 // there was an error
             }
         });

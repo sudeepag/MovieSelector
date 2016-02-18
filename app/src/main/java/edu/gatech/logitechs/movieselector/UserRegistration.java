@@ -233,9 +233,19 @@ public class UserRegistration extends AppCompatActivity implements LoaderCallbac
             manager.addUser(new User(email, password, major, description), UserRegistration.this, new Runnable() {
                 @Override
                 public void run() {
+                    new AlertDialog.Builder(UserRegistration.this)
+                            .setTitle(R.string.app_name)
+                            .setMessage(R.string.prompt_registration_error)
+                            .setPositiveButton("Okay",
+                                    new DialogInterface.OnClickListener() {
+                                        @TargetApi(11)
+                                        public void onClick(DialogInterface dialog, int id) {
+                                            dialog.cancel();
+                                        }
+                                    })
+                            .show();
+                    mEmailView.requestFocus();
                     showProgress(false);
-                    mPasswordView.setError(getString(R.string.error_incorrect_password));
-                    mPasswordView.requestFocus();
                 }
             });
 //            mAuthTask = new UserLoginTask(email, password, major, description);
