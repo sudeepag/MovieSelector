@@ -1,7 +1,8 @@
 <preference-headers xmlns:android="http://schemas.android.com/apk/res/android">
-
     <!-- These settings headers are only used on tablets. -->
 
+    <header
+        android:icon="@null" />
     <header
         android:fragment="edu.gatech.logitechs.movieselector.UserProfile$GeneralPreferenceFragment"
         android:icon="@drawable/ic_info_black_24dp"
@@ -16,5 +17,10 @@
         android:fragment="edu.gatech.logitechs.movieselector.UserProfile$DataSyncPreferenceFragment"
         android:icon="@drawable/ic_sync_black_24dp"
         android:title="@string/pref_header_data_sync" />
+
+    <header
+        android:fragment="edu.gatech.logitechs.movieselector.UserProfile$EditProfilePreferenceFragment"
+        android:icon="@drawable/ic_sync_black_24dp"
+        android:title="@string/pref_header_edit_profile" />
 
 </preference-headers>
