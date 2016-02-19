@@ -111,10 +111,10 @@
     <string name="pref_ringtone_silent">Silent</string>
 
     <string name="pref_title_vibrate">Vibrate</string>
-    <string name="pref_header_edit_profile">Edit Profile</string>
-    <string name="pref_title_edit_email">Change email</string>
-    <string name="pref_title_change_password">Change Password</string>
-    <string name="pref_title_change_description">Change Description</string>
-    <string name="pref_title_change_major">Change Major</string>
+    <string name="pref_header_edit_profile">Profile</string>
+    <string name="pref_title_edit_email">Email</string>
+    <string name="pref_title_change_password">Password</string>
+    <string name="pref_title_change_description">User Description</string>
+    <string name="pref_title_change_major">Major</string>
     <string name="pref_default_display_password">1234</string>
 </resources>
