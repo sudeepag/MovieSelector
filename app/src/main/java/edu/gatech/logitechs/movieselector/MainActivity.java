@@ -16,9 +16,16 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.TextView;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
+
+    UserManager manager;
+    User currUser;
+
+    TextView navHeader;
+    TextView navHeaderEmail;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,23 +51,29 @@ public class MainActivity extends AppCompatActivity
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+
+        navHeader = (TextView) findViewById(R.id.nav_header_text);
+        navHeaderEmail = (TextView) findViewById(R.id.nav_header_email);
+    }
+
+    protected void onStop() {
+//        update navigation headers
+//        manager = new UserManager();
+//        currUser = manager.getCurrentUser();
+//        String[] names = currUser.getEmail().split("@");
+//
+//        navHeader.setText(currUser.getEmail().split("@")[0]);
+//        navHeaderEmail.setText(currUser.getEmail());
+        super.onStop();
     }
 
     @Override
     public void onBackPressed() {
-//        User user = UserManager.getCurrentUser();
-//        UserManager.currentUser = null;
-//        user.setMajor("chicken");
-//        UserManager.updatedCurrentUser(user);
-//        user = null;
-//        user = UserManager.getCurrentUser();
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
         } else {
             logoutAction();
-//            TODO original code below check whether need to do this??
-//            super.onBackPressed();
         }
     }
 

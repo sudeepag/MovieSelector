@@ -64,8 +64,8 @@ public class UserManager {
         return currentUser;
     }
 
-    public static void updatedCurrentUser(User user) {
-        Map<String, Object> map = new HashMap<String, Object>();
+    public static void updateCurrentUser(User user) {
+        Map<String, Object> map = new HashMap<>();
         map.put("data", user);
         ref.child("users").child(user.getUID()).setValue(map);
         Firebase userRef = ref.child("users");

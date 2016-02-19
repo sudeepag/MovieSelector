@@ -41,6 +41,18 @@ import java.util.Map;
  * API Guide</a> for more information on developing a Settings UI.
  */
 public class UserProfile extends AppCompatPreferenceActivity {
+
+    private static UserManager manager;
+    private static User currUser;
+
+    private static Map<String, Integer> majorToInt;
+    private static Map<Integer, String> intToMajor;
+    String majors[];
+
+    SharedPreferences sp;
+    SharedPreferences.Editor editor;
+
+
     /**
      * A preference value change listener that updates the preference's summary
      * to reflect its new value.
@@ -56,36 +68,14 @@ public class UserProfile extends AppCompatPreferenceActivity {
                 ListPreference listPreference = (ListPreference) preference;
                 int index = listPreference.findIndexOfValue(stringValue);
 
-                System.out.println(stringValue);
+                updateUserProfileServer(preference.getKey(), String.valueOf(index));
 
                 // Set the summary to reflect the new value.
-                preference.setSummary(
-                        index >= 0
-                                ? listPreference.getEntries()[index]
-                                : null);
+                preference.setSummary(index >= 0 ? listPreference.getEntries()[index] : null);
 
-            } else if (preference instanceof RingtonePreference) {
-                // For ringtone preferences, look up the correct display value
-                // using RingtoneManager.
-                if (TextUtils.isEmpty(stringValue)) {
-                    // Empty values correspond to 'silent' (no ringtone).
-                    preference.setSummary(R.string.pref_ringtone_silent);
-
-                } else {
-                    Ringtone ringtone = RingtoneManager.getRingtone(
-                            preference.getContext(), Uri.parse(stringValue));
-
-                    if (ringtone == null) {
-                        // Clear the summary if there was a lookup error.
-                        preference.setSummary(null);
-                    } else {
-                        // Set the summary to reflect the new ringtone display
-                        // name.
-                        String name = ringtone.getTitle(preference.getContext());
-                        preference.setSummary(name);
-                    }
-                }
-
+            } else if (preference instanceof EditTextPreference) {
+                updateUserProfileServer(preference.getKey(), stringValue);
+                preference.setSummary(stringValue);
             } else {
                 // For all other preferences, set the summary to the value's
                 // simple string representation.
@@ -94,6 +84,31 @@ public class UserProfile extends AppCompatPreferenceActivity {
             return true;
         }
     };
+
+    /**
+     * Updates the user whenever there is a value change
+     * @param key       the preference key
+     * @param value     the preference value
+     */
+    private static void updateUserProfileServer(String key, String value) {
+        if (key.equals("change_email")) {
+            currUser.setEmail(value);
+        } else if (key.equals("change_password")) {
+            currUser.setPassword(value);
+        } else if (key.equals("change_major")) {
+            currUser.setMajor(intToMajor.get(Integer.valueOf(value)));
+        } else if (key.equals("change_description")) {
+            currUser.setDescription(value);
+        }
+    }
+
+    @Override
+    protected void onDestroy() {
+//        TODO update the current User to the server here
+        System.out.println();
+//        manager.updatedCurrentUser(currUser);
+        super.onDestroy();
+    }
 
     /**
      * Helper method to determine if the device has an extra-large screen. For
@@ -130,18 +145,20 @@ public class UserProfile extends AppCompatPreferenceActivity {
         super.onCreate(savedInstanceState);
         setupActionBar();
 
-        UserManager manager = new UserManager();
-        User currUser = manager.getCurrentUser();
-        String[] majors = getResources().getStringArray(R.array.pref_example_list_titles);
+        manager = new UserManager();
+        currUser = manager.getCurrentUser();
 
-        Map<String, Integer> majorToInt = new HashMap<>();
+        majors = getResources().getStringArray(R.array.pref_example_list_titles);
+        majorToInt = new HashMap<>();
+        intToMajor = new HashMap<>();
 
         for (int i = 0; i < majors.length; i++) {
             majorToInt.put(majors[i],i);
+            intToMajor.put(i, majors[i]);
         }
 
-        SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(UserProfile.this);
-        SharedPreferences.Editor editor = sp.edit();
+        sp = PreferenceManager.getDefaultSharedPreferences(UserProfile.this);
+        editor = sp.edit();
         editor.putString("change_email", currUser.getEmail());
         editor.putString("change_password", currUser.getPassword());
         editor.putString("change_major", String.valueOf(majorToInt.get(currUser.getMajor())));
@@ -219,8 +236,6 @@ public class UserProfile extends AppCompatPreferenceActivity {
 //            EditTextPreference change_email_pref = (EditTextPreference) findPreference("change_email");
 //            change_email_pref.setSummary(sp.getString("change_email", "FERRK UUUU"));
 
-
-
 //            EditText edit = ((EditTextPreference) findPreference("change_password")).getEditText();
 //            String pref = edit.getTransformationMethod().getTransformation(objValue.toString(), edit).toString();
 //            prePreference.setSummary(pref);
@@ -228,7 +243,7 @@ public class UserProfile extends AppCompatPreferenceActivity {
         }
 
         @Override
-        public boolean onOptionsItemSelected(MenuItem item) {
+         public boolean onOptionsItemSelected(MenuItem item) {
             int id = item.getItemId();
             if (id == android.R.id.home) {
                 startActivity(new Intent(getActivity(), UserProfile.class));
