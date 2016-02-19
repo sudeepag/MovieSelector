@@ -106,7 +106,7 @@ public class UserProfile extends AppCompatPreferenceActivity {
     protected void onDestroy() {
 //        TODO update the current User to the server here
         System.out.println();
-//        manager.updatedCurrentUser(currUser);
+        manager.updateCurrentUser(currUser);
         super.onDestroy();
     }
 
