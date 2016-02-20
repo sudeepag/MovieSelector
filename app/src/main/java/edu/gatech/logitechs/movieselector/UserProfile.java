@@ -110,11 +110,15 @@ public class UserProfile extends AppCompatPreferenceActivity {
         System.out.println();
         if(newPass != null || newEmail != null){
             if (newPass != null) {
-            manager.changePassword(currUser, newPass);
+            manager.changePassword(currUser, newPass, (String q) -> {
+                q = q+"hello";
+            });
             System.out.println("chang password to" + newPass);
             }
             if (newEmail != null) {
-                manager.changeEmail(currUser, newEmail);
+                manager.changeEmail(currUser, newEmail,  (String q) -> {
+                    q = q+"hello";
+                });
                 System.out.println("chang email to" + newEmail);
             }
         } else {

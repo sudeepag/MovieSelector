@@ -106,13 +106,14 @@ public class UserManager {
 
     }
 
-    public static void changePassword(final User user, final String password, Consumer<String> consumer) {
+    public static void changePassword(final User user, final String password, Runnable runnable, Consumer consumer) {
         ref.changePassword(user.getEmail(), user.getPassword(), password, new Firebase.ResultHandler() {
             @Override
             public void onSuccess() {
                 user.setPassword(password);
                 updateCurrentUser(user);
                 System.out.println("changed password");
+                runnable.run();
             }
 
             @Override
@@ -124,13 +125,14 @@ public class UserManager {
         });
     }
 
-    public static void changeEmail(final User user, final String email, Consumer<String> consumer) {
+    public static void changeEmail(final User user, final String email, Runnable runnable, Consumer consumer) {
         ref.changeEmail(user.getEmail(), user.getPassword(), email, new Firebase.ResultHandler() {
             @Override
             public void onSuccess() {
                 user.setEmail(email);
                 updateCurrentUser(user);
                 System.out.println("changed email");
+                runnable.run();
             }
 
             @Override
