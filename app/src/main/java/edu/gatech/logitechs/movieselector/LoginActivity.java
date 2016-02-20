@@ -280,13 +280,10 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
 
             //start authentication
             UserManager manager = new UserManager();
-            manager.authenticateUser(email, password, LoginActivity.this, new Runnable() {
-                @Override
-                public void run() {
-                    showProgress(false);
-                    mPasswordView.setError(getString(R.string.error_incorrect_password));
-                    mPasswordView.requestFocus();
-                }
+            manager.authenticateUser(email, password, LoginActivity.this, ()->{
+                showProgress(false);
+                mPasswordView.setError(getString(R.string.error_incorrect_password));
+                mPasswordView.requestFocus();
             });
 //            mAuthTask = new UserLoginTask(email, password);
 //            mAuthTask.execute((Void) null);

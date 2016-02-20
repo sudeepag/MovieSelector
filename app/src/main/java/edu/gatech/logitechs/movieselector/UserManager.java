@@ -106,7 +106,7 @@ public class UserManager {
 
     }
 
-    public static void changePassword(final User user, final String password) {
+    public static void changePassword(final User user, final String password, Consumer<String> consumer) {
         ref.changePassword(user.getEmail(), user.getPassword(), password, new Firebase.ResultHandler() {
             @Override
             public void onSuccess() {
@@ -119,11 +119,12 @@ public class UserManager {
             public void onError(FirebaseError firebaseError) {
                 System.out.println("failed changed password");
                 System.out.println(firebaseError.getMessage());
+                consumer.consume(firebaseError.getMessage());
             }
         });
     }
 
-    public static void changeEmail(final User user, final String email) {
+    public static void changeEmail(final User user, final String email, Consumer<String> consumer) {
         ref.changeEmail(user.getEmail(), user.getPassword(), email, new Firebase.ResultHandler() {
             @Override
             public void onSuccess() {
@@ -134,7 +135,8 @@ public class UserManager {
 
             @Override
             public void onError(FirebaseError firebaseError) {
-                System.out.println(firebaseError.getMessage());
+                System.out.println(firebaseError.getCode());
+                consumer.consume(firebaseError.getMessage());
             }
         });
     }

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="edu.gatech.logitechs.movieselector">
+    package="edu.gatech.logitechs.movieselector" >
 
     <!-- To auto-complete the email text field in the login form with the user's emails -->
     <uses-permission android:name="android.permission.GET_ACCOUNTS" />
@@ -14,10 +14,10 @@
         android:label="@string/app_name"
         android:orientation="vertical"
         android:supportsRtl="true"
-        android:theme="@style/AppTheme">
+        android:theme="@style/AppTheme" >
         <activity
             android:name=".LoginActivity"
-            android:label="@string/app_name">
+            android:label="@string/app_name" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -28,18 +28,18 @@
             android:name=".MainActivity"
             android:label="@string/app_name"
             android:parentActivityName=".LoginActivity"
-            android:theme="@style/AppTheme">
+            android:theme="@style/AppTheme" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="edu.gatech.logitechs.movieselector.LoginActivity" />
         </activity>
         <activity
             android:name=".UserRegistration"
-            android:label="@string/app_name"></activity>
+            android:label="@string/app_name" />
         <activity
             android:name=".UserProfile"
             android:label="@string/title_activity_user_profile"
-            android:parentActivityName=".MainActivity">
+            android:parentActivityName=".MainActivity" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="edu.gatech.logitechs.movieselector.MainActivity" />
