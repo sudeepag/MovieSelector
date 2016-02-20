@@ -106,7 +106,7 @@ public class UserManager {
 
     }
 
-    public static void changePassword(final User user, final String password, Runnable runnable, Consumer consumer) {
+    public static void changePassword(final User user, final String password, final Runnable runnable, final Consumer consumer) {
         ref.changePassword(user.getEmail(), user.getPassword(), password, new Firebase.ResultHandler() {
             @Override
             public void onSuccess() {
@@ -125,7 +125,7 @@ public class UserManager {
         });
     }
 
-    public static void changeEmail(final User user, final String email, Runnable runnable, Consumer consumer) {
+    public static void changeEmail(final User user, final String email, final Runnable runnable,final Consumer consumer) {
         ref.changeEmail(user.getEmail(), user.getPassword(), email, new Firebase.ResultHandler() {
             @Override
             public void onSuccess() {

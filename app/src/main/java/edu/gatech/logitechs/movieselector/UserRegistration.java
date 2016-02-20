@@ -226,20 +226,23 @@ public class UserRegistration extends AppCompatActivity implements LoaderCallbac
 
             //start authentication
             UserManager manager = new UserManager();
-            manager.addUser(new User(email, password, major, description), UserRegistration.this, () -> {
-                new AlertDialog.Builder(UserRegistration.this)
-                        .setTitle(R.string.app_name)
-                        .setMessage(R.string.prompt_registration_error)
-                        .setPositiveButton("Okay",
-                                new DialogInterface.OnClickListener() {
-                                    @TargetApi(11)
-                                    public void onClick(DialogInterface dialog, int id) {
-                                        dialog.cancel();
-                                    }
-                                })
-                        .show();
-                mEmailView.requestFocus();
-                showProgress(false);
+            manager.addUser(new User(email, password, major, description), UserRegistration.this, new Runnable() {
+                @Override
+                public void run() {
+                    new AlertDialog.Builder(UserRegistration.this)
+                            .setTitle(R.string.app_name)
+                            .setMessage(R.string.prompt_registration_error)
+                            .setPositiveButton("Okay",
+                                    new DialogInterface.OnClickListener() {
+                                        @TargetApi(11)
+                                        public void onClick(DialogInterface dialog, int id) {
+                                            dialog.cancel();
+                                        }
+                                    })
+                            .show();
+                    mEmailView.requestFocus();
+                    showProgress(false);
+                }
             });
 //            mAuthTask = new UserLoginTask(email, password, major, description);
 //            mAuthTask.execute((Void) null);

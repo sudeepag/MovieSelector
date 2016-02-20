@@ -19,6 +19,7 @@ import android.preference.EditTextPreference;
 import android.preference.ListPreference;
 import android.preference.Preference;
 import android.preference.PreferenceActivity;
+import android.support.design.widget.Snackbar;
 import android.support.v7.app.ActionBar;
 import android.preference.PreferenceFragment;
 import android.preference.PreferenceManager;
@@ -109,34 +110,8 @@ public class UserProfile extends AppCompatPreferenceActivity {
     private static void updateUserProfileServer(String key, String value) {
         copiedSp = PreferenceManager.getDefaultSharedPreferences(thisActivity);
         copiedEditor = copiedSp.edit();
-
         if (key.equals("change_email")) {
             newEmail = value;
-            copiedEditor.putString("change_email", "hihihihi");
-            manager.changeEmail(currUser, newEmail, () -> {
-                System.out.println("success");
-            }, (String q) -> {
-                System.out.println(q);
-            });
-//            manager.changeEmail(currUser, value,(Consumer<String> cs) -> {
-//                System.out.println();
-//            });
-//            if (isEmailValid(value)) {
-//                newEmail = value;
-//            } else {
-//                new AlertDialog.Builder(thisActivity)
-//                        .setTitle(R.string.app_name)
-//                        .setMessage(R.string.error_invalid_email)
-//                        .setPositiveButton("Yes",
-//                                new DialogInterface.OnClickListener() {
-//                                    @TargetApi(11)
-//                                    public void onClick(DialogInterface dialog, int id) {
-//                                        findPreference("")
-//                                        dialog.cancel();
-//                                    }
-//                                }
-//                        ).show();
-//            }
         } else if (key.equals("change_password")) {
             newPass = value;
         } else if (key.equals("change_major")) {
@@ -149,24 +124,40 @@ public class UserProfile extends AppCompatPreferenceActivity {
     @Override
     protected void onDestroy() {
 //        TODO update the current User to the server here
-        System.out.println();
         if(newPass != null || newEmail != null){
             if (newPass != null) {
-            manager.changePassword(currUser, newPass, (String q) -> {
-                q = q+"hello";
-            });
+                manager.changePassword(currUser, newPass, new Runnable() {
+                    @Override
+                    public void run() {
+                        System.out.println("sucess");
+                        //TODO success
+                    }
+                }, new Consumer() {
+                    @Override
+                    public void consume(String input) {
+                        System.out.println(input);
+                    }
+                });
             System.out.println("chang password to" + newPass);
             }
             if (newEmail != null) {
-                manager.changeEmail(currUser, newEmail,  (String q) -> {
-                    q = q+"hello";
+                manager.changeEmail(currUser, newEmail, new Runnable() {
+                    @Override
+                    public void run() {
+                        System.out.println("sucess");
+                        //TODO success
+                    }}, new Consumer() {
+                    @Override
+                    public void consume(String input) {
+                        System.out.println(input);
+                        //TODO: put error scenario for change email
+                    }
                 });
                 System.out.println("chang email to" + newEmail);
             }
         } else {
             manager.updateCurrentUser(currUser);
         }
-
         super.onDestroy();
     }
 
