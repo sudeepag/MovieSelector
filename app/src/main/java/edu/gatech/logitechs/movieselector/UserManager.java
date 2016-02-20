@@ -12,6 +12,7 @@ import com.firebase.client.Firebase;
 import com.firebase.client.FirebaseError;
 import com.firebase.client.ValueEventListener;
 
+import java.util.EventListener;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -19,6 +20,37 @@ public class UserManager {
 
     private static Firebase ref = new Firebase("https://muvee.firebaseio.com/");
     public static User currentUser;
+    private static ChildEventListener eventListener = new ChildEventListener() {
+
+        @Override
+        public void onChildAdded(DataSnapshot dataSnapshot, String s) {
+            currentUser = dataSnapshot.getValue(User.class);
+
+        }
+
+        @Override
+        public void onChildChanged(DataSnapshot dataSnapshot, String s) {
+            currentUser = dataSnapshot.getValue(User.class);
+
+        }
+
+        @Override
+        public void onChildRemoved(DataSnapshot dataSnapshot) {
+            currentUser = dataSnapshot.getValue(User.class);
+
+        }
+
+        @Override
+        public void onChildMoved(DataSnapshot dataSnapshot, String s) {
+            currentUser = dataSnapshot.getValue(User.class);
+
+        }
+
+        @Override
+        public void onCancelled(FirebaseError firebaseError) {
+            System.out.println("The read failed: " + firebaseError.getMessage());
+        }
+    };
 
 
     /**
@@ -70,19 +102,41 @@ public class UserManager {
         ref.child("users").child(user.getUID()).setValue(map);
         Firebase userRef = ref.child("users");
         userRef = userRef.child(currentUser.getUID());
-        userRef.addValueEventListener(new ValueEventListener() {
+        userRef.addChildEventListener(eventListener);
+
+    }
+
+    public static void changePassword(final User user, final String password) {
+        ref.changePassword(user.getEmail(), user.getPassword(), password, new Firebase.ResultHandler() {
             @Override
-            public void onDataChange(DataSnapshot snapshot) {
-                for (DataSnapshot dataSnapshot : snapshot.getChildren())
-                    currentUser = dataSnapshot.getValue(User.class);
+            public void onSuccess() {
+                user.setPassword(password);
+                updateCurrentUser(user);
+                System.out.println("changed password");
             }
 
             @Override
-            public void onCancelled(FirebaseError firebaseError) {
-                System.out.println("The read failed: " + firebaseError.getMessage());
+            public void onError(FirebaseError firebaseError) {
+                System.out.println("failed changed password");
+                System.out.println(firebaseError.getMessage());
             }
         });
+    }
 
+    public static void changeEmail(final User user, final String email) {
+        ref.changeEmail(user.getEmail(), user.getPassword(), email, new Firebase.ResultHandler() {
+            @Override
+            public void onSuccess() {
+                user.setEmail(email);
+                updateCurrentUser(user);
+                System.out.println("changed email");
+            }
+
+            @Override
+            public void onError(FirebaseError firebaseError) {
+                System.out.println(firebaseError.getMessage());
+            }
+        });
     }
 
     public void addUser(final User user, final UserRegistration context, final Runnable runnable) {
@@ -141,8 +195,10 @@ public class UserManager {
                 userRef.addValueEventListener(new ValueEventListener() {
                     @Override
                     public void onDataChange(DataSnapshot snapshot) {
-                        for (DataSnapshot dataSnapshot: snapshot.getChildren())
+                        for (DataSnapshot dataSnapshot : snapshot.getChildren())
                             currentUser = dataSnapshot.getValue(User.class);
+                        context.transition();
+                        context.finish();
                     }
 
                     @Override
@@ -150,8 +206,6 @@ public class UserManager {
                         System.out.println("The read failed: " + firebaseError.getMessage());
                     }
                 });
-                context.transition();
-                context.finish();
 
             }
             @Override
@@ -160,10 +214,5 @@ public class UserManager {
                 // there was an error
             }
         });
-//        User curr = userList.get(email);
-//        if (curr == null) {
-//            return false;
-//        }
-//        return curr.getPassword().equals(pass);
     }
 }

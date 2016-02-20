@@ -47,6 +47,8 @@ public class UserProfile extends AppCompatPreferenceActivity {
 
     private static Map<String, Integer> majorToInt;
     private static Map<Integer, String> intToMajor;
+    private static String newPass;
+    private static String newEmail;
     String majors[];
 
     SharedPreferences sp;
@@ -92,9 +94,9 @@ public class UserProfile extends AppCompatPreferenceActivity {
      */
     private static void updateUserProfileServer(String key, String value) {
         if (key.equals("change_email")) {
-            currUser.setEmail(value);
+            newEmail = value;
         } else if (key.equals("change_password")) {
-            currUser.setPassword(value);
+            newPass = value;
         } else if (key.equals("change_major")) {
             currUser.setMajor(intToMajor.get(Integer.valueOf(value)));
         } else if (key.equals("change_description")) {
@@ -106,7 +108,19 @@ public class UserProfile extends AppCompatPreferenceActivity {
     protected void onDestroy() {
 //        TODO update the current User to the server here
         System.out.println();
-        manager.updateCurrentUser(currUser);
+        if(newPass != null || newEmail != null){
+            if (newPass != null) {
+            manager.changePassword(currUser, newPass);
+            System.out.println("chang password to" + newPass);
+            }
+            if (newEmail != null) {
+                manager.changeEmail(currUser, newEmail);
+                System.out.println("chang email to" + newEmail);
+            }
+        } else {
+            manager.updateCurrentUser(currUser);
+        }
+
         super.onDestroy();
     }
 
@@ -159,8 +173,8 @@ public class UserProfile extends AppCompatPreferenceActivity {
 
         sp = PreferenceManager.getDefaultSharedPreferences(UserProfile.this);
         editor = sp.edit();
-        editor.putString("change_email", currUser.getEmail());
-        editor.putString("change_password", currUser.getPassword());
+        editor.putString("change_email", newEmail == null ? currUser.getEmail() : newEmail);
+        editor.putString("change_password", newPass == null ? currUser.getPassword() : newPass);
         editor.putString("change_major", String.valueOf(majorToInt.get(currUser.getMajor())));
         editor.putString("change_description", currUser.getDescription());
         editor.commit();
