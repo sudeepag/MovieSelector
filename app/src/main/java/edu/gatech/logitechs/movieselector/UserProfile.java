@@ -2,7 +2,9 @@ package edu.gatech.logitechs.movieselector;
 
 
 import android.annotation.TargetApi;
+import android.app.Activity;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
@@ -11,6 +13,8 @@ import android.media.RingtoneManager;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.preference.EditTextPreference;
 import android.preference.ListPreference;
 import android.preference.Preference;
@@ -19,10 +23,12 @@ import android.support.v7.app.ActionBar;
 import android.preference.PreferenceFragment;
 import android.preference.PreferenceManager;
 import android.preference.RingtonePreference;
+import android.support.v7.app.AlertDialog;
 import android.text.TextUtils;
 import android.view.MenuItem;
 import android.support.v4.app.NavUtils;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -49,10 +55,16 @@ public class UserProfile extends AppCompatPreferenceActivity {
     private static Map<Integer, String> intToMajor;
     private static String newPass;
     private static String newEmail;
+
+    static Activity thisActivity = null;
+
     String majors[];
 
     SharedPreferences sp;
     SharedPreferences.Editor editor;
+
+    static SharedPreferences copiedSp;
+    static SharedPreferences.Editor copiedEditor;
 
 
     /**
@@ -63,6 +75,8 @@ public class UserProfile extends AppCompatPreferenceActivity {
         @Override
         public boolean onPreferenceChange(Preference preference, Object value) {
             String stringValue = value.toString();
+
+            System.out.println(stringValue);
 
             if (preference instanceof ListPreference) {
                 // For list preferences, look up the correct display value in
@@ -93,8 +107,36 @@ public class UserProfile extends AppCompatPreferenceActivity {
      * @param value     the preference value
      */
     private static void updateUserProfileServer(String key, String value) {
+        copiedSp = PreferenceManager.getDefaultSharedPreferences(thisActivity);
+        copiedEditor = copiedSp.edit();
+
         if (key.equals("change_email")) {
             newEmail = value;
+            copiedEditor.putString("change_email", "hihihihi");
+            manager.changeEmail(currUser, newEmail, () -> {
+                System.out.println("success");
+            }, (String q) -> {
+                System.out.println(q);
+            });
+//            manager.changeEmail(currUser, value,(Consumer<String> cs) -> {
+//                System.out.println();
+//            });
+//            if (isEmailValid(value)) {
+//                newEmail = value;
+//            } else {
+//                new AlertDialog.Builder(thisActivity)
+//                        .setTitle(R.string.app_name)
+//                        .setMessage(R.string.error_invalid_email)
+//                        .setPositiveButton("Yes",
+//                                new DialogInterface.OnClickListener() {
+//                                    @TargetApi(11)
+//                                    public void onClick(DialogInterface dialog, int id) {
+//                                        findPreference("")
+//                                        dialog.cancel();
+//                                    }
+//                                }
+//                        ).show();
+//            }
         } else if (key.equals("change_password")) {
             newPass = value;
         } else if (key.equals("change_major")) {
@@ -110,11 +152,11 @@ public class UserProfile extends AppCompatPreferenceActivity {
         System.out.println();
         if(newPass != null || newEmail != null){
             if (newPass != null) {
-            manager.changePassword(currUser, newPass);
+            //manager.changePassword(currUser, newPass);
             System.out.println("chang password to" + newPass);
             }
             if (newEmail != null) {
-                manager.changeEmail(currUser, newEmail);
+                //manager.changeEmail(currUser, newEmail);
                 System.out.println("chang email to" + newEmail);
             }
         } else {
@@ -123,6 +165,17 @@ public class UserProfile extends AppCompatPreferenceActivity {
 
         super.onDestroy();
     }
+
+    private static boolean isEmailValid(String email) {
+        //TODO: Validate EMAIL
+        return email.contains("@");
+    }
+
+    private static boolean isPasswordValid(String password) {
+        //TODO: Validate PASSWORD
+        return password.length() > 4;
+    }
+
 
     /**
      * Helper method to determine if the device has an extra-large screen. For
@@ -158,6 +211,8 @@ public class UserProfile extends AppCompatPreferenceActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setupActionBar();
+
+        thisActivity = this;
 
         manager = new UserManager();
         currUser = manager.getCurrentUser();
