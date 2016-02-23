@@ -33,6 +33,14 @@ public class MainActivity extends AppCompatActivity
         setContentView(R.layout.activity_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        MovieManager.getDVD(this, new Runnable() {
+            @Override
+            public void run() {
+                for (Movie m :MovieManager.getMovieList()) {
+                    System.out.println(m);
+                }
+            }
+        });
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
