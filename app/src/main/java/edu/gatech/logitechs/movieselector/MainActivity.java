@@ -36,6 +36,14 @@ public class MainActivity extends AppCompatActivity
         MovieManager.getDVD(this, new Runnable() {
             @Override
             public void run() {
+                for (Movie m : MovieManager.getMovieList()) {
+                    System.out.println(m);
+                }
+            }
+        });
+        MovieManager.searchTitles("Forrest Gump", this, new Runnable() {
+            @Override
+            public void run() {
                 for (Movie m :MovieManager.getMovieList()) {
                     System.out.println(m);
                 }

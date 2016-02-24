@@ -15,7 +15,10 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 public class MovieManager {
@@ -42,6 +45,7 @@ public class MovieManager {
 
 
                     } catch (JSONException e) {
+                        System.out.println(response);
                         e.printStackTrace();
                     }
                 }
@@ -53,6 +57,52 @@ public class MovieManager {
 
                 }
             });
+        VolleySingleton.getInstance(context).addToRequestQueue(jsObjRequest);
+    }
+
+    public static void searchTitles(String searchTerm, Context context, final Runnable runnable) {
+        JSONObject params = new JSONObject();
+        String query = "";
+        try {
+            query = URLEncoder.encode(searchTerm, "utf-8");
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        }
+        String url = "http://api.rottentomatoes.com/api/public/v1.0/movies.json?apikey=yedukp76ffytfuy24zsqk7f5&q="+query;
+
+        ;
+        JsonObjectRequest jsObjRequest = new JsonObjectRequest
+                (Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
+
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        try {
+                            JSONArray array = response.getJSONArray("movies");
+                            movieList= new ArrayList<Movie>(array.length());
+                            for (int i = 0; i < array.length(); i++) {
+                                JSONObject object = array.getJSONObject(i);
+                                String title = object.getString("title");
+                                int year = object.getInt("year");
+                                JSONObject rating = object.getJSONObject("ratings");
+                                int critics_score = rating.getInt("critics_score");
+                                movieList.add(new Movie(title, year, critics_score));
+                                runnable.run();
+                            }
+
+
+                        } catch (JSONException e) {
+                            System.out.println(response);
+                            e.printStackTrace();
+                        }
+                    }
+                }, new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        System.out.println(error.getMessage());
+                        // TODO Auto-generated method stub
+
+                    }
+                });
         VolleySingleton.getInstance(context).addToRequestQueue(jsObjRequest);
     }
 
