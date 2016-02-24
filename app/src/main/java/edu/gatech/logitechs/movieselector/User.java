@@ -19,7 +19,7 @@ public class User {
     }
 
     /**
-     * Chained constructor for user containing only essential user information 
+     * Chained constructor for user containing only essential user information
      * @param email String of user email
      * @param password String of user password
      */
