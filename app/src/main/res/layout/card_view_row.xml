@@ -10,40 +10,51 @@
         android:id="@+id/cv"
         >
 
-        <RelativeLayout
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:padding="24dp">
+            android:id="@+id/card_header"
+            android:orientation="vertical">
 
-            <ImageView
-                android:layout_width="wrap_content"
+            <RelativeLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:id="@+id/movie_image_holder"
-                android:layout_alignParentLeft="true"
-                android:layout_marginRight="16dp"
-                android:adjustViewBounds="true"
-                android:scaleType="fitCenter"
-                />
+                android:background="#9C27B0"
+                android:elevation="2dp">
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/movie_image_holder"
+                    android:layout_alignParentLeft="true"
+                    android:adjustViewBounds="true"
+                    android:scaleType="fitCenter"
+                    />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:id="@+id/movie_title"
+                    android:layout_toRightOf="@+id/movie_image_holder"
+                    android:textSize="25sp"
+                    android:textColor="#ffffff"
+                    android:gravity="center"
+                    android:text="Title Unavailable"
+                    android:layout_centerVertical="true"
+                    />
+
+            </RelativeLayout>
 
             <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/movie_title"
-                android:layout_toRightOf="@+id/movie_image_holder"
-                android:layout_alignParentTop="true"
-                android:textSize="30sp"
-                android:layout_marginBottom="16dp"
-                />
-
-            <TextView
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:id="@+id/movie_description"
-                android:layout_toRightOf="@+id/movie_image_holder"
-                android:layout_below="@+id/movie_title"
-                />
+                android:text="Description Unavailable"
+                android:textSize="15sp"
+                android:padding="18dp"
+                android:background="#F1F8E9"/>
 
-        </RelativeLayout>
+        </LinearLayout>
 
     </android.support.v7.widget.CardView>
 

@@ -1,6 +1,7 @@
 package edu.gatech.logitechs.movieselector;
 
 import android.annotation.TargetApi;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
@@ -16,10 +17,14 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.text.InputType;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.EditText;
+import android.widget.LinearLayout;
+import android.widget.TableLayout;
 import android.widget.TextView;
 
 import java.util.ArrayList;
@@ -79,63 +84,63 @@ public class MainActivity extends AppCompatActivity
             }
         });
 
-
-
         setSupportActionBar(toolbar);
-
-//        MovieManager.searchTitles("Forrest Gump", this, new Runnable() {
-//            @Override
-//            public void run() {
-//                for (Movie m : MovieManager.getMovieList()) {
-//                    //System.out.println(m);
-//                }
-//            }
-//        });
-//
-//        MovieManager.getRecent(this, new Runnable() {
-//            @Override
-//            public void run() {
-//                for (Movie m : MovieManager.getMovieList()) {
-//                    //System.out.println(m);
-//                }
-//            }
-//        });
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
-                builder.setTitle("Title");
-                builder.setCancelable(true);
-// Set up the input
-                final EditText input = new EditText(MainActivity.this);
-// Specify the type of input expected; this, for example, sets the input as a password, and will mask the text
-                input.setInputType(InputType.TYPE_CLASS_TEXT);
-                builder.setView(input);
+                // creating the EditText widget programatically
+//                final EditText input = new EditText(MainActivity.this);
+//                TableLayout.LayoutParams params = new TableLayout.LayoutParams();
+//                params.setMarginStart(16);
+//                params.setMarginEnd(16);
+//                input.setLayoutParams(params);
 
-// Set up the buttons
-                builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                //get view from layout XML
+                LayoutInflater inflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+                final View searchFieldLayout = inflater.inflate(R.layout.search_box_view,
+                        null, false);
+                final EditText input = (EditText) searchFieldLayout.findViewById(R.id.search_field);
 
-
-                    public void onClick(DialogInterface dialog, int which) {
-                        MovieManager.searchTitles(input.getText().toString(), MainActivity.this, new Runnable() {
+                // create the AlertDialog as final
+                final AlertDialog dialog = new AlertDialog.Builder(MainActivity.this)
+                        .setMessage("Enter a movie title")
+                        .setTitle("Search")
+                        .setView(searchFieldLayout)
+                        .setPositiveButton("OK", new DialogInterface.OnClickListener() {
                             @Override
-                            public void run() {
-                                movies = MovieManager.getMovieList();
-                                adapter.updateMovieList(movies);
-                                System.out.println("Changed");
+                            public void onClick(DialogInterface dialog, int id) {
+                                MovieManager.searchTitles(input.getText().toString(), MainActivity.this, new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        movies = MovieManager.getMovieList();
+                                        adapter.updateMovieList(movies);
+//                                        System.out.println("Changed");
+                                    }
+                                });
                             }
-                        });
-                    }
-                });
-                builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                        })
+                        .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int id) {
+                                dialog.cancel();
+                            }
+                        })
+                        .create();
+
+                // set the focus change listener of the EditText
+                // this part will make the soft keyboard automaticall visible
+                            input.setOnFocusChangeListener(new View.OnFocusChangeListener() {
                     @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        dialog.cancel();
+                    public void onFocusChange(View v, boolean hasFocus) {
+                        if (hasFocus) {
+                            dialog.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_VISIBLE);
+                        }
                     }
                 });
-                builder.show();
+
+                dialog.show();
             }
         });
 
