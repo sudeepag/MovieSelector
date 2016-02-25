@@ -42,6 +42,9 @@ public class MovieManager {
                                 String title = object.getString("title");
                                 int year = object.getInt("year");
                                 String description = object.getString("synopsis");
+                                if (description.equals("")) {
+                                    description = "Description Unavailable";
+                                }
 
                                 JSONObject rating = object.getJSONObject("ratings");
                                 int critics_score = rating.getInt("critics_score");
@@ -120,6 +123,9 @@ public class MovieManager {
                                     String title = object.getString("title");
                                     int year = object.getInt("year");
                                     String description = object.getString("synopsis");
+                                    if (description.equals("")) {
+                                        description = "Description Unavailable";
+                                    }
 
                                     JSONObject rating = object.getJSONObject("ratings");
                                     int critics_score = rating.getInt("critics_score");
@@ -191,6 +197,9 @@ public class MovieManager {
                                     String title = object.getString("title");
                                     int year = object.getInt("year");
                                     String description = object.getString("synopsis");
+                                    if (description.equals("")) {
+                                        description = "Description Unavailable";
+                                    }
 
                                     JSONObject rating = object.getJSONObject("ratings");
                                     int critics_score = rating.getInt("critics_score");
