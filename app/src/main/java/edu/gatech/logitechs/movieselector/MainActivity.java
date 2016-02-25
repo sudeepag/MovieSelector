@@ -69,8 +69,7 @@ public class MainActivity extends AppCompatActivity
                 final EditText input = (EditText) searchFieldLayout.findViewById(R.id.search_field);
                 // create the AlertDialog as final
                 final AlertDialog dialog = new AlertDialog.Builder(MainActivity.this)
-                        .setMessage("Enter a movie title")
-                        .setTitle("Search")
+                        .setTitle("Find Movie")
                         .setView(searchFieldLayout)
                         .setPositiveButton("OK", new DialogInterface.OnClickListener() {
                             @Override
