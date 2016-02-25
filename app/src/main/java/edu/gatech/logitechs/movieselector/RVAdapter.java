@@ -1,5 +1,6 @@
 package edu.gatech.logitechs.movieselector;
 
+import android.graphics.Bitmap;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -55,7 +56,12 @@ public class RVAdapter extends RecyclerView.Adapter<RVAdapter.MovieViewHolder> {
     public void onBindViewHolder(MovieViewHolder MovieViewHolder, int i) {
         MovieViewHolder.movieTitle.setText(movies.get(i).getTitle());
         MovieViewHolder.movieDescription.setText(movies.get(i).getDescription());
-        MovieViewHolder.movieImage.setImageBitmap(movies.get(i).getThumbnail());
+        if (movies.get(i).getThumbnail() != null) {
+            MovieViewHolder.movieImage.setImageBitmap(Bitmap.createScaledBitmap(movies.get(i).getThumbnail(),
+                    (int) (movies.get(i).getThumbnail().getWidth() * 3),
+                    (int) (movies.get(i).getThumbnail().getHeight() * 3),
+                    false));
+        }
     }
 
     @Override
