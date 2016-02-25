@@ -94,7 +94,7 @@ public class MovieManager {
         VolleySingleton.getInstance(context).addToRequestQueue(jsObjRequest);
     }
 
-    public static void searchTitles(String searchTerm, Context context, final Runnable runnable) {
+    public static void searchTitles(String searchTerm, final Context context, final Runnable runnable) {
         JSONObject params = new JSONObject();
         String query = "";
         try {
@@ -136,8 +136,22 @@ public class MovieManager {
                                     }
                                     System.out.println(new Movie(title, year, critics_score,
                                             description, actor1, actor2));
-                                    movieList.add(new Movie(title, year, critics_score,
-                                            description, actor1, actor2));
+                                    final Movie movie = new Movie(title, year, critics_score,
+                                            description, actor1, actor2);
+                                    movieList.add(movie);
+                                    JSONObject posters = object.getJSONObject("posters");
+                                    String url = posters.getString("thumbnail");
+                                    VolleySingleton.getInstance(context).getImageLoader().get(url, new ImageLoader.ImageListener() {
+                                        @Override
+                                        public void onErrorResponse(VolleyError error) {
+
+                                        }
+
+                                        @Override
+                                        public void onResponse(ImageLoader.ImageContainer response, boolean isImmediate) {
+                                            movie.setThumbnail(response.getBitmap());
+                                        }
+                                    });
                                 } catch (JSONException e) {
                                     System.out.println(e.getMessage());
                                 }
@@ -159,7 +173,7 @@ public class MovieManager {
     }
 
 
-    public static void getRecent(Context context, final Runnable runnable) {
+    public static void getRecent(final Context context, final Runnable runnable) {
         String url = "http://api.rottentomatoes.com/api/public/v1.0/lists/movies/in_theaters.json?apikey=yedukp76ffytfuy24zsqk7f5";
         JsonObjectRequest jsObjRequest = new JsonObjectRequest
                 (Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
@@ -193,8 +207,22 @@ public class MovieManager {
                                     }
                                     System.out.println(new Movie(title, year, critics_score,
                                             description, actor1, actor2));
-                                    movieList.add(new Movie(title, year, critics_score,
-                                            description, actor1, actor2));
+                                    final Movie movie = new Movie(title, year, critics_score,
+                                            description, actor1, actor2);
+                                    movieList.add(movie);
+                                    JSONObject posters = object.getJSONObject("posters");
+                                    String url = posters.getString("thumbnail");
+                                    VolleySingleton.getInstance(context).getImageLoader().get(url, new ImageLoader.ImageListener() {
+                                        @Override
+                                        public void onErrorResponse(VolleyError error) {
+
+                                        }
+
+                                        @Override
+                                        public void onResponse(ImageLoader.ImageContainer response, boolean isImmediate) {
+                                            movie.setThumbnail(response.getBitmap());
+                                        }
+                                    });
                                 } catch (JSONException e) {
                                     System.out.println(e.getMessage());
                                 }

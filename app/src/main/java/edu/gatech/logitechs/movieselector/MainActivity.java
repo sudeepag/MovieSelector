@@ -103,6 +103,14 @@ public class MainActivity extends AppCompatActivity
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                MovieManager.searchTitles("friday", MainActivity.this, new Runnable() {
+                    @Override
+                    public void run() {
+                        movies = MovieManager.getMovieList();
+                        adapter.updateMovieList(movies);
+                        System.out.println("Changed");
+                    }
+                });
                 Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
                         .setAction("Action", null).show();
             }
