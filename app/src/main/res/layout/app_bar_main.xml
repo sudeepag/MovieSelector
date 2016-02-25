@@ -19,7 +19,6 @@
             android:background="?attr/colorPrimary"
             app:popupTheme="@style/AppTheme" />
 
-
     </android.support.design.widget.AppBarLayout>
 
 

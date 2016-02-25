@@ -41,37 +41,20 @@ public class MainActivity extends AppCompatActivity
 
     private List<Movie> movies;
 
-    private void initializeData() {
-        movies = new ArrayList<>();
-        movies.add(new Movie("Movie", 2000, 100, "best movie", "bob", "bobert"));
-        movies.add(new Movie("Movie", 2000, 100, "best movie", "bob", "bobert"));
-        movies.add(new Movie("Movie", 2000, 100, "best movie", "bob", "bobert"));
-        movies.add(new Movie("Movie", 2000, 100, "best movie", "bob", "bobert"));
-        movies.add(new Movie("Movie", 2000, 100, "best movie", "bob", "bobert"));
-        movies.add(new Movie("Movie", 2000, 100, "best movie", "bob", "bobert"));
-        movies.add(new Movie("Movie", 2000, 100, "best movie", "bob", "bobert"));
-        movies.add(new Movie("Movie", 2000, 100, "best movie", "bob", "bobert"));
-        movies.add(new Movie("Movie", 2000, 100, "best movie", "bob", "bobert"));
-        movies.add(new Movie("Movie", 2000, 100, "best movie", "bob", "bobert"));
-        movies.add(new Movie("a", 2, 1, "best movie", "bob", "bobert"));
-    }
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+
+        movies = new ArrayList<>();
 
         //Setting up RecyclerView
         RecyclerView rv = (RecyclerView)findViewById(R.id.recycler_view);
         rv.setHasFixedSize(true);
-
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);
         rv.setLayoutManager(layoutManager);
-
-        initializeData();
-        System.out.println("Data initialized");
-
         final RVAdapter adapter = new RVAdapter(movies);
         rv.setAdapter(adapter);
 
@@ -84,25 +67,15 @@ public class MainActivity extends AppCompatActivity
             }
         });
 
-        setSupportActionBar(toolbar);
-
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                // creating the EditText widget programatically
-//                final EditText input = new EditText(MainActivity.this);
-//                TableLayout.LayoutParams params = new TableLayout.LayoutParams();
-//                params.setMarginStart(16);
-//                params.setMarginEnd(16);
-//                input.setLayoutParams(params);
-
                 //get view from layout XML
                 LayoutInflater inflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
                 final View searchFieldLayout = inflater.inflate(R.layout.search_box_view,
                         null, false);
                 final EditText input = (EditText) searchFieldLayout.findViewById(R.id.search_field);
-
                 // create the AlertDialog as final
                 final AlertDialog dialog = new AlertDialog.Builder(MainActivity.this)
                         .setMessage("Enter a movie title")
@@ -116,7 +89,6 @@ public class MainActivity extends AppCompatActivity
                                     public void run() {
                                         movies = MovieManager.getMovieList();
                                         adapter.updateMovieList(movies);
-//                                        System.out.println("Changed");
                                     }
                                 });
                             }
@@ -128,10 +100,9 @@ public class MainActivity extends AppCompatActivity
                             }
                         })
                         .create();
-
                 // set the focus change listener of the EditText
-                // this part will make the soft keyboard automaticall visible
-                            input.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+                // this part will make the soft keyboard automatically visible
+                input.setOnFocusChangeListener(new View.OnFocusChangeListener() {
                     @Override
                     public void onFocusChange(View v, boolean hasFocus) {
                         if (hasFocus) {
@@ -139,7 +110,6 @@ public class MainActivity extends AppCompatActivity
                         }
                     }
                 });
-
                 dialog.show();
             }
         });
@@ -192,8 +162,7 @@ public class MainActivity extends AppCompatActivity
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
 
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
+        if (id == R.id.action_about) {
             return true;
         }
 
@@ -206,21 +175,14 @@ public class MainActivity extends AppCompatActivity
         // Handle navigation view item clicks here.
         int id = item.getItemId();
 
-        if (id == R.id.nav_library) {
-            // Handle the camera action
-        } else if (id == R.id.nav_gallery) {
-
-        } else if (id == R.id.nav_slideshow) {
-
-        } else if (id == R.id.nav_manage) {
+        if (id == R.id.nav_manage) {
             Intent myIntent = new Intent(MainActivity.this, UserProfile.class);
             startActivity(myIntent);
-        } else if (id == R.id.nav_share) {
-
         } else if (id == R.id.nav_log_out) {
             logoutAction();
         }
 
+        //Close Drawer
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
