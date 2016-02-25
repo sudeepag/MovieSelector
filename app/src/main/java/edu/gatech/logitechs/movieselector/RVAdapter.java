@@ -15,15 +15,15 @@ public class RVAdapter extends RecyclerView.Adapter<RVAdapter.PersonViewHolder> 
     public static class PersonViewHolder extends RecyclerView.ViewHolder {
 
         CardView cv;
-        TextView personName;
-        TextView personAge;
+        TextView movieTitle;
+        TextView movieYear;
         ImageView personPhoto;
 
         PersonViewHolder(View itemView) {
             super(itemView);
             cv = (CardView)itemView.findViewById(R.id.cv);
-            personName = (TextView)itemView.findViewById(R.id.person_name);
-            personAge = (TextView)itemView.findViewById(R.id.person_age);
+            movieTitle = (TextView)itemView.findViewById(R.id.person_name);
+            movieYear = (TextView)itemView.findViewById(R.id.person_age);
             personPhoto = (ImageView)itemView.findViewById(R.id.person_photo);
         }
     }
