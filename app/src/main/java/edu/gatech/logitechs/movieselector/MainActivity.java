@@ -37,6 +37,15 @@ public class MainActivity extends AppCompatActivity
     private void initializeData() {
         movies = new ArrayList<>();
         movies.add(new Movie("Movie", 2000, 100, "best movie", "bob", "bobert"));
+        movies.add(new Movie("Movie", 2000, 100, "best movie", "bob", "bobert"));
+        movies.add(new Movie("Movie", 2000, 100, "best movie", "bob", "bobert"));
+        movies.add(new Movie("Movie", 2000, 100, "best movie", "bob", "bobert"));
+        movies.add(new Movie("Movie", 2000, 100, "best movie", "bob", "bobert"));
+        movies.add(new Movie("Movie", 2000, 100, "best movie", "bob", "bobert"));
+        movies.add(new Movie("Movie", 2000, 100, "best movie", "bob", "bobert"));
+        movies.add(new Movie("Movie", 2000, 100, "best movie", "bob", "bobert"));
+        movies.add(new Movie("Movie", 2000, 100, "best movie", "bob", "bobert"));
+        movies.add(new Movie("Movie", 2000, 100, "best movie", "bob", "bobert"));
         movies.add(new Movie("a", 2, 1, "best movie", "bob", "bobert"));
     }
 
@@ -46,38 +55,49 @@ public class MainActivity extends AppCompatActivity
         setContentView(R.layout.activity_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
 
+        //Setting up RecyclerView
         RecyclerView rv = (RecyclerView)findViewById(R.id.recycler_view);
         rv.setHasFixedSize(true);
 
-        LinearLayoutManager llm = new LinearLayoutManager(this);
-        rv.setLayoutManager(llm);
+        LinearLayoutManager layoutManager = new LinearLayoutManager(this);
+        rv.setLayoutManager(layoutManager);
 
-        setSupportActionBar(toolbar);
+        initializeData();
+        System.out.println("Data initialized");
+
+        final RVAdapter adapter = new RVAdapter(movies);
+        rv.setAdapter(adapter);
+
         MovieManager.getDVD(this, new Runnable() {
             @Override
             public void run() {
-                for (Movie m : MovieManager.getMovieList()) {
-                    //System.out.println(m);
-                }
-            }
-        });
-        MovieManager.searchTitles("Forrest Gump", this, new Runnable() {
-            @Override
-            public void run() {
-                for (Movie m : MovieManager.getMovieList()) {
-                    //System.out.println(m);
-                }
+                movies = MovieManager.getMovieList();
+                adapter.updateMovieList(movies);
+                System.out.println("Changed");
             }
         });
 
-        MovieManager.getRecent(this, new Runnable() {
-            @Override
-            public void run() {
-                for (Movie m : MovieManager.getMovieList()) {
-                    //System.out.println(m);
-                }
-            }
-        });
+
+
+        setSupportActionBar(toolbar);
+
+//        MovieManager.searchTitles("Forrest Gump", this, new Runnable() {
+//            @Override
+//            public void run() {
+//                for (Movie m : MovieManager.getMovieList()) {
+//                    //System.out.println(m);
+//                }
+//            }
+//        });
+//
+//        MovieManager.getRecent(this, new Runnable() {
+//            @Override
+//            public void run() {
+//                for (Movie m : MovieManager.getMovieList()) {
+//                    //System.out.println(m);
+//                }
+//            }
+//        });
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {

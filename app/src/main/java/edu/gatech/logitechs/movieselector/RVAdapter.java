@@ -10,21 +10,21 @@ import android.widget.TextView;
 
 import java.util.List;
 
-public class RVAdapter extends RecyclerView.Adapter<RVAdapter.PersonViewHolder> {
+public class RVAdapter extends RecyclerView.Adapter<RVAdapter.MovieViewHolder> {
 
-    public static class PersonViewHolder extends RecyclerView.ViewHolder {
+    public static class MovieViewHolder extends RecyclerView.ViewHolder {
 
         CardView cv;
         TextView movieTitle;
-        TextView movieYear;
-        ImageView personPhoto;
+        TextView movieDescription;
+        ImageView movieImage;
 
-        PersonViewHolder(View itemView) {
+        MovieViewHolder(View itemView) {
             super(itemView);
             cv = (CardView)itemView.findViewById(R.id.cv);
-            movieTitle = (TextView)itemView.findViewById(R.id.person_name);
-            movieYear = (TextView)itemView.findViewById(R.id.person_age);
-            personPhoto = (ImageView)itemView.findViewById(R.id.person_photo);
+            movieTitle = (TextView)itemView.findViewById(R.id.movie_title);
+            movieDescription = (TextView)itemView.findViewById(R.id.movie_description);
+            movieImage = (ImageView)itemView.findViewById(R.id.movie_image_holder);
         }
     }
 
@@ -34,24 +34,28 @@ public class RVAdapter extends RecyclerView.Adapter<RVAdapter.PersonViewHolder> 
         this.movies = movies;
     }
 
+    public void updateMovieList(List<Movie> newMovies) {
+        movies = newMovies;
+        this.notifyDataSetChanged();
+    }
+
     @Override
     public void onAttachedToRecyclerView(RecyclerView recyclerView) {
         super.onAttachedToRecyclerView(recyclerView);
     }
 
     @Override
-    public PersonViewHolder onCreateViewHolder(ViewGroup viewGroup, int i) {
-//        View v = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.item, viewGroup, false);
-//        PersonViewHolder pvh = new PersonViewHolder(v);
-//        return pvh;
-        return null;
+    public MovieViewHolder onCreateViewHolder(ViewGroup viewGroup, int i) {
+        View v = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.card_view_row, viewGroup, false);
+        MovieViewHolder pvh = new MovieViewHolder(v);
+        return pvh;
     }
 
     @Override
-    public void onBindViewHolder(PersonViewHolder personViewHolder, int i) {
-//        personViewHolder.personName.setText(movies.get(i).name);
-//        personViewHolder.personAge.setText(movies.get(i).age);
-//        personViewHolder.personPhoto.setImageResource(movies.get(i).photoId);
+    public void onBindViewHolder(MovieViewHolder MovieViewHolder, int i) {
+        MovieViewHolder.movieTitle.setText(movies.get(i).getTitle());
+        MovieViewHolder.movieDescription.setText(movies.get(i).getDescription());
+        MovieViewHolder.movieImage.setImageResource(R.mipmap.movie_placeholder);
     }
 
     @Override

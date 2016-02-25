@@ -28,6 +28,14 @@ public class Movie {
         this.actor2 = actor2;
     }
 
+    public String getTitle() {
+        return title;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
 
     @Override
     public String toString() {
