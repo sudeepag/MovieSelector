@@ -245,6 +245,9 @@ public class MovieManager {
     }
 
     public static List<Movie> getMovieList() {
+        if (movieList.size() == 0) {
+            movieList.add(new Movie("No Movies Found", 0, 0));
+        }
         return movieList;
     }
 

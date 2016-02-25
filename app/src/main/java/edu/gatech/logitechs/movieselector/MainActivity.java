@@ -107,7 +107,7 @@ public class MainActivity extends AppCompatActivity
             public void onClick(View view) {
                 AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
                 builder.setTitle("Title");
-
+                builder.setCancelable(true);
 // Set up the input
                 final EditText input = new EditText(MainActivity.this);
 // Specify the type of input expected; this, for example, sets the input as a password, and will mask the text
@@ -116,7 +116,8 @@ public class MainActivity extends AppCompatActivity
 
 // Set up the buttons
                 builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
-                    @Override
+
+
                     public void onClick(DialogInterface dialog, int which) {
                         MovieManager.searchTitles(input.getText().toString(), MainActivity.this, new Runnable() {
                             @Override
