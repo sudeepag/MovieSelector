@@ -12,11 +12,16 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -27,11 +32,26 @@ public class MainActivity extends AppCompatActivity
     TextView navHeader;
     TextView navHeaderEmail;
 
+    private List<Movie> movies;
+
+    private void initializeData() {
+        movies = new ArrayList<>();
+        movies.add(new Movie("Movie", 2000, 100, "best movie", "bob", "bobert"));
+        movies.add(new Movie("a", 2, 1, "best movie", "bob", "bobert"));
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+
+        RecyclerView rv = (RecyclerView)findViewById(R.id.recycler_view);
+        rv.setHasFixedSize(true);
+
+        LinearLayoutManager llm = new LinearLayoutManager(this);
+        rv.setLayoutManager(llm);
+
         setSupportActionBar(toolbar);
         MovieManager.getDVD(this, new Runnable() {
             @Override
