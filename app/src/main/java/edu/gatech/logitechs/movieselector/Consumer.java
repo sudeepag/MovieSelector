@@ -5,5 +5,4 @@ package edu.gatech.logitechs.movieselector;
  */
 public interface Consumer {
     public abstract void consume(String input);
-
 }

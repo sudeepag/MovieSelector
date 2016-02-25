@@ -47,7 +47,7 @@ import android.view.View.OnTouchListener;
 import static android.Manifest.permission.READ_CONTACTS;
 
 /**
- * A login screen that offers login via email/password.
+ * Müveé Login Screen
  */
 public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<Cursor> {
 
@@ -75,18 +75,19 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
-        //custom fonts for welcome text
+        //Linking UI to Code
+
+        //Custom fonts for welcome text
         Typeface tf = Typeface.createFromAsset(getAssets(), "fonts/akaDora.ttf");
         TextView tv = (TextView) findViewById(R.id.welcome_text);
         tv.setTypeface(tf);
 
         final TextView linkSignup = (TextView) findViewById(R.id.signup_link);
+        //Change the text color when the user touches it
         linkSignup.setOnTouchListener(new OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
-                // change the background color
                 switch (event.getAction() & MotionEvent.ACTION_MASK) {
-
                     case MotionEvent.ACTION_DOWN:
                         linkSignup.setTextColor(Color.rgb(189, 189, 189));
                         break;
@@ -97,7 +98,6 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
                 return false;
             }
         });
-
         linkSignup.setOnClickListener(new View.OnClickListener() {
 
             @Override
@@ -109,12 +109,12 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
             }
         });
 
+        //Set up Firebase
+        Firebase.setAndroidContext(this);
+
         // Set up the login form.
         mEmailView = (AutoCompleteTextView) findViewById(R.id.email);
         populateAutoComplete();
-
-        //Set up firebase
-        Firebase.setAndroidContext(this);
         mPasswordView = (EditText) findViewById(R.id.password);
         mPasswordView.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             @Override
@@ -126,7 +126,6 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
                 return false;
             }
         });
-
         Button mEmailSignInButton = (Button) findViewById(R.id.email_sign_in_button);
         mEmailSignInButton.setOnClickListener(new OnClickListener() {
             @Override
@@ -134,16 +133,11 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
                 attemptLogin();
             }
         });
-
         mLoginFormView = findViewById(R.id.login_form);
         mProgressView = findViewById(R.id.login_progress);
 
+        //Code Initializers
         isLoading = false;
-    }
-
-    public void transition() {
-        Intent myIntent = new Intent(this,MainActivity.class);
-        this.startActivity(myIntent);
     }
 
     @Override
@@ -395,6 +389,11 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
 
         int ADDRESS = 0;
         int IS_PRIMARY = 1;
+    }
+
+    public void transition() {
+        Intent myIntent = new Intent(this,MainActivity.class);
+        this.startActivity(myIntent);
     }
 
     /**

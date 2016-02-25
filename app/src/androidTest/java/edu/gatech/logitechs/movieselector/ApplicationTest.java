@@ -13,11 +13,10 @@ public class ApplicationTest extends ApplicationTestCase<Application> {
         super(Application.class);
     }
 
-    @Test()
-    public void firebaseeTest() {
-        UserManager mngr = new UserManager();
-        mngr.addUser(new User("robert@email.com", "12345"));
-        assertTrue(mngr.authenticateUser("robert@email.com", "12345"));
-    }
-
+//    @Test()
+//    public void firebaseeTest() {
+//        UserManager mngr = new UserManager();
+//        mngr.addUser(new User("robert@email.com", "12345"));
+//        assertTrue(mngr.authenticateUser("robert@email.com", "12345"));
+//    }
 }
