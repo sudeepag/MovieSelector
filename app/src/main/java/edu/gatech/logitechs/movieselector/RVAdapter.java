@@ -55,7 +55,7 @@ public class RVAdapter extends RecyclerView.Adapter<RVAdapter.MovieViewHolder> {
     public void onBindViewHolder(MovieViewHolder MovieViewHolder, int i) {
         MovieViewHolder.movieTitle.setText(movies.get(i).getTitle());
         MovieViewHolder.movieDescription.setText(movies.get(i).getDescription());
-        MovieViewHolder.movieImage.setImageResource(R.mipmap.movie_placeholder);
+        MovieViewHolder.movieImage.setImageBitmap(movies.get(i).getThumbnail());
     }
 
     @Override

@@ -1,5 +1,7 @@
 package edu.gatech.logitechs.movieselector;
 
+import android.graphics.Bitmap;
+
 /**
  * Created by akhilesh on 2/23/16.
  */
@@ -10,6 +12,7 @@ public class Movie {
     private String description;
     private String actor1;
     private String actor2;
+    private Bitmap thumbnail;
 
     public Movie() {}
 
@@ -40,6 +43,14 @@ public class Movie {
     @Override
     public String toString() {
         return "Title: " + title + "year: " + year + "score: " + cScore + " with " + actor1 + " and " + actor2;
+    }
+
+    public Bitmap getThumbnail() {
+        return thumbnail;
+    }
+
+    public void setThumbnail(Bitmap thumbnail) {
+        this.thumbnail = thumbnail;
     }
 
 

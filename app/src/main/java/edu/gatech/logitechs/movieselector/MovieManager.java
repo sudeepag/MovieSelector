@@ -4,10 +4,12 @@ package edu.gatech.logitechs.movieselector;
  * Created by akhilesh on 2/23/16.
  */
 import android.content.Context;
+import android.graphics.Bitmap;
 
 import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
+import com.android.volley.toolbox.ImageLoader;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 
@@ -23,7 +25,7 @@ import java.util.List;
 
 public class MovieManager {
     private static List<Movie> movieList;
-    public static void getDVD(Context context, final Runnable runnable) {
+    public static void getDVD(final Context context, final Runnable runnable) {
         String url = "http://api.rottentomatoes.com/api/public/v1.0/lists/dvds/new_releases.json?apikey=yedukp76ffytfuy24zsqk7f5";
         JsonObjectRequest jsObjRequest = new JsonObjectRequest
             (Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
@@ -54,10 +56,24 @@ public class MovieManager {
                                 } else if (cast.length() >= 1) {
                                     actor1 = cast.getJSONObject(0).getString("name");
                                 }
-                                System.out.println(new Movie (title, year, critics_score,
+                                System.out.println(new Movie(title, year, critics_score,
                                         description, actor1, actor2));
-                                movieList.add(new Movie(title, year, critics_score,
-                                        description, actor1, actor2));
+                                final Movie movie = new Movie(title, year, critics_score,
+                                        description, actor1, actor2);
+                                movieList.add(movie);
+                                JSONObject posters = object.getJSONObject("posters");
+                                String url = posters.getString("thumbnail");
+                                VolleySingleton.getInstance(context).getImageLoader().get(url, new ImageLoader.ImageListener() {
+                                    @Override
+                                    public void onErrorResponse(VolleyError error) {
+
+                                    }
+
+                                    @Override
+                                    public void onResponse(ImageLoader.ImageContainer response, boolean isImmediate) {
+                                        movie.setThumbnail(response.getBitmap());
+                                    }
+                                });
                             } catch (JSONException e) {
                                 System.out.println(e.getMessage());
                             }
