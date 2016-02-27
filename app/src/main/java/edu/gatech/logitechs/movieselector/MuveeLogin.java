@@ -35,7 +35,7 @@ import android.view.View.OnTouchListener;
 /**
  * Müveé Login Screen
  */
-public class LoginActivity extends AppCompatActivity {
+public class MuveeLogin extends AppCompatActivity {
 
     /**
      * Keep track of the login task to ensure we can cancel it if requested.
@@ -84,9 +84,9 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 // Start the Signup activity
-                Intent intent = new Intent(getApplicationContext(), UserRegistration.class);
+                Intent intent = new Intent(getApplicationContext(), MuveeRegistration.class);
                 //startActivityForResult(intent, REQUEST_SIGNUP);
-                LoginActivity.this.startActivity(intent);
+                MuveeLogin.this.startActivity(intent);
             }
         });
 
@@ -126,7 +126,7 @@ public class LoginActivity extends AppCompatActivity {
             //system loading pressed back button -> do cancel async task action;
             mAuthTask.cancel(true);
         } else {
-            new AlertDialog.Builder(LoginActivity.this)
+            new AlertDialog.Builder(MuveeLogin.this)
                     .setTitle(R.string.app_name)
                     .setMessage(R.string.prompt_exit)
                     .setPositiveButton("Yes",
@@ -210,7 +210,7 @@ public class LoginActivity extends AppCompatActivity {
 
             //start authentication
             UserManager manager = new UserManager();
-            manager.authenticateUser(email, password, LoginActivity.this, new Runnable() {
+            manager.authenticateUser(email, password, MuveeLogin.this, new Runnable() {
 
                 @Override
                 public void run() {
@@ -282,7 +282,7 @@ public class LoginActivity extends AppCompatActivity {
      * Transition to the main Movies page after login
      */
     public void transition() {
-        Intent myIntent = new Intent(this,MainActivity.class);
+        Intent myIntent = new Intent(this,MuveeMainActivity.class);
         this.startActivity(myIntent);
     }
 
@@ -322,8 +322,8 @@ public class LoginActivity extends AppCompatActivity {
 
             if (success) {
                 finish();
-                Intent myIntent = new Intent(LoginActivity.this,MainActivity.class);
-                LoginActivity.this.startActivity(myIntent);
+                Intent myIntent = new Intent(MuveeLogin.this,MuveeMainActivity.class);
+                MuveeLogin.this.startActivity(myIntent);
             } else {
                 mPasswordView.setError(getString(R.string.error_incorrect_password));
                 mPasswordView.requestFocus();

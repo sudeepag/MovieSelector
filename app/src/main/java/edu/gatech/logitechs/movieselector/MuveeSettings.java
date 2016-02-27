@@ -34,7 +34,7 @@ import java.util.Map;
  * href="http://developer.android.com/guide/topics/ui/settings.html">Settings
  * API Guide</a> for more information on developing a Settings UI.
  */
-public class UserSettings extends AppCompatPreferenceActivity {
+public class MuveeSettings extends AppCompatPreferenceActivity {
 
     private static UserManager manager;
     private static User currUser;
@@ -206,7 +206,7 @@ public class UserSettings extends AppCompatPreferenceActivity {
             intToMajor.put(i, majors[i]);
         }
 
-        sp = PreferenceManager.getDefaultSharedPreferences(UserSettings.this);
+        sp = PreferenceManager.getDefaultSharedPreferences(MuveeSettings.this);
         editor = sp.edit();
         editor.putString("change_email", newEmail == null ? currUser.getEmail() : newEmail);
         editor.putString("change_password", newPass == null ? currUser.getPassword() : newPass);
@@ -295,7 +295,7 @@ public class UserSettings extends AppCompatPreferenceActivity {
          public boolean onOptionsItemSelected(MenuItem item) {
             int id = item.getItemId();
             if (id == android.R.id.home) {
-                startActivity(new Intent(getActivity(), UserSettings.class));
+                startActivity(new Intent(getActivity(), MuveeSettings.class));
                 return true;
             }
             return super.onOptionsItemSelected(item);

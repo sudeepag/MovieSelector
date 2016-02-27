@@ -15,7 +15,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name=".LoginActivity"
+            android:name=".MuveeLogin"
             android:label="@string/app_name"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.Login">
@@ -25,39 +25,39 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".MainActivity"
+            android:name=".MuveeMainActivity"
             android:label="@string/app_name"
-            android:parentActivityName=".LoginActivity"
+            android:parentActivityName=".MuveeLogin"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="edu.gatech.logitechs.movieselector.LoginActivity" />
+                android:value=".MuveeLogin" />
         </activity>
         <activity
-            android:name=".UserRegistration"
+            android:name=".MuveeRegistration"
             android:label="@string/app_name"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.Registration" />
         <activity
-            android:name=".UserSettings"
+            android:name=".MuveeSettings"
             android:label="Settings"
-            android:parentActivityName=".MainActivity"
+            android:parentActivityName=".MuveeMainActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.Preference">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="edu.gatech.logitechs.movieselector.MainActivity" />
+                android:value=".MuveeMainActivity" />
         </activity>
         <activity
-            android:name=".MovieDetails"
+            android:name=".MuveeDetails"
             android:label="Müveé Details"
-            android:parentActivityName=".MainActivity"
+            android:parentActivityName=".MuveeMainActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.MovieDetails">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="edu.gatech.logitechs.movieselector.MainActivity" />
+                android:value=".MuveeMainActivity" />
         </activity>
     </application>
 

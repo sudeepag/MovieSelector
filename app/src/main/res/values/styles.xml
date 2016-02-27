@@ -44,7 +44,7 @@
     </style>
 
     <!-- Movie Details theme-->
-    <style name="AppTheme.MovieDetails" parent="Theme.AppCompat.Light.NoActionBar">
+    <style name="AppTheme.MovieDetails" parent="Theme.AppCompat.Light">
         <!-- Customize your theme here. -->
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
@@ -53,8 +53,8 @@
 
     <!-- RatingBar theme-->
     <style name="RatingBar" parent="Theme.AppCompat.Light">
-        <item name="colorControlNormal">#009688</item>
-        <item name="colorControlActivated">#FFC107</item>
+        <item name="colorControlNormal">#FFC107</item>
+        <item name="colorControlActivated">#009688</item>
     </style>
 
     <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />

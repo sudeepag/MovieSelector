@@ -7,7 +7,7 @@
     android:fitsSystemWindows="true"
     android:background="#e5e5e5"
     android:id="@+id/main_layout"
-    tools:context="edu.gatech.logitechs.movieselector.MainActivity">
+    tools:context=".MuveeMainActivity">
 
     <android.support.design.widget.AppBarLayout
         android:layout_width="match_parent"

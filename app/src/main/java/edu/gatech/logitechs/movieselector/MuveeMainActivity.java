@@ -29,7 +29,7 @@ import android.widget.TextView;
 import java.util.ArrayList;
 import java.util.List;
 
-public class MainActivity extends AppCompatActivity
+public class MuveeMainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
     UserManager manager;
@@ -80,13 +80,13 @@ public class MainActivity extends AppCompatActivity
 //                        null, false);
 //                final EditText input = (EditText) searchFieldLayout.findViewById(R.id.search_field);
 //                // create the AlertDialog as final
-//                final AlertDialog dialog = new AlertDialog.Builder(MainActivity.this)
+//                final AlertDialog dialog = new AlertDialog.Builder(MuveeMainActivity.this)
 //                        .setTitle("Find Movie")
 //                        .setView(searchFieldLayout)
 //                        .setPositiveButton("OK", new DialogInterface.OnClickListener() {
 //                            @Override
 //                            public void onClick(DialogInterface dialog, int id) {
-//                                MovieManager.searchTitles(input.getText().toString(), MainActivity.this, new Runnable() {
+//                                MovieManager.searchTitles(input.getText().toString(), MuveeMainActivity.this, new Runnable() {
 //                                    @Override
 //                                    public void run() {
 //                                        movies = MovieManager.getMovieList();
@@ -134,7 +134,7 @@ public class MainActivity extends AppCompatActivity
         public boolean onQueryTextSubmit(String query) {
             MenuItemCompat.collapseActionView(searchMenuItem);
 //            rvDisappear();
-            MovieManager.searchTitles(query, MainActivity.this, new Runnable() {
+            MovieManager.searchTitles(query, MuveeMainActivity.this, new Runnable() {
                 @Override
                 public void run() {
                     movies = MovieManager.getMovieList();
@@ -202,7 +202,7 @@ public class MainActivity extends AppCompatActivity
                         .setAction("MORE INFO", new View.OnClickListener() {
                             @Override
                             public void onClick(View view) {
-                                AlertDialog dialog = new AlertDialog.Builder(MainActivity.this)
+                                AlertDialog dialog = new AlertDialog.Builder(MuveeMainActivity.this)
                                         .setTitle("About us")
                                         .setView(aboutDialogLayout)
                                         .setPositiveButton("THANKS", new DialogInterface.OnClickListener() {
@@ -230,9 +230,9 @@ public class MainActivity extends AppCompatActivity
         } else if (id == R.id.nav_new_release) {
             getRecent();
         } else if (id == R.id.nav_manage) {
-            Intent myIntent = new Intent(MainActivity.this, UserSettings.class);
+            Intent myIntent = new Intent(MuveeMainActivity.this, MuveeSettings.class);
             //DO not show headers when loading preference
-            myIntent.putExtra(PreferenceActivity.EXTRA_SHOW_FRAGMENT, UserSettings.class);
+            myIntent.putExtra(PreferenceActivity.EXTRA_SHOW_FRAGMENT, MuveeSettings.class);
             myIntent.putExtra(PreferenceActivity.EXTRA_NO_HEADERS, true);
             startActivity(myIntent);
         } else if (id == R.id.nav_log_out) {
@@ -262,7 +262,7 @@ public class MainActivity extends AppCompatActivity
 
     private void getRecent() {
         rvDisappear();
-        MovieManager.getRecent(MainActivity.this, new Runnable() {
+        MovieManager.getRecent(MuveeMainActivity.this, new Runnable() {
             @Override
             public void run() {
                 movies = MovieManager.getMovieList();
@@ -287,7 +287,7 @@ public class MainActivity extends AppCompatActivity
     }
 
     private void logoutAction() {
-        new AlertDialog.Builder(MainActivity.this)
+        new AlertDialog.Builder(MuveeMainActivity.this)
                 .setTitle(R.string.app_name)
                 .setMessage(R.string.prompt_logout)
         .setPositiveButton("Yes",
@@ -302,7 +302,7 @@ public class MainActivity extends AppCompatActivity
 //                        user = null;
 //                        user = UserManager.getCurrentUser();
 
-                        Intent myIntent = new Intent(MainActivity.this, LoginActivity.class);
+                        Intent myIntent = new Intent(MuveeMainActivity.this, MuveeLogin.class);
                         myIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);// clear back stack
                         startActivity(myIntent);
                         finish();

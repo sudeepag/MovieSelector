@@ -3,7 +3,6 @@ package edu.gatech.logitechs.movieselector;
 /**
  * Created by matth_000 on 2/7/2016.
  */
-import android.content.Context;
 
 import com.firebase.client.AuthData;
 import com.firebase.client.ChildEventListener;
@@ -12,7 +11,6 @@ import com.firebase.client.Firebase;
 import com.firebase.client.FirebaseError;
 import com.firebase.client.ValueEventListener;
 
-import java.util.EventListener;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -143,7 +141,7 @@ public class UserManager {
         });
     }
 
-    public void addUser(final User user, final UserRegistration context, final Runnable runnable) {
+    public void addUser(final User user, final MuveeRegistration context, final Runnable runnable) {
         String newEmail = user.getEmail();
 
         Firebase userRef = ref.child("User");
@@ -189,7 +187,7 @@ public class UserManager {
      *
      * @return true if the input email and password match, false otherwise
      */
-    public void authenticateUser(String email, String pass, final LoginActivity context, final Runnable runnable) {
+    public void authenticateUser(String email, String pass, final MuveeLogin context, final Runnable runnable) {
         Firebase userRef = ref.child("User");
         userRef.authWithPassword(email, pass, new Firebase.AuthResultHandler() {
             @Override

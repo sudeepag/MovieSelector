@@ -25,7 +25,7 @@ import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
 
-public class UserRegistration extends AppCompatActivity{
+public class MuveeRegistration extends AppCompatActivity{
 
     private AutoCompleteTextView mEmailView;
     private EditText mPasswordView;
@@ -88,7 +88,7 @@ public class UserRegistration extends AppCompatActivity{
             @Override
             public void onClick(View v) {
                 // Start the Signup activity
-                Intent intent = new Intent(UserRegistration.this, LoginActivity.class);
+                Intent intent = new Intent(MuveeRegistration.this, MuveeLogin.class);
                 intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 startActivity(intent);
                 finish();
@@ -206,10 +206,10 @@ public class UserRegistration extends AppCompatActivity{
 
             //start authentication
             UserManager manager = new UserManager();
-            manager.addUser(new User(email, password, major, description), UserRegistration.this, new Runnable() {
+            manager.addUser(new User(email, password, major, description), MuveeRegistration.this, new Runnable() {
                 @Override
                 public void run() {
-                    new AlertDialog.Builder(UserRegistration.this)
+                    new AlertDialog.Builder(MuveeRegistration.this)
                             .setTitle(R.string.app_name)
                             .setMessage(R.string.prompt_registration_error)
                             .setPositiveButton("Okay",
@@ -278,7 +278,7 @@ public class UserRegistration extends AppCompatActivity{
     }
 
     public void transition() {
-        Intent myIntent = new Intent(this,MainActivity.class);
+        Intent myIntent = new Intent(this,MuveeMainActivity.class);
         this.startActivity(myIntent);
     }
 }
