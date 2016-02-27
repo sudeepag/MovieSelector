@@ -1,11 +1,12 @@
 <preference-headers xmlns:android="http://schemas.android.com/apk/res/android">
     <!-- These settings headers are only used on tablets. -->
-
     <header
-        android:icon="@null" />
+        android:icon="@drawable/ic_info"
+        android:title="General"
+        />
     <header
         android:fragment="edu.gatech.logitechs.movieselector.UserProfile$EditProfilePreferenceFragment"
-        android:icon="@drawable/ic_menu_face"
-        android:title="@string/pref_header_edit_profile" />
+        android:icon="@drawable/ic_menu_profile"
+        android:title="Account" />
 
 </preference-headers>

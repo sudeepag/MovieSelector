@@ -5,6 +5,8 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.preference.Preference;
+import android.preference.PreferenceActivity;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -22,6 +24,7 @@ import android.view.View;
 import android.view.WindowManager;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.preference.PreferenceFragment;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -171,6 +174,9 @@ public class MainActivity extends AppCompatActivity
 
         if (id == R.id.nav_manage) {
             Intent myIntent = new Intent(MainActivity.this, UserProfile.class);
+            //DO not show headers when loading preference
+            myIntent.putExtra(PreferenceActivity.EXTRA_SHOW_FRAGMENT, UserProfile.class);
+            myIntent.putExtra(PreferenceActivity.EXTRA_NO_HEADERS, true);
             startActivity(myIntent);
         } else if (id == R.id.nav_log_out) {
             logoutAction();

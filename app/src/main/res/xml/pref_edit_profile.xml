@@ -1,12 +1,4 @@
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
-
-    <!--<SwitchPreference-->
-        <!--android:defaultValue="true"-->
-        <!--android:key="example_switch"-->
-        <!--android:summary="@string/pref_description_social_recommendations"-->
-        <!--android:title="@string/pref_title_social_recommendations" />-->
-    <Preference
-        android:icon="@null"/>
     <!-- NOTE: EditTextPreference accepts EditText attributes. -->
     <!-- NOTE: EditTextPreference's summary should be set to its value by the activity code. -->
     <EditTextPreference
@@ -18,7 +10,6 @@
         android:selectAllOnFocus="true"
         android:singleLine="true"
         android:title="@string/pref_title_edit_email" />
-
     <EditTextPreference
         android:capitalize="none"
         android:id="@+id/edit_psw"
@@ -41,7 +32,6 @@
         android:negativeButtonText="@null"
         android:positiveButtonText="@null"
         android:title="@string/pref_title_change_major" />
-
     <EditTextPreference
         android:capitalize="words"
         android:defaultValue="@string/pref_default_display_name"

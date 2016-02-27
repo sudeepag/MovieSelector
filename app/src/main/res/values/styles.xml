@@ -4,17 +4,35 @@
     <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
         <!-- Customize your theme here. -->
         <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryLight</item>
+        <item name="colorAccent">@color/colorAccent</item>
+        <item name="android:windowTranslucentStatus">true</item>
+    </style>
+
+    <!-- Login theme -->
+    <style name="AppThemeLogin" parent="Theme.AppCompat.Light.NoActionBar">
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
-
         <!-- TextLayout Colors -->
         <item name="android:textColorHint">#fff</item>
         <item name="colorControlNormal">#fff</item>
         <item name="colorControlActivated">#FFC107</item>
         <item name="colorControlHighlight">#fff</item>
+    </style>
 
-        <item name="android:windowTranslucentStatus">true</item>
-
+    <!-- Registration theme -->
+    <style name="AppThemeRegistration" parent="Theme.AppCompat.Light.NoActionBar">
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">@color/colorAlternate</item>
+        <item name="colorPrimaryDark">@color/colorAlternateDark</item>
+        <item name="colorAccent">@color/colorAccent</item>
+        <!-- TextLayout Colors -->
+        <item name="android:textColorHint">#fff</item>
+        <item name="colorControlNormal">#fff</item>
+        <item name="colorControlActivated">#FFC107</item>
+        <item name="colorControlHighlight">#fff</item>
     </style>
 
     <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
