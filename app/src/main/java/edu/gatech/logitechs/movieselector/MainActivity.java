@@ -280,13 +280,13 @@ public class MainActivity extends AppCompatActivity
 
     private void rvAppear() {
         AlphaAnimation anim = new AlphaAnimation(0.0f, 1.0f);
-        anim.setDuration(650);
+        anim.setDuration(700);
         rv.startAnimation(anim);
     }
 
     private void rvDisappear() {
         AlphaAnimation anim = new AlphaAnimation(1.0f, 0.0f);
-        anim.setDuration(800);
+        anim.setDuration(700);
         rv.startAnimation(anim);
     }
 
