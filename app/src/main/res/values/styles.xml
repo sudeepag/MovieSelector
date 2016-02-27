@@ -44,7 +44,7 @@
     </style>
 
     <!-- Movie Details theme-->
-    <style name="AppTheme.MovieDetails" parent="Theme.AppCompat.Light">
+    <style name="AppTheme.MovieDetails" parent="Theme.AppCompat.Light.NoActionBar">
         <!-- Customize your theme here. -->
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
