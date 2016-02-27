@@ -11,7 +11,7 @@
     </style>
 
     <!-- Login theme -->
-    <style name="AppThemeLogin" parent="Theme.AppCompat.Light.NoActionBar">
+    <style name="AppTheme.Login" parent="Theme.AppCompat.Light.NoActionBar">
         <!-- Customize your theme here. -->
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
@@ -19,12 +19,12 @@
         <!-- TextLayout Colors -->
         <item name="android:textColorHint">#fff</item>
         <item name="colorControlNormal">#fff</item>
-        <item name="colorControlActivated">#FFC107</item>
+        <item name="colorControlActivated">#ffc107</item>
         <item name="colorControlHighlight">#fff</item>
     </style>
 
     <!-- Registration theme -->
-    <style name="AppThemeRegistration" parent="Theme.AppCompat.Light.NoActionBar">
+    <style name="AppTheme.Registration" parent="Theme.AppCompat.Light.NoActionBar">
         <!-- Customize your theme here. -->
         <item name="colorPrimary">@color/colorAlternate</item>
         <item name="colorPrimaryDark">@color/colorAlternateDark</item>
@@ -32,8 +32,29 @@
         <!-- TextLayout Colors -->
         <item name="android:textColorHint">#fff</item>
         <item name="colorControlNormal">#fff</item>
-        <item name="colorControlActivated">#FFC107</item>
+        <item name="colorControlActivated">#ffc107</item>
         <item name="colorControlHighlight">#fff</item>
+    </style>
+
+    <!-- Preference theme-->
+    <style name="AppTheme.Preference" parent="Theme.AppCompat.Light.DarkActionBar">
+        <item name="colorPrimary">#795548</item>
+        <item name="colorPrimaryDark">#5D4037</item>
+        <item name="colorAccent">#009688</item>
+    </style>
+
+    <!-- Movie Details theme-->
+    <style name="AppTheme.MovieDetails" parent="Theme.AppCompat.Light.NoActionBar">
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorAccent</item>
+    </style>
+
+    <!-- RatingBar theme-->
+    <style name="RatingBar" parent="Theme.AppCompat.Light">
+        <item name="colorControlNormal">#009688</item>
+        <item name="colorControlActivated">#FFC107</item>
     </style>
 
     <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />

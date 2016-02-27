@@ -4,34 +4,21 @@ package edu.gatech.logitechs.movieselector;
 import android.annotation.TargetApi;
 import android.app.Activity;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
-import android.media.Ringtone;
-import android.media.RingtoneManager;
-import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
-import android.os.Handler;
-import android.os.Message;
 import android.preference.EditTextPreference;
 import android.preference.ListPreference;
 import android.preference.Preference;
 import android.preference.PreferenceActivity;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.ActionBar;
 import android.preference.PreferenceFragment;
 import android.preference.PreferenceManager;
-import android.preference.RingtonePreference;
-import android.support.v7.app.AlertDialog;
-import android.text.TextUtils;
 import android.view.MenuItem;
 import android.support.v4.app.NavUtils;
-import android.widget.EditText;
-import android.widget.Toast;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -47,7 +34,7 @@ import java.util.Map;
  * href="http://developer.android.com/guide/topics/ui/settings.html">Settings
  * API Guide</a> for more information on developing a Settings UI.
  */
-public class UserProfile extends AppCompatPreferenceActivity {
+public class UserSettings extends AppCompatPreferenceActivity {
 
     private static UserManager manager;
     private static User currUser;
@@ -219,7 +206,7 @@ public class UserProfile extends AppCompatPreferenceActivity {
             intToMajor.put(i, majors[i]);
         }
 
-        sp = PreferenceManager.getDefaultSharedPreferences(UserProfile.this);
+        sp = PreferenceManager.getDefaultSharedPreferences(UserSettings.this);
         editor = sp.edit();
         editor.putString("change_email", newEmail == null ? currUser.getEmail() : newEmail);
         editor.putString("change_password", newPass == null ? currUser.getPassword() : newPass);
@@ -281,7 +268,7 @@ public class UserProfile extends AppCompatPreferenceActivity {
         @Override
         public void onCreate(Bundle savedInstanceState) {
             super.onCreate(savedInstanceState);
-            addPreferencesFromResource(R.xml.pref_edit_profile);
+            addPreferencesFromResource(R.xml.pref_edit_account);
             setHasOptionsMenu(true);
 
             // Bind the summaries of EditText/List/Dialog/Ringtone preferences
@@ -308,7 +295,7 @@ public class UserProfile extends AppCompatPreferenceActivity {
          public boolean onOptionsItemSelected(MenuItem item) {
             int id = item.getItemId();
             if (id == android.R.id.home) {
-                startActivity(new Intent(getActivity(), UserProfile.class));
+                startActivity(new Intent(getActivity(), UserSettings.class));
                 return true;
             }
             return super.onOptionsItemSelected(item);

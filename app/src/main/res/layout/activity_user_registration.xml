@@ -12,7 +12,7 @@
         android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:paddingTop="55dp">
+        android:paddingTop="36dp">
 
         <TextView
             android:id="@+id/signup_text"
@@ -72,7 +72,6 @@
             <android.support.design.widget.TextInputLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
-
                 <AutoCompleteTextView
                     android:id="@+id/email"
                     android:layout_width="match_parent"
@@ -83,13 +82,11 @@
                     android:singleLine="true"
                     android:textColor="#fff"
                     android:imeOptions="actionNext"/>
-
             </android.support.design.widget.TextInputLayout>
 
             <android.support.design.widget.TextInputLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
-
                 <EditText
                     android:id="@+id/password"
                     android:layout_width="match_parent"
@@ -100,13 +97,11 @@
                     android:maxLines="1"
                     android:singleLine="true"
                     android:textColor="#fff"/>
-
             </android.support.design.widget.TextInputLayout>
 
             <android.support.design.widget.TextInputLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
-
                 <EditText
                     android:id="@+id/confirm_password"
                     android:layout_width="match_parent"
@@ -118,7 +113,6 @@
                     android:maxLines="1"
                     android:singleLine="true"
                     android:textColor="#fff"/>
-
             </android.support.design.widget.TextInputLayout>
 
             <Spinner
@@ -146,9 +140,8 @@
                     android:gravity="top|left"
                     android:singleLine="true"
                     android:textColor="#fff"/>
-
-
             </android.support.design.widget.TextInputLayout>
+
             <Button
                 android:id="@+id/email_sign_up_button"
                 style="?android:textAppearanceSmall"
@@ -171,5 +164,6 @@
                 android:textSize="16dip"/>
 
         </LinearLayout>
+
     </ScrollView>
 </LinearLayout>

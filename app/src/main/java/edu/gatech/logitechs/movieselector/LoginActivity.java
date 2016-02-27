@@ -70,10 +70,10 @@ public class LoginActivity extends AppCompatActivity {
             public boolean onTouch(View v, MotionEvent event) {
                 switch (event.getAction() & MotionEvent.ACTION_MASK) {
                     case MotionEvent.ACTION_DOWN:
-                        linkSignup.setTextColor(Color.rgb(189, 189, 189));
+                        linkSignup.setTextColor(Color.argb(160, 189, 189, 189));
                         break;
                     case MotionEvent.ACTION_UP:
-                        linkSignup.setTextColor(Color.rgb(224, 224, 224));
+                        linkSignup.setTextColor(Color.argb(255, 224, 224, 224));
                         break;
                 }
                 return false;

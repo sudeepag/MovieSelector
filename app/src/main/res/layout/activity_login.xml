@@ -15,7 +15,7 @@
         android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:paddingTop="54dp">
+        android:paddingTop="36dp">
 
         <TextView
             android:id="@+id/welcome_text"
@@ -56,10 +56,11 @@
     </LinearLayout>
 
 
-    <LinearLayout
+    <RelativeLayout
         android:id="@+id/login_form"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:orientation="vertical">
 
         <LinearLayout
             android:id="@+id/email_login_form"
@@ -122,9 +123,19 @@
                 android:layout_marginBottom="24dp"
                 android:text="No account yet? Create one"
                 android:gravity="center"
-                android:textColor="#E0E0E0"
+                android:textColor="#FFe0e0e0"
                 android:textSize="16dip"/>
 
         </LinearLayout>
-    </LinearLayout>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="❤ CS 2340"
+            android:textSize="14sp"
+            android:textColor="#8Fe0e0e0"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true"/>
+
+    </RelativeLayout>
 </LinearLayout>

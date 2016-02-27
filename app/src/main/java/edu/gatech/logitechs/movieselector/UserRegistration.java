@@ -100,10 +100,10 @@ public class UserRegistration extends AppCompatActivity{
                 // change the background color
                 switch (event.getAction() & MotionEvent.ACTION_MASK) {
                     case MotionEvent.ACTION_DOWN:
-                        linkCancel.setTextColor(Color.rgb(189, 189, 189));
+                        linkCancel.setTextColor(Color.argb(160, 189, 189, 189));
                         break;
                     case MotionEvent.ACTION_UP:
-                        linkCancel.setTextColor(Color.rgb(224, 224, 224));
+                        linkCancel.setTextColor(Color.argb(255, 224, 224, 224));
                         break;
                 }
                 return false;

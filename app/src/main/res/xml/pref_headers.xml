@@ -2,10 +2,9 @@
     <!-- These settings headers are only used on tablets. -->
     <header
         android:icon="@drawable/ic_info"
-        android:title="General"
-        />
+        android:title="General" />
     <header
-        android:fragment="edu.gatech.logitechs.movieselector.UserProfile$EditProfilePreferenceFragment"
+        android:fragment="edu.gatech.logitechs.movieselector.UserSettings$EditProfilePreferenceFragment"
         android:icon="@drawable/ic_menu_profile"
         android:title="Account" />
 

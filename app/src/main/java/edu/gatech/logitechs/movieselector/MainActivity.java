@@ -1,17 +1,12 @@
 package edu.gatech.logitechs.movieselector;
 
-import android.animation.Animator;
-import android.animation.AnimatorListenerAdapter;
 import android.annotation.TargetApi;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.os.Build;
 import android.os.Bundle;
-import android.preference.Preference;
 import android.preference.PreferenceActivity;
 import android.support.design.widget.CoordinatorLayout;
-import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
 import android.support.design.widget.Snackbar;
 import android.support.v4.view.GravityCompat;
@@ -28,14 +23,8 @@ import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.Window;
-import android.view.WindowManager;
 import android.view.animation.AlphaAnimation;
-import android.view.animation.Animation;
-import android.widget.EditText;
 import android.widget.TextView;
-import android.preference.PreferenceFragment;
-import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -47,9 +36,12 @@ public class MainActivity extends AppCompatActivity
     User currUser;
 
     CoordinatorLayout mainLayout;
+    NavigationView navigationView;
     RecyclerView rv;
     TextView navHeader;
     TextView navHeaderEmail;
+
+    View aboutDialogLayout;
 
     SearchView mSearchView;
     MenuItem searchMenuItem;
@@ -84,7 +76,7 @@ public class MainActivity extends AppCompatActivity
 //            public void onClick(View view) {
 //                //get view from layout XML
 //                LayoutInflater inflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-//                final View searchFieldLayout = inflater.inflate(R.layout.search_box_view,
+//                final View searchFieldLayout = inflater.inflate(R.layout.about_dialog_view,
 //                        null, false);
 //                final EditText input = (EditText) searchFieldLayout.findViewById(R.id.search_field);
 //                // create the AlertDialog as final
@@ -130,7 +122,7 @@ public class MainActivity extends AppCompatActivity
         drawer.setDrawerListener(toggle);
         toggle.syncState();
 
-        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+        navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
         navHeader = (TextView) findViewById(R.id.nav_header_text);
@@ -149,6 +141,8 @@ public class MainActivity extends AppCompatActivity
                     adapter.updateMovieList(movies);
                 }
             });
+            navigationView.getMenu().getItem(0).setChecked(false);
+            navigationView.getMenu().getItem(1).setChecked(false);
 //            rvAppear();
             return false;
         }
@@ -201,20 +195,22 @@ public class MainActivity extends AppCompatActivity
         if (id == R.id.action_search) {
             return true;
         } else if (id == R.id.action_about) {
+            LayoutInflater inflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+            aboutDialogLayout = inflater.inflate(R.layout.about_dialog_view, null, false);
             Snackbar snackbar = Snackbar
                         .make(mainLayout, "Made with ❤️ from CS 2340", Snackbar.LENGTH_LONG)
                         .setAction("MORE INFO", new View.OnClickListener() {
                             @Override
                             public void onClick(View view) {
                                 AlertDialog dialog = new AlertDialog.Builder(MainActivity.this)
-                                    .setTitle("About us")
-                                    .setMessage("hi!")
-                                    .setPositiveButton("OK", new DialogInterface.OnClickListener() {
-                                        @Override
-                                        public void onClick(DialogInterface dialog, int id) {
-                                            dialog.cancel();
-                                        }
-                                    }).create();
+                                        .setTitle("About us")
+                                        .setView(aboutDialogLayout)
+                                        .setPositiveButton("THANKS", new DialogInterface.OnClickListener() {
+                                            @Override
+                                            public void onClick(DialogInterface dialog, int id) {
+                                                dialog.cancel();
+                                            }
+                                        }).create();
                                 dialog.show();
                             }
                         });
@@ -234,9 +230,9 @@ public class MainActivity extends AppCompatActivity
         } else if (id == R.id.nav_new_release) {
             getRecent();
         } else if (id == R.id.nav_manage) {
-            Intent myIntent = new Intent(MainActivity.this, UserProfile.class);
+            Intent myIntent = new Intent(MainActivity.this, UserSettings.class);
             //DO not show headers when loading preference
-            myIntent.putExtra(PreferenceActivity.EXTRA_SHOW_FRAGMENT, UserProfile.class);
+            myIntent.putExtra(PreferenceActivity.EXTRA_SHOW_FRAGMENT, UserSettings.class);
             myIntent.putExtra(PreferenceActivity.EXTRA_NO_HEADERS, true);
             startActivity(myIntent);
         } else if (id == R.id.nav_log_out) {
@@ -280,13 +276,13 @@ public class MainActivity extends AppCompatActivity
 
     private void rvAppear() {
         AlphaAnimation anim = new AlphaAnimation(0.0f, 1.0f);
-        anim.setDuration(700);
+        anim.setDuration(500);
         rv.startAnimation(anim);
     }
 
     private void rvDisappear() {
         AlphaAnimation anim = new AlphaAnimation(1.0f, 0.0f);
-        anim.setDuration(700);
+        anim.setDuration(500);
         rv.startAnimation(anim);
     }
 
