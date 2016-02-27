@@ -4,7 +4,6 @@ import android.annotation.TargetApi;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.media.Image;
 import android.os.Bundle;
 import android.preference.PreferenceActivity;
 import android.support.design.widget.CoordinatorLayout;
@@ -16,7 +15,6 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.CardView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SearchView;
@@ -26,9 +24,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.animation.AlphaAnimation;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import java.util.ArrayList;
@@ -59,7 +55,7 @@ public class MuveeMainActivity extends AppCompatActivity
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.muvee_main_activity);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         mainLayout = (CoordinatorLayout) findViewById(R.id.main_layout);
@@ -81,6 +77,7 @@ public class MuveeMainActivity extends AppCompatActivity
                         Intent myIntent = new Intent(MuveeMainActivity.this, MuveeDetails.class);
                         myIntent.putExtra("title", movies.get(position).getTitle());
                         myIntent.putExtra("thumbnail", movies.get(position).getThumbnail());
+                        //TODO consider using startActivityForResult for the main screen to stay the same when user hits back
                         startActivity(myIntent);
                         overridePendingTransition(R.anim.pull_in_right, R.anim.push_out_left);
                     }
@@ -96,7 +93,7 @@ public class MuveeMainActivity extends AppCompatActivity
 //            public void onClick(View view) {
 //                //get view from layout XML
 //                LayoutInflater inflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-//                final View searchFieldLayout = inflater.inflate(R.layout.about_dialog_view,
+//                final View searchFieldLayout = inflater.inflate(R.layout.movie_about_dialog_view,
 //                        null, false);
 //                final EditText input = (EditText) searchFieldLayout.findViewById(R.id.search_field);
 //                // create the AlertDialog as final
@@ -216,7 +213,7 @@ public class MuveeMainActivity extends AppCompatActivity
             return true;
         } else if (id == R.id.action_about) {
             LayoutInflater inflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            aboutDialogLayout = inflater.inflate(R.layout.about_dialog_view, null, false);
+            aboutDialogLayout = inflater.inflate(R.layout.movie_about_dialog_view, null, false);
             Snackbar snackbar = Snackbar
                         .make(mainLayout, "Made with ❤️ from CS 2340", Snackbar.LENGTH_LONG)
                         .setAction("MORE INFO", new View.OnClickListener() {

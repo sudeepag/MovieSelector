@@ -10,7 +10,7 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:context=".MuveeMainActivity"
-    tools:showIn="@layout/activity_main_content">
+    tools:showIn="@layout/muvee_main_content_activity">
 
     <TextView
         android:layout_width="wrap_content"

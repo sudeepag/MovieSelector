@@ -42,7 +42,7 @@ public class MuveeRegistration extends AppCompatActivity{
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_user_registration);
+        setContentView(R.layout.muvee_registration_activity);
 
         //custom fonts for welcome text
         Typeface tf = Typeface.createFromAsset(getAssets(), "fonts/akaDora.ttf");
@@ -227,11 +227,9 @@ public class MuveeRegistration extends AppCompatActivity{
         }
     }
     private boolean isEmailValid(String email) {
-        //TODO: Validate EMAIL
         return email.contains("@");
     }
     private boolean isPasswordValid(String password) {
-        //TODO: Validate PASSWORD
         return password.length() > 4;
     }
 

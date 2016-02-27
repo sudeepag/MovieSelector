@@ -54,7 +54,7 @@ public class MuveeLogin extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_login);
+        setContentView(R.layout.muvee_login_activity);
 
         //Linking UI to Code
 
@@ -237,7 +237,6 @@ public class MuveeLogin extends AppCompatActivity {
      * @return              a boolean that tells whether the password is long enough
      */
     private boolean isPasswordValid(String password) {
-        //TODO: Validate PASSWORD
         return password.length() > 4;
     }
 

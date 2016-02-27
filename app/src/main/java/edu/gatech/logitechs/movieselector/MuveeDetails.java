@@ -15,7 +15,7 @@ public class MuveeDetails extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_movie_details);
+        setContentView(R.layout.muvee_details_activity);
 
         Intent intent = getIntent();
         this.movieTitle = intent.getStringExtra("title");

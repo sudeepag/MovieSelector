@@ -147,12 +147,10 @@ public class MuveeSettings extends AppCompatPreferenceActivity {
     }
 
     private static boolean isEmailValid(String email) {
-        //TODO: Validate EMAIL
         return email.contains("@");
     }
 
     private static boolean isPasswordValid(String password) {
-        //TODO: Validate PASSWORD
         return password.length() > 4;
     }
 

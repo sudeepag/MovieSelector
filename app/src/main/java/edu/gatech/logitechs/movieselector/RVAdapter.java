@@ -1,6 +1,5 @@
 package edu.gatech.logitechs.movieselector;
 
-import android.content.DialogInterface;
 import android.graphics.Bitmap;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
@@ -48,7 +47,7 @@ public class RVAdapter extends RecyclerView.Adapter<RVAdapter.MovieViewHolder> {
 
     @Override
     public MovieViewHolder onCreateViewHolder(ViewGroup viewGroup, int i) {
-        View v = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.card_view_row, viewGroup, false);
+        View v = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.muvee_card_view_row, viewGroup, false);
         MovieViewHolder pvh = new MovieViewHolder(v);
         return pvh;
     }
