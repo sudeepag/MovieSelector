@@ -73,9 +73,10 @@ public class MuveeMainActivity extends AppCompatActivity
                 @Override
                 public void onItemClick(View view, int position) {
                     if (view instanceof LinearLayout) {
-                        System.out.println("Item Clicked:" + movies.get(position).getTitle());
+                        //User touched an item
                         Intent myIntent = new Intent(MuveeMainActivity.this, MuveeDetails.class);
                         myIntent.putExtra("title", movies.get(position).getTitle());
+                        myIntent.putExtra("description", movies.get(position).getDescription());
                         myIntent.putExtra("thumbnail", movies.get(position).getThumbnail());
                         //TODO consider using startActivityForResult for the main screen to stay the same when user hits back
                         startActivity(myIntent);

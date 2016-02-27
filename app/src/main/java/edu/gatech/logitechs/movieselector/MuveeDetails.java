@@ -17,6 +17,7 @@ import org.w3c.dom.Text;
 public class MuveeDetails extends AppCompatActivity {
 
     String movieTitle;
+    String movieDescription;
     Bitmap movieThumbnail;
 
     Toolbar dToolbar;
@@ -32,6 +33,7 @@ public class MuveeDetails extends AppCompatActivity {
         //Get data from Intent
         Intent intent = getIntent();
         this.movieTitle = intent.getStringExtra("title");
+        this.movieDescription = intent.getStringExtra("description");
         Bundle extras = intent.getExtras();
         this.movieThumbnail = (Bitmap) extras.get("thumbnail");
 
@@ -43,6 +45,8 @@ public class MuveeDetails extends AppCompatActivity {
         detailsTitle = (TextView) findViewById(R.id.details_title);
         detailsTitle.setText(movieTitle);
         detailsDescription = (TextView) findViewById(R.id.details_description);
+        detailsDescription.setText(movieDescription);
+
 
         fabWrite = (FloatingActionButton) findViewById(R.id.fab);
         fabWrite.setOnClickListener(new View.OnClickListener() {
