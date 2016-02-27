@@ -39,6 +39,8 @@
                     android:textSize="25sp"
                     android:textColor="#ffffff"
                     android:gravity="center"
+                    android:paddingStart="8dp"
+                    android:paddingEnd="8dp"
                     android:text="Title Unavailable"
                     android:layout_centerVertical="true"
                     />

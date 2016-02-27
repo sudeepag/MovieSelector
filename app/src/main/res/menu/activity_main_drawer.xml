@@ -3,9 +3,14 @@
 
     <group android:checkableBehavior="single">
         <item
-            android:id="@+id/nav_library"
-            android:icon="@drawable/ic_menu_library"
-            android:title="Library" />
+            android:id="@+id/nav_dvd_library"
+            android:icon="@drawable/ic_dvd"
+            android:title="DVD Library"
+            android:checked="true"/>
+        <item
+            android:id="@+id/nav_new_release"
+            android:icon="@drawable/ic_new_release"
+            android:title="New Release" />
     </group>
 
     <item android:title="Account">

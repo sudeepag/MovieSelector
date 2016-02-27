@@ -8,15 +8,10 @@
         android:title="About"
         app:showAsAction="never" />
     <item
-        android:id="@+id/action_new_release"
+        android:id="@+id/action_search"
         android:orderInCategory="200"
-        android:title="New Releases"
-        android:icon="@drawable/ic_new_release"
-        app:showAsAction="ifRoom" />
-    <item
-        android:id="@+id/action_dvd"
-        android:orderInCategory="300"
-        android:icon="@drawable/ic_dvd"
-        android:title="DVD"
-        app:showAsAction="ifRoom" />
+        android:title="Search"
+        android:icon="@drawable/ic_menu_search"
+        app:showAsAction="collapseActionView|ifRoom"
+        app:actionViewClass="android.support.v7.widget.SearchView"/>
 </menu>
