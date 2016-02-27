@@ -4,6 +4,7 @@ import android.annotation.TargetApi;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.media.Image;
 import android.os.Bundle;
 import android.preference.PreferenceActivity;
 import android.support.design.widget.CoordinatorLayout;
@@ -15,6 +16,7 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.CardView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SearchView;
@@ -24,6 +26,9 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.animation.AlphaAnimation;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import java.util.ArrayList;
@@ -62,11 +67,26 @@ public class MuveeMainActivity extends AppCompatActivity
         isAtMainPage = false;
 
         //Setting up RecyclerView
-        rv = (RecyclerView)findViewById(R.id.recycler_view);
+        rv = (RecyclerView) findViewById(R.id.recycler_view);
         rv.setHasFixedSize(true);
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);
         rv.setLayoutManager(layoutManager);
         rv.setAdapter(adapter);
+        rv.addOnItemTouchListener(
+            new RecyclerItemClickListener(MuveeMainActivity.this, new RecyclerItemClickListener.OnItemClickListener() {
+                @Override
+                public void onItemClick(View view, int position) {
+                    if (view instanceof LinearLayout) {
+                        System.out.println("Item Clicked:" + movies.get(position).getTitle());
+                        Intent myIntent = new Intent(MuveeMainActivity.this, MuveeDetails.class);
+                        myIntent.putExtra("title", movies.get(position).getTitle());
+                        myIntent.putExtra("thumbnail", movies.get(position).getThumbnail());
+                        startActivity(myIntent);
+                        overridePendingTransition(R.anim.pull_in_right, R.anim.push_out_left);
+                    }
+                }
+            })
+        );
 
         getDVD();
 

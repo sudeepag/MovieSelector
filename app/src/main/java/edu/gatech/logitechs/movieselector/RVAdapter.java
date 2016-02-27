@@ -1,5 +1,6 @@
 package edu.gatech.logitechs.movieselector;
 
+import android.content.DialogInterface;
 import android.graphics.Bitmap;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
@@ -20,7 +21,7 @@ public class RVAdapter extends RecyclerView.Adapter<RVAdapter.MovieViewHolder> {
         TextView movieDescription;
         ImageView movieImage;
 
-        MovieViewHolder(View itemView) {
+        public MovieViewHolder(View itemView) {
             super(itemView);
             cv = (CardView)itemView.findViewById(R.id.cv);
             movieTitle = (TextView)itemView.findViewById(R.id.movie_title);
