@@ -3,6 +3,7 @@ package edu.gatech.logitechs.movieselector;
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.annotation.TargetApi;
+import android.app.Activity;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -122,6 +123,9 @@ public class MuveeLogin extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
+        //first bring down the keyboard
+        InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
+        imm.hideSoftInputFromWindow(this.getCurrentFocus().getWindowToken(), 0);
         if (isLoading) {
             //system loading pressed back button -> do cancel async task action;
             mAuthTask.cancel(true);
