@@ -58,7 +58,6 @@
         <item name="colorControlNormal">#FFC107</item>
         <item name="colorControlActivated">#009688</item>
     </style>
-
     <style name="RatingBar.Details" parent="Theme.AppCompat.Light">
         <item name="colorControlNormal">#FF5252</item>
         <item name="colorControlActivated">#03A9F4</item>
