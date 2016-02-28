@@ -17,7 +17,7 @@
         android:layout_height="wrap_content"
         android:stepSize="0.5"
         android:numStars="5"
-        android:theme="@style/RatingBar"
+        android:theme="@style/RatingBar.Dialog"
         android:layout_gravity="center"
         android:layout_marginTop="16dp"
         android:layout_marginStart="20dp"

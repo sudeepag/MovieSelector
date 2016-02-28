@@ -46,17 +46,22 @@
     <!-- Movie Details theme-->
     <style name="AppTheme.MovieDetails" parent="Theme.AppCompat.Light.NoActionBar">
         <!-- Customize your theme here. -->
-        <item name="colorPrimary">@color/colorPrimary</item>
-        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
-        <item name="colorAccent">@color/colorAccent</item>
+        <item name="colorPrimary">#03A9F4</item>
+        <item name="colorPrimaryDark">#0288D1</item>
+        <item name="colorAccent">#FF5252</item>
         <item name="android:textColorPrimary">#FFffffff</item>
         <item name="colorControlNormal">#fff</item>
     </style>
 
-    <!-- RatingBar theme-->
-    <style name="RatingBar" parent="Theme.AppCompat.Light">
+    <!-- RatingBar themes-->
+    <style name="RatingBar.Dialog" parent="Theme.AppCompat.Light">
         <item name="colorControlNormal">#FFC107</item>
         <item name="colorControlActivated">#009688</item>
+    </style>
+
+    <style name="RatingBar.Details" parent="Theme.AppCompat.Light">
+        <item name="colorControlNormal">#FF5252</item>
+        <item name="colorControlActivated">#03A9F4</item>
     </style>
 
     <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
