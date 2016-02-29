@@ -131,9 +131,9 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="❤ CS 2340"
+            android:text="@string/team_name"
             android:textSize="14sp"
-            android:textColor="#8Fe0e0e0"
+            android:textColor="#8F80CBC4"
             android:layout_alignParentBottom="true"
             android:layout_centerHorizontal="true"/>
 

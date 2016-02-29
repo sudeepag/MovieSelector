@@ -117,4 +117,6 @@
     <string name="pref_title_change_description">User Description</string>
     <string name="pref_title_change_major">Major</string>
     <string name="pref_default_display_password">1234</string>
+
+    <string name="team_name">❤ LogiTechs</string>
 </resources>
