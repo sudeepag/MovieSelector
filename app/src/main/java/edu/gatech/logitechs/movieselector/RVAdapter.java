@@ -59,8 +59,8 @@ public class RVAdapter extends RecyclerView.Adapter<RVAdapter.MovieViewHolder> {
         if (movies.get(i).getThumbnail() != null) {
             //Scale the Movie Thumbnail
             MovieViewHolder.movieImage.setImageBitmap(Bitmap.createScaledBitmap(movies.get(i).getThumbnail(),
-                    (int) (movies.get(i).getThumbnail().getWidth() * 3),
-                    (int) (movies.get(i).getThumbnail().getHeight() * 3),
+                    (int) (movies.get(i).getThumbnail().getWidth() * 4),
+                    (int) (movies.get(i).getThumbnail().getHeight() * 4),
                     false));
         }
     }

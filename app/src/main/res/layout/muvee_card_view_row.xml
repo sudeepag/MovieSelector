@@ -37,7 +37,7 @@
                     android:layout_height="wrap_content"
                     android:id="@+id/movie_title"
                     android:layout_toRightOf="@+id/movie_image_holder"
-                    android:textSize="22sp"
+                    android:textSize="20sp"
                     android:textColor="#FFffffff"
                     android:gravity="center"
                     android:paddingStart="8dp"
