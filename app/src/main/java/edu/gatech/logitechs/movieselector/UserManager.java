@@ -52,7 +52,7 @@ public class UserManager {
 
 
     /**
-     * cunstructor for user manager
+     * constructor for user manager
      * creates listener for added changed or deleted user values that updates list of users
      */
     public UserManager() {
@@ -94,6 +94,11 @@ public class UserManager {
         return currentUser;
     }
 
+    /*
+    * Essentially a setter for current user
+    *
+    * @param user  the new current user
+     */
     public static void updateCurrentUser(User user) {
         Map<String, Object> map = new HashMap<>();
         map.put("data", user);
@@ -104,6 +109,14 @@ public class UserManager {
 
     }
 
+    /*
+    * Changes password for the input user
+    *
+    * @param  user  the user who's password is being changed
+    * @param  password  The new password for the user
+    * @param  runnable  The Runnable to execute upon completion of the synchronous method
+    * @param  consumer  the consumer to handle error messages from firebase
+     */
     public static void changePassword(final User user, final String password, final Runnable runnable, final Consumer consumer) {
         ref.changePassword(user.getEmail(), user.getPassword(), password, new Firebase.ResultHandler() {
             @Override
@@ -123,6 +136,14 @@ public class UserManager {
         });
     }
 
+    /*
+    * Changes password for the input user
+    *
+    * @param  user  the user who's password is being changed
+    * @param  password  The new password for the user
+    * @param  runnable  The Runnable to execute upon completion of the synchronous method
+    * @param  consumer  the consumer to handle error messages from firebase
+     */
     public static void changeEmail(final User user, final String email, final Runnable runnable,final Consumer consumer) {
         ref.changeEmail(user.getEmail(), user.getPassword(), email, new Firebase.ResultHandler() {
             @Override
@@ -141,6 +162,13 @@ public class UserManager {
         });
     }
 
+    /**
+     * Method to add a user to the local app as well as the server
+     *
+     * @param user  the user to add
+     * @param context  the context in which the user is being added
+     * @param runnable  the runnable to run after the server call has been resolved
+     */
     public void addUser(final User user, final MuveeRegistration context, final Runnable runnable) {
         String newEmail = user.getEmail();
 

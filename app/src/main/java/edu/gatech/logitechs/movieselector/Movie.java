@@ -14,13 +14,30 @@ public class Movie {
     private String actor2;
     private Bitmap thumbnail;
 
+    /**
+     * No args constuctor for movie; needed for firebase
+     */
     public Movie() {}
 
-
+    /**
+     * Partial constructor for movie
+     * @param title  title of the movie
+     * @param year  the year the movie was released
+     * @param cScore   rating score of the movie
+     */
     public Movie(String title, int year, int cScore) {
         this (title, year, cScore, "", "", "");
     }
 
+    /**
+     * Partial constructor for movie
+     * @param title  title of the movie
+     * @param year  the year the movie was released
+     * @param cScore   rating score of the movie
+     * @param description  the string description of the movie
+     * @param actor1  the first actor listed in the movie's cast
+     * @param actor2 the second actor listed in the movie's cast
+     */
     public Movie(String title, int year, int cScore, String description,
                  String actor1, String actor2) {
         this.title = title;
@@ -31,13 +48,30 @@ public class Movie {
         this.actor2 = actor2;
     }
 
+    /**
+     * A getter for the movie title
+     *
+     * @return  the title o the movie
+     */
     public String getTitle() {
         return title;
     }
 
+    /**
+     * A getter for the movie description
+     *
+     * @return the descritpion of the movie
+     */
     public String getDescription() {
         return description;
     }
+
+    /**
+     * a getter for the cScore
+     *
+     * @return  the cScore for the movie
+     */
+    public int getcScore() { return cScore; }
 
 
     @Override
@@ -45,10 +79,19 @@ public class Movie {
         return "Title: " + title + "year: " + year + "score: " + cScore + " with " + actor1 + " and " + actor2;
     }
 
+    /**
+     * A getter for the thumbnail
+     * @return  the thumbnail for the movie
+     */
     public Bitmap getThumbnail() {
         return thumbnail;
     }
 
+    /**
+     * The setter for the thumbnail
+     *
+     * @param thumbnail  the thumnail assigned to the movie
+     */
     public void setThumbnail(Bitmap thumbnail) {
         this.thumbnail = thumbnail;
     }

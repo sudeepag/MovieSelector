@@ -25,8 +25,16 @@ import java.util.List;
 
 public class MovieManager {
     private static List<Movie> movieList;
+
+    /*
+    * A getter for movies recently released on DVD
+    *
+    * @param context     Context of the call to get; used to return to flow
+    * @param runnable    Runnable to execute upon completion of synchronous call to Rotten Tomatoes
+     */
     public static void getDVD(final Context context, final Runnable runnable) {
-        String url = "http://api.rottentomatoes.com/api/public/v1.0/lists/dvds/new_releases.json?apikey=yedukp76ffytfuy24zsqk7f5";
+        String url = "http://api.rottentomatoes.com/api/public/v1.0/lists/" +
+                "dvds/new_releases.json?apikey=yedukp76ffytfuy24zsqk7f5";
         JsonObjectRequest jsObjRequest = new JsonObjectRequest
             (Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
 
@@ -97,6 +105,13 @@ public class MovieManager {
         VolleySingleton.getInstance(context).addToRequestQueue(jsObjRequest);
     }
 
+    /*
+    * A getter for titles searched for
+    *
+    * @param searchTerm  The term being searched for
+    * @param context     Context of the call to get; used to return to flow
+    * @param runnable    Runnable to execute upon completion of synchronous call to Rotten Tomatoes
+     */
     public static void searchTitles(String searchTerm, final Context context, final Runnable runnable) {
         JSONObject params = new JSONObject();
         String query = "";
@@ -179,6 +194,12 @@ public class MovieManager {
     }
 
 
+    /*
+    * A getter for recent movies
+    *
+    * @param context     Context of the call to get; used to return to flow
+    * @param runnable    Runnable to execute upon completion of synchronous call to Rotten Tomatoes
+     */
     public static void getRecent(final Context context, final Runnable runnable) {
         String url = "http://api.rottentomatoes.com/api/public/v1.0/lists/movies/in_theaters.json?apikey=yedukp76ffytfuy24zsqk7f5";
         JsonObjectRequest jsObjRequest = new JsonObjectRequest
@@ -253,6 +274,11 @@ public class MovieManager {
         VolleySingleton.getInstance(context).addToRequestQueue(jsObjRequest);
     }
 
+    /*
+    * A getter for the populated movie list
+    *
+    * @return The a paramatrized list of movies
+     */
     public static List<Movie> getMovieList() {
         if (movieList.size() == 0) {
             movieList.add(new Movie("Sorry", 0, 0, "No movies found, please try again", "", ""));
