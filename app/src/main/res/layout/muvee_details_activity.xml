@@ -88,11 +88,10 @@
                         android:layout_height="wrap_content"
                         android:text="Synopsis"
                         android:textColor="#FFffffff"
-                        android:textStyle="bold"
                         android:textSize="18sp"
                         android:paddingStart="16dp"
-                        android:paddingTop="9dp"
-                        android:paddingBottom="9dp"
+                        android:paddingTop="6dp"
+                        android:paddingBottom="6dp"
                         android:background="#607D8B"/>
 
                     <TextView
@@ -128,11 +127,10 @@
                         android:layout_height="wrap_content"
                         android:text="Rating"
                         android:textColor="#FFffffff"
-                        android:textStyle="bold"
                         android:textSize="18sp"
                         android:paddingStart="16dp"
-                        android:paddingTop="9dp"
-                        android:paddingBottom="9dp"
+                        android:paddingTop="6dp"
+                        android:paddingBottom="6dp"
                         android:background="#607D8B"/>
 
                     <RatingBar
@@ -168,11 +166,10 @@
                         android:layout_height="wrap_content"
                         android:text="Review"
                         android:textColor="#FFffffff"
-                        android:textStyle="bold"
                         android:textSize="18sp"
                         android:paddingStart="16dp"
-                        android:paddingTop="9dp"
-                        android:paddingBottom="9dp"
+                        android:paddingTop="6dp"
+                        android:paddingBottom="6dp"
                         android:background="#607D8B"/>
 
                     <TextView
@@ -187,6 +184,16 @@
                 </LinearLayout>
 
             </android.support.v7.widget.CardView>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:layout_marginBottom="16dp"
+                android:text="@string/team_name"
+                android:textSize="14sp"
+                android:textColor="#8F757575"
+                android:layout_gravity="center_horizontal"/>
 
         </LinearLayout>
 

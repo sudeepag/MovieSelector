@@ -57,7 +57,8 @@
         android:layout_height="match_parent"
         android:scrollbars="none"
         android:overScrollMode="always"
-        android:layout_marginTop="36dp">
+        android:layout_marginTop="36dp"
+        android:layout_marginBottom="16dp">
 
         <LinearLayout
             android:id="@+id/email_login_form"
@@ -66,7 +67,6 @@
             android:layout_marginRight="40dp"
             android:layout_marginLeft="40dp"
             android:layout_marginTop="@dimen/activity_vertical_margin"
-            android:paddingBottom="72dp"
             android:orientation="vertical">
 
             <android.support.design.widget.TextInputLayout
@@ -152,7 +152,7 @@
                 android:textStyle="bold" />
 
             <TextView android:id="@+id/login_link"
-                android:layout_width="fill_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="96dp"
                 android:textColor="#E0E0E0"
@@ -160,10 +160,19 @@
                 android:imeActionLabel="@string/action_sign_up"
                 android:imeOptions="actionDone"
                 android:text="Already a member? Login"
-                android:gravity="center"
+                android:layout_gravity="center_horizontal"
                 android:textSize="16dip"/>
 
-        </LinearLayout>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="56dp"
+                android:layout_marginBottom="16dp"
+                android:text="@string/team_name"
+                android:textSize="14sp"
+                android:textColor="#8FB0BEC5"
+                android:layout_gravity="center_horizontal"/>
 
+        </LinearLayout>
     </ScrollView>
 </LinearLayout>
