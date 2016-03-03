@@ -20,6 +20,11 @@ public class RVAdapter extends RecyclerView.Adapter<RVAdapter.MovieViewHolder> {
         TextView movieDescription;
         ImageView movieImage;
 
+        /*
+        * Constructor for the MovieViewHolder
+        *
+        * @param itemView   the view being added
+         */
         public MovieViewHolder(View itemView) {
             super(itemView);
             cv = (CardView)itemView.findViewById(R.id.cv);
@@ -35,6 +40,12 @@ public class RVAdapter extends RecyclerView.Adapter<RVAdapter.MovieViewHolder> {
         this.movies = movies;
     }
 
+    /*
+    * Updates the list of movies after fetching it remotely
+    *
+    * @param newMovies  The new list of movies returned remotely
+    *
+     */
     public void updateMovieList(List<Movie> newMovies) {
         movies = newMovies;
         this.notifyDataSetChanged();
