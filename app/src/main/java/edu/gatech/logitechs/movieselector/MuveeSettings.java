@@ -146,15 +146,6 @@ public class MuveeSettings extends AppCompatPreferenceActivity {
         super.onDestroy();
     }
 
-    private static boolean isEmailValid(String email) {
-        return email.contains("@");
-    }
-
-    private static boolean isPasswordValid(String password) {
-        return password.length() > 4;
-    }
-
-
     /**
      * Helper method to determine if the device has an extra-large screen. For
      * example, 10" tablets are extra-large.
