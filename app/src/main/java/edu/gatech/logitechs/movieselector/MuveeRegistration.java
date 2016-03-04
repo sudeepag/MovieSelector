@@ -35,10 +35,6 @@ public class MuveeRegistration extends AppCompatActivity{
     private View mProgressView;
     private View mSignupFormView;
 
-    /**
-     * Keep track of the login task to ensure we can cancel it if requested.
-     */
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -275,6 +271,9 @@ public class MuveeRegistration extends AppCompatActivity{
         }
     }
 
+    /**
+     * Transitions to the main movie activity
+     */
     public void transition() {
         Intent myIntent = new Intent(this,MuveeMainActivity.class);
         this.startActivity(myIntent);

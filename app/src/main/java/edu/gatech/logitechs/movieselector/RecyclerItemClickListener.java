@@ -13,12 +13,20 @@ import android.view.View;
 public class RecyclerItemClickListener implements RecyclerView.OnItemTouchListener {
     private OnItemClickListener mListener;
 
+    /**
+     * Interface for click listener
+     */
     public interface OnItemClickListener {
         public void onItemClick(View view, int position);
     }
 
     GestureDetector mGestureDetector;
 
+    /**
+     * Initializes the listener
+     * @param context   the scene it is in
+     * @param listener  the listener
+     */
     public RecyclerItemClickListener(Context context, OnItemClickListener listener) {
         mListener = listener;
         mGestureDetector = new GestureDetector(context, new GestureDetector.SimpleOnGestureListener() {

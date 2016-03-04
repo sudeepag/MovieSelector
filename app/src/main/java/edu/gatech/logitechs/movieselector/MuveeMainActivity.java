@@ -175,16 +175,19 @@ public class MuveeMainActivity extends AppCompatActivity
         }
     };
 
-    protected void onStop() {
-//        update navigation headers
-//        manager = new UserManager();
-//        currUser = manager.getCurrentUser();
-//        String[] names = currUser.getEmail().split("@");
-//
-//        navHeader.setText(currUser.getEmail().split("@")[0]);
-//        navHeaderEmail.setText(currUser.getEmail());
-        super.onStop();
-    }
+    /**
+     * Executes when the activity stops
+     */
+//    protected void onStop() {
+////        update navigation headers
+////        manager = new UserManager();
+////        currUser = manager.getCurrentUser();
+////        String[] names = currUser.getEmail().split("@");
+////
+////        navHeader.setText(currUser.getEmail().split("@")[0]);
+////        navHeaderEmail.setText(currUser.getEmail());
+//        super.onStop();
+//    }
 
     @Override
     public void onBackPressed() {
@@ -266,6 +269,9 @@ public class MuveeMainActivity extends AppCompatActivity
         return true;
     }
 
+    /**
+     * Communicate with MovieManager to update DVD list
+     */
     private void getDVD() {
         rvDisappear();
         MovieManager.getDVD(this, new Runnable() {
@@ -281,6 +287,9 @@ public class MuveeMainActivity extends AppCompatActivity
         rvAppear();
     }
 
+    /**
+     * Communicate with MovieManager to update recent list
+     */
     private void getRecent() {
         rvDisappear();
         MovieManager.getRecent(MuveeMainActivity.this, new Runnable() {
@@ -295,18 +304,27 @@ public class MuveeMainActivity extends AppCompatActivity
         rvAppear();
     }
 
+    /**
+     * Animation for RecyclerView to fade in
+     */
     private void rvAppear() {
         AlphaAnimation anim = new AlphaAnimation(0.0f, 1.0f);
         anim.setDuration(500);
         rv.startAnimation(anim);
     }
 
+    /**
+     * Animation for RecyclerView to fade out
+     */
     private void rvDisappear() {
         AlphaAnimation anim = new AlphaAnimation(1.0f, 0.0f);
         anim.setDuration(500);
         rv.startAnimation(anim);
     }
 
+    /**
+     * Perform logout
+     */
     private void logoutAction() {
         new AlertDialog.Builder(MuveeMainActivity.this)
                 .setTitle(R.string.app_name)
