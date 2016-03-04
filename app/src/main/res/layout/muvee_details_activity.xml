@@ -134,6 +134,7 @@
                         android:background="#607D8B"/>
 
                     <RatingBar
+                        android:id="@+id/rating_bar"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:stepSize="0.5"

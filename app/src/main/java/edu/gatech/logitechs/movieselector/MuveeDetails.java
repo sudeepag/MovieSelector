@@ -27,6 +27,8 @@ public class MuveeDetails extends AppCompatActivity {
     FloatingActionButton fabWrite;
     RatingBar ratingBar;
 
+    RatingData ratingMovie;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -49,6 +51,10 @@ public class MuveeDetails extends AppCompatActivity {
         detailsDescription = (TextView) findViewById(R.id.details_description);
         detailsDescription.setText(movieDescription);
 
+        ratingBar = (RatingBar) findViewById(R.id.rating_bar);
+
+        ratingMovie = MovieManager.getCurrentMovie();
+        ratingBar.setRating((float) ratingMovie.calculateRating());
 
         fabWrite = (FloatingActionButton) findViewById(R.id.fab);
         fabWrite.setOnClickListener(new View.OnClickListener() {
@@ -62,12 +68,16 @@ public class MuveeDetails extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
+        if (ratingBar.getRating() != 0.0f) {
+            updateRatings();
+        }
         super.onBackPressed();
-        RatingData ratingMovie = MovieManager.getCurrentMovie();
-        ratingMovie.addRating(3.5);
-        System.out.println(ratingMovie.calculateRating());
-        MovieManager.updateMovie(ratingMovie);
         overridePendingTransition(R.anim.pull_in_left, R.anim.push_out_right);
+    }
+
+    public void updateRatings() {
+        ratingMovie.addRating(ratingBar.getRating());
+        MovieManager.updateMovie(ratingMovie);
     }
 
     @Override
@@ -75,8 +85,8 @@ public class MuveeDetails extends AppCompatActivity {
         switch (item.getItemId()) {
             // Respond to the action bar's Up/Home button
             case android.R.id.home:
-                NavUtils.navigateUpFromSameTask(this);
-                overridePendingTransition(R.anim.pull_in_left, R.anim.push_out_right);
+//                NavUtils.navigateUpFromSameTask(this);
+                onBackPressed();
                 return true;
         }
         return super.onOptionsItemSelected(item);

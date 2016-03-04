@@ -38,7 +38,7 @@ public class MovieManager {
 
         @Override
         public void onChildAdded(DataSnapshot dataSnapshot, String s) {
-            System.out.println(dataSnapshot.getKey());
+//            System.out.println(dataSnapshot.getKey());
             currentMovie = dataSnapshot.getValue(RatingData.class);
         }
 
@@ -123,6 +123,7 @@ public class MovieManager {
                                     @Override
                                     public void onResponse(ImageLoader.ImageContainer response, boolean isImmediate) {
                                         movie.setThumbnail(response.getBitmap());
+                                        runnable.run();
                                     }
                                 });
                             } catch (JSONException e) {
@@ -133,7 +134,6 @@ public class MovieManager {
                         System.out.println(response);
                         e.printStackTrace();
                     }
-                    runnable.run();
                 }
             }, new Response.ErrorListener() {
                 @Override
@@ -211,6 +211,7 @@ public class MovieManager {
                                         @Override
                                         public void onResponse(ImageLoader.ImageContainer response, boolean isImmediate) {
                                             movie.setThumbnail(response.getBitmap());
+                                            runnable.run();
                                         }
                                     });
                                 } catch (JSONException e) {
@@ -221,7 +222,6 @@ public class MovieManager {
                             System.out.println(response);
                             e.printStackTrace();
                         }
-                        runnable.run();
                     }
                 }, new Response.ErrorListener() {
                     @Override
@@ -291,6 +291,7 @@ public class MovieManager {
                                         @Override
                                         public void onResponse(ImageLoader.ImageContainer response, boolean isImmediate) {
                                             movie.setThumbnail(response.getBitmap());
+                                            runnable.run();
                                         }
                                     });
                                 } catch (JSONException e) {
@@ -301,7 +302,6 @@ public class MovieManager {
                             System.out.println(response);
                             e.printStackTrace();
                         }
-                        runnable.run();
 
                     }
                 }, new Response.ErrorListener() {
