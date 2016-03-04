@@ -9,6 +9,7 @@ public class Movie {
     private String title;
     private int year;
     private int cScore;
+    private String id;
     private String description;
     private String actor1;
     private String actor2;
@@ -17,7 +18,9 @@ public class Movie {
     /**
      * No args constuctor for movie; needed for firebase
      */
-    public Movie() {}
+    public Movie() {
+        super();
+    }
 
     /**
      * Partial constructor for movie
@@ -26,7 +29,7 @@ public class Movie {
      * @param cScore   rating score of the movie
      */
     public Movie(String title, int year, int cScore) {
-        this (title, year, cScore, "", "", "");
+        this(title, year, cScore, "", "", "");
     }
 
     /**
@@ -55,6 +58,15 @@ public class Movie {
      */
     public String getTitle() {
         return title;
+    }
+
+
+    /**
+     * a getter for the movie's firebase id
+     * @return the movie's id
+     */
+    public String getId() {
+        return id;
     }
 
     /**
@@ -95,6 +107,16 @@ public class Movie {
     public void setThumbnail(Bitmap thumbnail) {
         this.thumbnail = thumbnail;
     }
+
+    /**
+     * set the id for firebase retrieval purposes
+     * @param id the new id of the movie
+     */
+    public void setId(String id)  {
+        this.id = id;
+    }
+
+
 
 
 }

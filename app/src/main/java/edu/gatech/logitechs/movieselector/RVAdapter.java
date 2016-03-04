@@ -62,6 +62,8 @@ public class RVAdapter extends RecyclerView.Adapter<RVAdapter.MovieViewHolder> {
                     (int) (movies.get(i).getThumbnail().getWidth() * 4),
                     (int) (movies.get(i).getThumbnail().getHeight() * 4),
                     false));
+        } else {
+            MovieViewHolder.movieImage.setImageBitmap(null);
         }
     }
 

@@ -27,6 +27,8 @@ import android.view.animation.AlphaAnimation;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -74,13 +76,14 @@ public class MuveeMainActivity extends AppCompatActivity
                 public void onItemClick(View view, int position) {
                     if (view instanceof LinearLayout) {
                         //User touched an item
-                        Intent myIntent = new Intent(MuveeMainActivity.this, MuveeDetails.class);
+                        final Intent myIntent = new Intent(MuveeMainActivity.this, MuveeDetails.class);
                         myIntent.putExtra("title", movies.get(position).getTitle());
                         myIntent.putExtra("description", movies.get(position).getDescription());
                         myIntent.putExtra("thumbnail", movies.get(position).getThumbnail());
-                        //TODO consider using startActivityForResult for the main screen to stay the same when user hits back
+                        MovieManager.queryMovieRating(movies.get(position).getTitle());
                         startActivity(myIntent);
                         overridePendingTransition(R.anim.pull_in_right, R.anim.push_out_left);
+                        //TODO consider using startActivityForResult for the main screen to stay the same when user hits back
                     }
                 }
             })
@@ -333,5 +336,7 @@ public class MuveeMainActivity extends AppCompatActivity
             }
         }).show();
     }
+
+
 
 }

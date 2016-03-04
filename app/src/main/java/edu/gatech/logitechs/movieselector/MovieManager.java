@@ -12,6 +12,10 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.ImageLoader;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
+import com.firebase.client.ChildEventListener;
+import com.firebase.client.DataSnapshot;
+import com.firebase.client.Firebase;
+import com.firebase.client.FirebaseError;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -20,11 +24,47 @@ import org.json.JSONObject;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 
 public class MovieManager {
     private static List<Movie> movieList;
+    private static Firebase ref = new Firebase("https://muvee.firebaseio.com/");
+    private static RatingData currentMovie;
+    private static String lastMovieTitle;
+    private static ChildEventListener eventListener = new ChildEventListener() {
+
+        @Override
+        public void onChildAdded(DataSnapshot dataSnapshot, String s) {
+            System.out.println(dataSnapshot.getKey());
+            currentMovie = dataSnapshot.getValue(RatingData.class);
+        }
+
+        @Override
+        public void onChildChanged(DataSnapshot dataSnapshot, String s) {
+            currentMovie = dataSnapshot.getValue(RatingData.class);
+
+        }
+
+        @Override
+        public void onChildRemoved(DataSnapshot dataSnapshot) {
+            currentMovie = dataSnapshot.getValue(RatingData.class);
+
+        }
+
+        @Override
+        public void onChildMoved(DataSnapshot dataSnapshot, String s) {
+            currentMovie = dataSnapshot.getValue(RatingData.class);
+
+        }
+
+        @Override
+        public void onCancelled(FirebaseError firebaseError) {
+            System.out.println("The read failed: " + firebaseError.getMessage());
+        }
+    };
 
     /*
     * A getter for movies recently released on DVD
@@ -281,9 +321,44 @@ public class MovieManager {
      */
     public static List<Movie> getMovieList() {
         if (movieList.size() == 0) {
-            movieList.add(new Movie("Sorry", 0, 0, "No movies found, please try again", "", ""));
+            Movie movie = new Movie("Sorry", 0, 0, "No movies found, please try again", "", "");
+            movie.setThumbnail(null);
+            movieList.add(movie);
         }
         return movieList;
+    }
+
+    public static void updateMovie(RatingData movie) {
+        Map<String, Object> map = new HashMap<>();
+        String key = null;
+        try {
+            key = URLEncoder.encode(movie.getTitle(), "UTF-8");
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        }
+        map.put("data", movie);
+        Firebase movieRef = ref.child("movies").child(key);
+        movieRef.setValue(map);
+    }
+
+    public static void queryMovieRating(String title) {
+        currentMovie = null;
+        String key = null;
+        try {
+            key = URLEncoder.encode(title, "UTF-8");
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        }
+        lastMovieTitle = title;
+        ref.child("movies").child(key).addChildEventListener(eventListener);
+
+    }
+
+    public static RatingData getCurrentMovie() {
+        if (currentMovie == null) {
+            return new RatingData(lastMovieTitle);
+        }
+       return currentMovie;
     }
 
 }

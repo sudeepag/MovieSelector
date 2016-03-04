@@ -10,6 +10,7 @@ import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.RatingBar;
 import android.widget.TextView;
 
 import org.w3c.dom.Text;
@@ -24,6 +25,7 @@ public class MuveeDetails extends AppCompatActivity {
     TextView detailsTitle;
     TextView detailsDescription;
     FloatingActionButton fabWrite;
+    RatingBar ratingBar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,6 +63,10 @@ public class MuveeDetails extends AppCompatActivity {
     @Override
     public void onBackPressed() {
         super.onBackPressed();
+        RatingData ratingMovie = MovieManager.getCurrentMovie();
+        ratingMovie.addRating(3.5);
+        System.out.println(ratingMovie.calculateRating());
+        MovieManager.updateMovie(ratingMovie);
         overridePendingTransition(R.anim.pull_in_left, R.anim.push_out_right);
     }
 
