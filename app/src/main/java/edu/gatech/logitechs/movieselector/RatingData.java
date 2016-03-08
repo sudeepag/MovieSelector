@@ -13,8 +13,11 @@ public class RatingData {
 
     public RatingData() {
         super();
+        sum = new HashMap<String, Double>();
+        numRating = new HashMap<String, Integer>();
     }
     public RatingData(String title) {
+        this();
         this.title = title;
     }
     public String getTitle() {
@@ -29,31 +32,48 @@ public class RatingData {
      * getter fpr num rating
      * @return numrating
      */
-    public int getNumRating(String major) {
+    public HashMap<String, Integer> getNumRating() {
+        return numRating;
+    }
+
+    public void setNumRating(HashMap<String, Integer> numRating) {
+        this.numRating = numRating;
+    }
+
+
+    public HashMap<String, Double>  getSum() {
+        return sum;
+    }
+
+    public void setSum(HashMap<String, Double> sum) {
+        this.sum = sum;
+    }
+
+    public int getMajorNumRating(String major) {
         return numRating.get(major) == null ? 0 : numRating.get(major);
     }
 
-    public double getSum(String major) {
+    public double getMajorSum(String major) {
         return sum.get(major) == null ? 0 : sum.get(major);
     }
 
-    public void setSum(String major, double sum) {
+    public void setMajorSum(String major, double sum) {
         this.sum.put(major, sum);
     }
 
-    public void setNumRating(String major, int numRating) {
+    public void setMajorNumRating(String major, int numRating) {
         this.numRating.put(major, numRating);
     }
 
     public void addRating(String major, double rating) {
         int majorRating = numRating.get(major) == null ? 0 : numRating.get(major);;
         double majorSum = sum.get(major) == null ? 0 : sum.get(major);
-        numRating.put(major, majorRating++);
-        sum.put(major, majorSum++);
+        numRating.put(major, majorRating + 1);
+        sum.put(major, majorSum + rating);
     }
 
     public double calculateRating(String major) {
-        return sum.get(major)/(numRating.get(major) == null ? 0 : numRating.get(major));
+        return sum.get(major) == null ? 0 : sum.get(major)/(numRating.get(major) == null ? 1 : numRating.get(major));
     }
 
 }

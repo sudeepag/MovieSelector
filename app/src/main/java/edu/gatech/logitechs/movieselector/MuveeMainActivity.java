@@ -84,9 +84,9 @@ public class MuveeMainActivity extends AppCompatActivity
 
                             @Override
                             public void run() {
-                                startActivity(myIntent);
                             }
                         });
+                        startActivity(myIntent);
                         overridePendingTransition(R.anim.pull_in_right, R.anim.push_out_left);
                         //TODO consider using startActivityForResult for the main screen to stay the same when user hits back
                     }
