@@ -34,37 +34,6 @@ public class MovieManager {
     private static Firebase ref = new Firebase("https://muvee.firebaseio.com/");
     private static RatingData currentMovie;
     private static String lastMovieTitle;
-    private static ChildEventListener eventListener = new ChildEventListener() {
-
-        @Override
-        public void onChildAdded(DataSnapshot dataSnapshot, String s) {
-//            System.out.println(dataSnapshot.getKey());
-            currentMovie = dataSnapshot.getValue(RatingData.class);
-        }
-
-        @Override
-        public void onChildChanged(DataSnapshot dataSnapshot, String s) {
-            currentMovie = dataSnapshot.getValue(RatingData.class);
-
-        }
-
-        @Override
-        public void onChildRemoved(DataSnapshot dataSnapshot) {
-            currentMovie = dataSnapshot.getValue(RatingData.class);
-
-        }
-
-        @Override
-        public void onChildMoved(DataSnapshot dataSnapshot, String s) {
-            currentMovie = dataSnapshot.getValue(RatingData.class);
-
-        }
-
-        @Override
-        public void onCancelled(FirebaseError firebaseError) {
-            System.out.println("The read failed: " + firebaseError.getMessage());
-        }
-    };
 
     /*
     * A getter for movies recently released on DVD
@@ -341,7 +310,7 @@ public class MovieManager {
         movieRef.setValue(map);
     }
 
-    public static void queryMovieRating(String title) {
+    public static void queryMovieRating(String title, final Runnable runnable) {
         currentMovie = null;
         String key = null;
         try {
@@ -350,7 +319,40 @@ public class MovieManager {
             e.printStackTrace();
         }
         lastMovieTitle = title;
-        ref.child("movies").child(key).addChildEventListener(eventListener);
+        ref.child("movies").child(key).addChildEventListener(new ChildEventListener() {
+            @Override
+            public void onChildAdded(DataSnapshot dataSnapshot, String s) {
+                System.out.println(dataSnapshot.getKey());
+                currentMovie = dataSnapshot.getValue(RatingData.class);
+                runnable.run();
+            }
+
+            @Override
+            public void onChildChanged(DataSnapshot dataSnapshot, String s) {
+                currentMovie = dataSnapshot.getValue(RatingData.class);
+                runnable.run();
+
+            }
+
+            @Override
+            public void onChildRemoved(DataSnapshot dataSnapshot) {
+                currentMovie = dataSnapshot.getValue(RatingData.class);
+                runnable.run();
+
+            }
+
+            @Override
+            public void onChildMoved(DataSnapshot dataSnapshot, String s) {
+                currentMovie = dataSnapshot.getValue(RatingData.class);
+                runnable.run();
+
+            }
+
+            @Override
+            public void onCancelled(FirebaseError firebaseError) {
+                System.out.println("The read failed: " + firebaseError.getMessage());
+            }
+        });
 
     }
 

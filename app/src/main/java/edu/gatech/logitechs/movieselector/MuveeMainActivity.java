@@ -80,8 +80,13 @@ public class MuveeMainActivity extends AppCompatActivity
                         myIntent.putExtra("title", movies.get(position).getTitle());
                         myIntent.putExtra("description", movies.get(position).getDescription());
                         myIntent.putExtra("thumbnail", movies.get(position).getThumbnail());
-                        MovieManager.queryMovieRating(movies.get(position).getTitle());
-                        startActivity(myIntent);
+                        MovieManager.queryMovieRating(movies.get(position).getTitle(), new Runnable() {
+
+                            @Override
+                            public void run() {
+                                startActivity(myIntent);
+                            }
+                        });
                         overridePendingTransition(R.anim.pull_in_right, R.anim.push_out_left);
                         //TODO consider using startActivityForResult for the main screen to stay the same when user hits back
                     }

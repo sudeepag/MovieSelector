@@ -54,7 +54,7 @@ public class MuveeDetails extends AppCompatActivity {
         ratingBar = (RatingBar) findViewById(R.id.rating_bar);
 
         ratingMovie = MovieManager.getCurrentMovie();
-        ratingBar.setRating((float) ratingMovie.calculateRating());
+        ratingBar.setRating((float) ratingMovie.calculateRating(UserManager.getCurrentUser().getMajor()));
 
         fabWrite = (FloatingActionButton) findViewById(R.id.fab);
         fabWrite.setOnClickListener(new View.OnClickListener() {
@@ -76,7 +76,7 @@ public class MuveeDetails extends AppCompatActivity {
     }
 
     public void updateRatings() {
-        ratingMovie.addRating(ratingBar.getRating());
+        ratingMovie.addRating(UserManager.getCurrentUser().getMajor(), ratingBar.getRating());
         MovieManager.updateMovie(ratingMovie);
     }
 
