@@ -33,7 +33,7 @@ public class MovieManager {
     private static List<Movie> movieList;
     private static Firebase ref = new Firebase("https://muvee.firebaseio.com/");
     private static RatingData currentMovie;
-    private static String lastMovieTitle;
+    private static Movie lastMovie;
 
     /*
     * A getter for movies recently released on DVD
@@ -310,15 +310,15 @@ public class MovieManager {
         movieRef.setValue(map);
     }
 
-    public static void queryMovieRating(String title, final Runnable runnable) {
+    public static void queryMovieRating(Movie movie, final Runnable runnable) {
         currentMovie = null;
         String key = null;
         try {
-            key = URLEncoder.encode(title, "UTF-8");
+            key = URLEncoder.encode(movie.getTitle(), "UTF-8");
         } catch (UnsupportedEncodingException e) {
             e.printStackTrace();
         }
-        lastMovieTitle = title;
+        lastMovie = movie;
         ref.child("movies").child(key).addChildEventListener(new ChildEventListener() {
             @Override
             public void onChildAdded(DataSnapshot dataSnapshot, String s) {
@@ -358,7 +358,7 @@ public class MovieManager {
 
     public static RatingData getCurrentMovie() {
         if (currentMovie == null) {
-            return new RatingData(lastMovieTitle);
+            return new RatingData(lastMovie.getTitle(),  lastMovie.getId());
         }
        return currentMovie;
     }
