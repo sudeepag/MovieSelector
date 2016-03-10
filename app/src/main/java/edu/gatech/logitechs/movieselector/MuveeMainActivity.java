@@ -81,7 +81,7 @@ public class MuveeMainActivity extends AppCompatActivity
                         myIntent.putExtra("title", movies.get(position).getTitle());
                         myIntent.putExtra("description", movies.get(position).getDescription());
                         myIntent.putExtra("thumbnail", movies.get(position).getThumbnail());
-                        MovieManager.queryMovieRating(movies.get(position).getTitle(), new Runnable() {
+                        MovieManager.queryMovieRating(movies.get(position), new Runnable() {
 
                             @Override
                             public void run() {
@@ -101,7 +101,7 @@ public class MuveeMainActivity extends AppCompatActivity
         fab.setOnClickListener(new View.OnClickListener() {
                @Override
                public void onClick(View view) {
-                    //TODO get recommendation
+                    getRecomendation();
                }
            });
 
@@ -310,6 +310,27 @@ public class MuveeMainActivity extends AppCompatActivity
 
             }
         });
+        adapter.updateMovieList(movies);
+        rvAppear();
+    }
+
+    /**
+     * Communicate with MovieManager to update recent list
+     */
+    private void getRecomendation() {
+        rvDisappear();
+        ArrayList<Integer> requestedMovies = new ArrayList<Integer>();
+        requestedMovies.add(770860165);
+        requestedMovies.add(771203390);
+        requestedMovies.add(770863875);
+        requestedMovies.add(770739679);
+        MovieManager.getMoviesFromIds(MuveeMainActivity.this, new Runnable() {
+            @Override
+            public void run() {
+                movies = MovieManager.getMovieList();
+                adapter.updateMovieList(movies);
+            }
+        }, requestedMovies);
         adapter.updateMovieList(movies);
         rvAppear();
     }

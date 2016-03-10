@@ -202,6 +202,72 @@ public class MovieManager {
         VolleySingleton.getInstance(context).addToRequestQueue(jsObjRequest);
     }
 
+    public static void getMoviesFromIds(final Context context, final Runnable runnable, List<Integer> list) {
+        movieList = new ArrayList<Movie>(list.size());
+        for (Integer movie : list) {
+            String url = String.format("http://api.rottentomatoes.com/api/public/v1.0/movies/%d.json?apikey=%s",movie, "yedukp76ffytfuy24zsqk7f5");
+            JsonObjectRequest jsObjRequest = new JsonObjectRequest
+                    (Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
+                        @Override
+                        public void onResponse(JSONObject response) {
+                            System.out.print("-------Searches---------");
+                            JSONObject object = response;
+                            try {
+                                String title = object.getString("title");
+                                int year = object.getInt("year");
+                                String description = object.getString("synopsis");
+                                if (description.equals("")) {
+                                    description = "Description Unavailable";
+                                }
+
+                                JSONObject rating = object.getJSONObject("ratings");
+                                int critics_score = rating.getInt("critics_score");
+
+
+                                JSONArray cast = object.getJSONArray("abridged_cast");
+                                String actor1 = "";
+                                String actor2 = "";
+                                if (cast.length() >= 2) {
+                                    actor1 = cast.getJSONObject(0).getString("name");
+                                    actor2 = cast.getJSONObject(1).getString("name");
+                                } else if (cast.length() >= 1) {
+                                    actor1 = cast.getJSONObject(0).getString("name");
+                                }
+                                System.out.println(new Movie(title, year, critics_score,
+                                        description, actor1, actor2));
+                                final Movie movie = new Movie(title, year, critics_score,
+                                        description, actor1, actor2);
+                                movieList.add(movie);
+                                JSONObject posters = object.getJSONObject("posters");
+                                String url = posters.getString("thumbnail");
+                                VolleySingleton.getInstance(context).getImageLoader().get(url, new ImageLoader.ImageListener() {
+                                    @Override
+                                    public void onErrorResponse(VolleyError error) {
+
+                                    }
+
+                                    @Override
+                                    public void onResponse(ImageLoader.ImageContainer response, boolean isImmediate) {
+                                        movie.setThumbnail(response.getBitmap());
+                                        runnable.run();
+                                    }
+                                });
+                            } catch (JSONException e) {
+                                System.out.println(e.getMessage());
+                            }
+
+                        }
+                    }, new Response.ErrorListener() {
+                        @Override
+                        public void onErrorResponse(VolleyError error) {
+                            System.out.println(error.getMessage());
+                            // TODO Auto-generated method stub
+                        }
+                    });
+            VolleySingleton.getInstance(context).addToRequestQueue(jsObjRequest);
+        }
+    }
+
 
     /*
     * A getter for recent movies
