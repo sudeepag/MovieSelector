@@ -9,25 +9,45 @@ import java.util.HashMap;
 public class RatingData {
     private HashMap<String, Integer> numRating;
     private HashMap<String, Double> sum;
+    private HashMap<String, Double> average;
     private String title;
+    private String uid;
 
     public RatingData() {
         super();
         sum = new HashMap<String, Double>();
         numRating = new HashMap<String, Integer>();
     }
-    public RatingData(String title) {
+    public RatingData(String title, String uid) {
         this();
         this.title = title;
+        this.uid = uid;
     }
+
+    public String getUid() {
+        return uid;
+    }
+
+    public void setUid(String uid) {
+        this.uid = uid;
+    }
+
     public String getTitle() {
         return title;
     }
 
     public void setTitle(String title) {
         this.title = title;
-
     }
+
+    public void setAverage(HashMap<String, Double> average) {
+        this.average = average;
+    }
+
+    public HashMap<String, Double> getAverage() {
+        return average;
+    }
+
     /**
      * getter fpr num rating
      * @return numrating
@@ -73,7 +93,9 @@ public class RatingData {
     }
 
     public double calculateRating(String major) {
-        return sum.get(major) == null ? 0 : sum.get(major)/(numRating.get(major) == null ? 1 : numRating.get(major));
+        double average = sum.get(major) == null ? 0 : sum.get(major)/(numRating.get(major) == null ? 1 : numRating.get(major));
+        this.average.put(major, average);
+        return average;
     }
 
 }
