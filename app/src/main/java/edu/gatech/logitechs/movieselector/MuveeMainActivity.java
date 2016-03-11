@@ -324,13 +324,20 @@ public class MuveeMainActivity extends AppCompatActivity
         requestedMovies.add(771203390);
         requestedMovies.add(770863875);
         requestedMovies.add(770739679);
-        MovieManager.getMoviesFromIds(MuveeMainActivity.this, new Runnable() {
+        MovieManager.getRankedMovies(MuveeMainActivity.this, new Runnable() {
             @Override
             public void run() {
                 movies = MovieManager.getMovieList();
                 adapter.updateMovieList(movies);
             }
-        }, requestedMovies);
+        }, "Computer Science");
+//        MovieManager.getMoviesFromIds(MuveeMainActivity.this, new Runnable() {
+//            @Override
+//            public void run() {
+//                movies = MovieManager.getMovieList();
+//                adapter.updateMovieList(movies);
+//            }
+//        }, "770739679");
         adapter.updateMovieList(movies);
         rvAppear();
     }
