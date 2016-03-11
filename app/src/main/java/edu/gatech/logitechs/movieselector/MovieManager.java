@@ -25,6 +25,8 @@ import org.json.JSONObject;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
@@ -35,7 +37,7 @@ public class MovieManager {
     private static Firebase ref = new Firebase("https://muvee.firebaseio.com/");
     private static RatingData currentMovie;
     private static Movie lastMovie;
-    private static List<Integer> ratedIds;
+    private static List<String> orderedIds;
 
     /*
     * A getter for movies recently released on DVD
@@ -240,7 +242,13 @@ public class MovieManager {
                             final Movie movie = new Movie(title, year, critics_score,
                                     description, actor1, actor2);
                             movie.setId(object.getString("id"));
-                            movieList.add(0, movie);
+                            movieList.add(movie);
+                            Collections.sort(movieList, new Comparator<Movie>() {
+                                @Override
+                                public int compare(Movie lhs, Movie rhs) {
+                                    return orderedIds.indexOf(lhs.getId()) - orderedIds.indexOf(rhs.getId());
+                                }
+                            });
                             JSONObject posters = object.getJSONObject("posters");
                             String url = posters.getString("thumbnail");
                             VolleySingleton.getInstance(context).getImageLoader().get(url, new ImageLoader.ImageListener() {
@@ -435,6 +443,8 @@ public class MovieManager {
     public static void getRankedMovies(final Context context, final Runnable runnable, final String major) {
         Firebase movieRef = ref.child("movies");
         movieList = new ArrayList<Movie>();
+        orderedIds = new ArrayList<String>();
+
         Query query = movieRef.orderByChild("data/average/" + major);
         query.addChildEventListener(new ChildEventListener() {
             @Override
@@ -443,6 +453,7 @@ public class MovieManager {
                     RatingData data = child.getValue(RatingData.class);
                     if(data.getAverage().containsKey(major)) {
                         getMoviesFromIds(context, runnable, data.getUid());
+                        orderedIds.add(0, data.getUid());
                     }
                     System.out.println(dataSnapshot.toString());
                 }
