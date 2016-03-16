@@ -17,6 +17,7 @@ public class RatingData {
         super();
         sum = new HashMap<String, Double>();
         numRating = new HashMap<String, Integer>();
+        average = new HashMap<String, Double>();
     }
     public RatingData(String title, String uid) {
         this();
@@ -90,6 +91,8 @@ public class RatingData {
         double majorSum = sum.get(major) == null ? 0 : sum.get(major);
         numRating.put(major, majorRating + 1);
         sum.put(major, majorSum + rating);
+        double average = sum.get(major) == null ? 0 : sum.get(major)/(numRating.get(major) == null ? 1 : numRating.get(major));
+        this.average.put(major, average);
     }
 
     public double calculateRating(String major) {
