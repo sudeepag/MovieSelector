@@ -62,6 +62,7 @@ public class MovieManager {
                                 JSONObject object = array.getJSONObject(i);
                                 String title = object.getString("title");
                                 int year = object.getInt("year");
+                                String uID = object.getString("id");
                                 String description = object.getString("synopsis");
                                 if (description.equals("")) {
                                     description = "Description Unavailable";
@@ -84,7 +85,7 @@ public class MovieManager {
                                         description, actor1, actor2));
                                 final Movie movie = new Movie(title, year, critics_score,
                                         description, actor1, actor2);
-                                movie.setId(object.getString("id"));
+                                movie.setId(uID);
                                 movieList.add(movie);
                                 JSONObject posters = object.getJSONObject("posters");
                                 String url = posters.getString("thumbnail");
@@ -151,6 +152,7 @@ public class MovieManager {
                                     JSONObject object = array.getJSONObject(i);
                                     String title = object.getString("title");
                                     int year = object.getInt("year");
+                                    String uID = object.getString("id");
                                     String description = object.getString("synopsis");
                                     if (description.equals("")) {
                                         description = "Description Unavailable";
@@ -173,7 +175,7 @@ public class MovieManager {
                                             description, actor1, actor2));
                                     final Movie movie = new Movie(title, year, critics_score,
                                             description, actor1, actor2);
-                                    movie.setId(object.getString("id"));
+                                    movie.setId(uID);
                                     movieList.add(movie);
                                     JSONObject posters = object.getJSONObject("posters");
                                     String url = posters.getString("thumbnail");
@@ -302,6 +304,7 @@ public class MovieManager {
                                     JSONObject object = array.getJSONObject(i);
                                     String title = object.getString("title");
                                     int year = object.getInt("year");
+                                    String uID = object.getString("id");
                                     String description = object.getString("synopsis");
                                     if (description.equals("")) {
                                         description = "Description Unavailable";
@@ -324,7 +327,7 @@ public class MovieManager {
                                             description, actor1, actor2));
                                     final Movie movie = new Movie(title, year, critics_score,
                                             description, actor1, actor2);
-                                    movie.setId(object.getString("id"));
+                                    movie.setId(uID);
                                     movieList.add(movie);
                                     JSONObject posters = object.getJSONObject("posters");
                                     String url = posters.getString("thumbnail");
