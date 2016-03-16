@@ -4,6 +4,8 @@ package edu.gatech.logitechs.movieselector;
  * Created by matth_000 on 2/7/2016.
  */
 
+import android.content.Context;
+
 import com.firebase.client.AuthData;
 import com.firebase.client.ChildEventListener;
 import com.firebase.client.DataSnapshot;
@@ -11,13 +13,16 @@ import com.firebase.client.Firebase;
 import com.firebase.client.FirebaseError;
 import com.firebase.client.ValueEventListener;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class UserManager {
 
     private static Firebase ref = new Firebase("https://muvee.firebaseio.com/");
     public static User currentUser;
+    public static List<User> userList;
     private static ChildEventListener eventListener = new ChildEventListener() {
 
         @Override
@@ -199,6 +204,7 @@ public class UserManager {
                 currentUser = user;
                 user.setUID((String) result.get("uid"));
             }
+
             @Override
             public void onError(FirebaseError firebaseError) {
                 System.out.println(firebaseError.getMessage());
@@ -238,11 +244,56 @@ public class UserManager {
                 });
 
             }
+
             @Override
             public void onAuthenticationError(FirebaseError firebaseError) {
                 runnable.run();
                 // there was an error
             }
         });
+    }
+
+    public static void lockUser(String id) {
+        Firebase userRef = ref.child("user").child(id).child("data").child("locked");
+        userRef.setValue(true);
+    }
+    public static void unlockUser(String id) {
+        Firebase userRef = ref.child("user").child(id).child("data").child("locked");
+        userRef.setValue(false);
+    }
+    public static void banUser(String id) {
+        Firebase userRef = ref.child("user").child(id).child("data").child("banned");
+        userRef.setValue(true);
+    }
+    public static void unbanUser(String id) {
+        Firebase userRef = ref.child("user").child(id).child("data").child("banned");
+        userRef.setValue(false);
+    }
+    public static void poppulateUserList(Context context) {
+        userList = new ArrayList<User>();
+        Firebase userRef = ref.child("user");
+        userRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot snapshot) {
+                for (DataSnapshot dataSnapshot : snapshot.getChildren())
+                    userList.add(dataSnapshot.getValue(User.class));
+            }
+
+            @Override
+            public void onCancelled(FirebaseError firebaseError) {
+                System.out.println("The read failed: " + firebaseError.getMessage());
+            }
+        });
+    }
+
+    public int square(Integer n) {
+        int q = 0;
+        if (n == 1) {
+            return 1;
+        }
+        while(q < square(n - 1) + 2 * n + 1) {
+            q++;
+        }
+        return q;
     }
 }
