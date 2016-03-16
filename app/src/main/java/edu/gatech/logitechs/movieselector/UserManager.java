@@ -53,37 +53,8 @@ public class UserManager {
 
     /**
      * constructor for user manager
-     * creates listener for added changed or deleted user values that updates list of users
      */
-    public UserManager() {
-//       Firebase userRef = ref.child("User");
-//        userRef.addChildEventListener(new ChildEventListener() {
-//            // Retrieve new posts as they are added to the database
-//            @Override
-//            public void onChildAdded(DataSnapshot snapshot, String previousChildKey) {
-//                User newUser = snapshot.getValue(User.class);
-//                userList.put(newUser.getEmail(), newUser);
-//
-//            }
-//            public void onChildRemoved(DataSnapshot snapshot) {
-//                User newUser = snapshot.getValue(User.class);
-//                userList.remove(newUser.getEmail());
-//            }
-//            public void onChildChanged(DataSnapshot snapshot, String previousChildKey) {
-//                User newUser = snapshot.getValue(User.class);
-//                userList.put(newUser.getEmail(), newUser);
-//            }
-//            public void onChildMoved(DataSnapshot snapshot, String previousChildKey) {
-//                User newUser = snapshot.getValue(User.class);
-//                userList.put(newUser.getEmail(), newUser);
-//            }
-//            public void onCancelled(FirebaseError firebaseError) {
-//                System.out.println("The read failed: " + firebaseError.getMessage());
-//            }
-//            //... ChildEventListener also defines onChildChanged, onChildRemoved,
-//            //    onChildMoved and onCanceled, covered in later sections.
-//        });
-    }
+    public UserManager() {}
 
     /**
      * Method to add user to database of users
@@ -173,8 +144,6 @@ public class UserManager {
         String newEmail = user.getEmail();
 
         Firebase userRef = ref.child("User");
-//        userRef.setValue(user);
-//        return true;
         userRef.createUser(user.getEmail(), user.getPassword(), new Firebase.ValueResultHandler<Map<String, Object>>() {
             @Override
             public void onSuccess(Map<String, Object> result) {
