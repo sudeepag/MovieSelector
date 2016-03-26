@@ -10,9 +10,12 @@ public class User {
    // private Majors majorEnum;
     private String major;
     private String UID;
+    private boolean admin;
+    private boolean locked;
+    private boolean banned;
 
     /**
-     * User constructor. Only here because requried for use by FireBase
+     * User constructor. Only here because required for use by FireBase
      */
     public User() {
         super();
@@ -82,7 +85,54 @@ public class User {
 //        return majorEnum.getMajorString();
 //    }
 
+    /**
+     * getter for boolean isAdmin
+     *
+     * @return value for isAdmin
+     */
+    public boolean isAdmin() {
+        return admin;
+    }
 
+    /**
+     * Setter for the admin value
+     * @param value the new admin boolean
+     */
+    public void setAdmin(boolean value) {
+        admin = value;
+    }
+
+    /**
+     * getter for the locked boolean
+     * @return the locked boolean
+     */
+    public boolean isLocked() {
+        return locked;
+    }
+
+    /**
+     * setter for the locken boolean
+     * @param value the new value for the locked variable
+     */
+    public void setLocked(boolean value) {
+        locked = value;
+    }
+
+    /**
+     * getter for the banned boolean
+     * @return the value of the banned variable
+     */
+    public boolean isBanned() {
+        return banned;
+    }
+
+    /**
+     * Setter for the banned variable
+     * @param value the new value for the banned boolean
+     */
+    public void setBanned(boolean value) {
+        banned = value;
+    }
     /**
      * get the email of the user
      * @return String representation of user email
@@ -100,10 +150,18 @@ public class User {
         return password;
     }
 
+    /**
+     * getter for UID
+     * @return the userID for the user
+     */
     public String getUID() {
         return UID;
     }
 
+    /**
+     * setter for UID
+     * @param UID the UserID of the user
+     */
     public void setUID(String UID) {
         this.UID = UID;
     }
