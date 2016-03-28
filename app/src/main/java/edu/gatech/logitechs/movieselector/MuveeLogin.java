@@ -324,9 +324,15 @@ public class MuveeLogin extends AppCompatActivity {
             showProgress(false);
 
             if (success) {
-                finish();
-                Intent myIntent = new Intent(MuveeLogin.this,MuveeMainActivity.class);
-                MuveeLogin.this.startActivity(myIntent);
+                if (mEmail.equals("admin@admin.com") && mPassword.equals("admin")) {
+                    finish();
+                    Intent myIntent = new Intent(MuveeLogin.this,MuveeAdminActivity.class);
+                    MuveeLogin.this.startActivity(myIntent);
+                } else {
+                    finish();
+                    Intent myIntent = new Intent(MuveeLogin.this,MuveeMainActivity.class);
+                    MuveeLogin.this.startActivity(myIntent);
+                }
             } else {
                 mPasswordView.setError(getString(R.string.error_incorrect_password));
                 mPasswordView.requestFocus();
