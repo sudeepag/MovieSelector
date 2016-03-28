@@ -99,6 +99,10 @@ public class UserManager {
         return currentUser;
     }
 
+    public static List<User> getUserList() {
+        return  userList;
+    }
+
     /*
     * Essentially a setter for current user
     *
@@ -269,14 +273,16 @@ public class UserManager {
         Firebase userRef = ref.child("user").child(id).child("data").child("banned");
         userRef.setValue(false);
     }
-    public static void poppulateUserList(Context context) {
+    public static void poppulateUserList(Context context, final Runnable runnable) {
         userList = new ArrayList<User>();
-        Firebase userRef = ref.child("user");
+        Firebase userRef = ref.child("users");
         userRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot snapshot) {
-                for (DataSnapshot dataSnapshot : snapshot.getChildren())
-                    userList.add(dataSnapshot.getValue(User.class));
+                for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
+                        userList.add(dataSnapshot.child("data").getValue(User.class));
+                }
+                runnable.run();
             }
 
             @Override

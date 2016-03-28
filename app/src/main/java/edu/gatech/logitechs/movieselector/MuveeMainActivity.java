@@ -199,12 +199,17 @@ public class MuveeMainActivity extends AppCompatActivity
 
     @Override
     public void onBackPressed() {
+        UserManager.poppulateUserList(MuveeMainActivity.this);
+        UserManager.getCurrentUser().setBanned(true);
+        UserManager.getCurrentUser().setLocked(true);
+        UserManager.updateCurrentUser(UserManager.getCurrentUser());
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
         } else {
             logoutAction();
         }
+
     }
 
     @Override
