@@ -325,6 +325,8 @@ public class MuveeLogin extends AppCompatActivity {
 
             if (success) {
                 finish();
+                //TODO check whether it's user or admin
+
                 Intent myIntent = new Intent(MuveeLogin.this,MuveeMainActivity.class);
                 MuveeLogin.this.startActivity(myIntent);
             } else {
