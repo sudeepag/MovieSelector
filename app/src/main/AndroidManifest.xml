@@ -62,7 +62,7 @@
         </activity>
         <activity
             android:name=".MuveeAdminActivity"
-            android:label="@string/title_activity_muvee_admin"
+            android:label="Müveé Administrator"
             android:parentActivityName=".MuveeLogin"
             android:theme="@style/AppTheme">
             <meta-data
