@@ -24,6 +24,7 @@ public class RVAdminAdapter extends RecyclerView.Adapter<RVAdminAdapter.UserView
         public UserViewHolder(View itemView) {
             super(itemView);
             cvAdmin = (CardView)itemView.findViewById(R.id.cv_admin);
+            System.out.println("HEYHEY" + (CardView) itemView.findViewById(R.id.cv_admin));
             userTitle = (TextView)itemView.findViewById(R.id.admin_user);
         }
     }
@@ -52,7 +53,7 @@ public class RVAdminAdapter extends RecyclerView.Adapter<RVAdminAdapter.UserView
 
     @Override
     public UserViewHolder onCreateViewHolder(ViewGroup viewGroup, int i) {
-        View v = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.muvee_card_view_row, viewGroup, false);
+        View v = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.muvee_admin_card_view_row, viewGroup, false);
         UserViewHolder pvh = new UserViewHolder(v);
         return pvh;
     }

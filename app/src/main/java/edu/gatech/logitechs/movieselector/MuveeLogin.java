@@ -288,7 +288,6 @@ public class MuveeLogin extends AppCompatActivity {
         Intent myIntent;
         if (UserManager.getCurrentUser().isAdmin()) {
             myIntent = new Intent(this,MuveeAdminActivity.class);
-            UserManager.poppulateUserList(this);
         } else {
             myIntent = new Intent(this,MuveeMainActivity.class);
         }

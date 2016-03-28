@@ -32,6 +32,8 @@ public class MuveeAdminActivity extends AppCompatActivity {
         rv.setLayoutManager(layoutManager);
         rv.setAdapter(adapter);
 
+        initListOfUsers();
+
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -43,4 +45,13 @@ public class MuveeAdminActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     }
 
+    private void initListOfUsers() {
+        UserManager.poppulateUserList(this, new Runnable() {
+            @Override
+            public void run() {
+                adapter.updateUserList(UserManager.getUserList());
+            }
+        });
+        
+    }
 }

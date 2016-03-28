@@ -9,7 +9,7 @@ import android.view.View;
 import android.widget.TextView;
 import android.widget.ToggleButton;
 
-public class muvee_admin_user_priv extends AppCompatActivity {
+public class MuveeAdminUserPriv extends AppCompatActivity {
 
     private User currUser;
     private TextView banTextView;
