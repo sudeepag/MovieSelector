@@ -214,7 +214,6 @@ public class MuveeLogin extends AppCompatActivity {
 
             //start authentication
             UserManager manager = new UserManager();
-            //System.out.println(manager.getCurrentUser().getEmail());
             manager.authenticateUser(email, password, MuveeLogin.this, new Runnable() {
 
                 @Override
