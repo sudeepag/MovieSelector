@@ -297,11 +297,11 @@ public class MuveeLogin extends AppCompatActivity {
             if (UserManager.getCurrentUser().isBanned()) {
                 showProgress(false);
                 mPasswordView.setError("User is Banned");
-                mEmailView.requestFocus();
+                mPasswordView.requestFocus();
             } else if (UserManager.getCurrentUser().isLocked()) {
                 showProgress(false);
                 mPasswordView.setError("User is Locked");
-                mEmailView.requestFocus();
+                mPasswordView.requestFocus();
             } else {
                 myIntent = new Intent(this,MuveeMainActivity.class);
                 this.startActivity(myIntent);
