@@ -149,7 +149,7 @@ public class UserManager {
     * @param  runnable  The Runnable to execute upon completion of the synchronous method
     * @param  consumer  the consumer to handle error messages from firebase
      */
-    public static void changeEmail(final User user, final String email, final Runnable runnable,final Consumer consumer) {
+    public static void changeEmail(final User user, final String email, final Runnable runnable, final Consumer consumer) {
         ref.changeEmail(user.getEmail(), user.getPassword(), email, new Firebase.ResultHandler() {
             @Override
             public void onSuccess() {
