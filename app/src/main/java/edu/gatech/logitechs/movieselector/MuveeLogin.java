@@ -285,6 +285,8 @@ public class MuveeLogin extends AppCompatActivity {
      * Transition to the main Movies page after login
      */
     public void transition() {
+        //TODO change this to
+        //if (user.isAdmin())
         String email = mEmailView.getText().toString();
         String password = mPasswordView.getText().toString();
         if (email.equals("admin@admin.com") && password.equals("admin")) {
@@ -331,6 +333,8 @@ public class MuveeLogin extends AppCompatActivity {
             showProgress(false);
 
             if (success) {
+                //TODO change this to
+                //if (user.isAdmin())
                 if (mEmail.equals("admin@admin.com") && mPassword.equals("admin")) {
                     finish();
                     Intent myIntent = new Intent(MuveeLogin.this,MuveeAdminActivity.class);
