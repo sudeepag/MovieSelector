@@ -6,15 +6,27 @@ import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
+import android.widget.TextView;
+import android.widget.ToggleButton;
 
 public class muvee_admin_user_priv extends AppCompatActivity {
 
+    private User currUser;
+    private TextView banTextView;
+    private TextView lockTextView;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.muvee_admin_user_priv_activity);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+
+        banTextView = (TextView)findViewById(R.id.ban_text);
+        banTextView.setVisibility(View.INVISIBLE);
+
+        lockTextView = (TextView)findViewById(R.id.ban_text);
+        lockTextView.setVisibility(View.INVISIBLE);
+
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
@@ -25,6 +37,25 @@ public class muvee_admin_user_priv extends AppCompatActivity {
             }
         });
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+    }
+    public void changeBanState(View view) {
+        boolean checked = ((ToggleButton)view).isChecked();
+        if (checked) {
+            banTextView.setText("unban");
+            banTextView.setVisibility(View.VISIBLE);
+        } else {
+            banTextView.setText("ban");
+        }
+    }
+
+    public void changeLockState(View view) {
+        boolean checked = ((ToggleButton)view).isChecked();
+        if (checked) {
+            lockTextView.setText("unlock");
+            lockTextView.setVisibility(View.VISIBLE);
+        } else {
+            lockTextView.setText("lock");
+        }
     }
 
 }

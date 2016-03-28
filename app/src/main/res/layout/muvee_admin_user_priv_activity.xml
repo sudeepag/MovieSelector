@@ -33,7 +33,14 @@
             android:textOn="unban"
             android:textOff="ban"
             android:layout_gravity="center_horizontal"
+            android:onClick="changeBanState"
             />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="placeholder"
+            android:id="@+id/ban_text"
+            android:layout_gravity="center_horizontal"/>
 
         <ToggleButton
             android:layout_width="wrap_content"
@@ -42,7 +49,14 @@
             android:textOn="unlock"
             android:textOff="lock"
             android:layout_gravity="center_horizontal"
+            android:onClick="changeLockState"
             />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="placeholder"
+            android:id="@+id/lock_text"
+            android:layout_gravity="center_horizontal"/>
 
 
     </LinearLayout>
