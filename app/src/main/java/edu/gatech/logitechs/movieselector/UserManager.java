@@ -238,6 +238,7 @@ public class UserManager {
                         for (DataSnapshot dataSnapshot : snapshot.getChildren())
                             currentUser = dataSnapshot.getValue(User.class);
                         context.transition();
+                        runnable.run();
                         context.finish();
                     }
 
@@ -258,24 +259,24 @@ public class UserManager {
     }
 
     public static void lockUser(String id) {
-        Firebase userRef = ref.child("user").child(id).child("data").child("locked");
+        Firebase userRef = ref.child("users").child(id).child("data").child("locked");
         userRef.setValue(true);
     }
     public static void unlockUser(String id) {
-        Firebase userRef = ref.child("user").child(id).child("data").child("locked");
+        Firebase userRef = ref.child("users").child(id).child("data").child("locked");
         userRef.setValue(false);
     }
     public static void banUser(String id) {
-        Firebase userRef = ref.child("user").child(id).child("data").child("banned");
+        Firebase userRef = ref.child("users").child(id).child("data").child("banned");
         userRef.setValue(true);
     }
     public static void unbanUser(String id) {
-        Firebase userRef = ref.child("user").child(id).child("data").child("banned");
+        Firebase userRef = ref.child("users").child(id).child("data").child("banned");
         userRef.setValue(false);
     }
     public static void poppulateUserList(Context context, final Runnable runnable) {
         userList = new ArrayList<User>();
-        Firebase userRef = ref.child("users");
+        final Firebase userRef = ref.child("users");
         userRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot snapshot) {
@@ -285,6 +286,7 @@ public class UserManager {
                         userList.add(dataSnapshot.child("data").getValue(User.class));
                     }
                 }
+                userRef.removeEventListener(this);
                 runnable.run();
             }
 

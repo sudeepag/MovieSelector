@@ -288,10 +288,21 @@ public class MuveeLogin extends AppCompatActivity {
         Intent myIntent;
         if (UserManager.getCurrentUser().isAdmin()) {
             myIntent = new Intent(this,MuveeAdminActivity.class);
+            this.startActivity(myIntent);
         } else {
-            myIntent = new Intent(this,MuveeMainActivity.class);
+            if (UserManager.getCurrentUser().isBanned()) {
+                showProgress(false);
+                mPasswordView.setError("User is Banned");
+                mEmailView.requestFocus();
+            } else if (UserManager.getCurrentUser().isLocked()) {
+                showProgress(false);
+                mPasswordView.setError("User is Locked");
+                mEmailView.requestFocus();
+            } else {
+                myIntent = new Intent(this,MuveeMainActivity.class);
+                this.startActivity(myIntent);
+            }
         }
-        this.startActivity(myIntent);
     }
 
     /**
