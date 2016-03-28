@@ -11,7 +11,7 @@ import android.widget.TextView;
 
 import java.util.List;
 
-public class RVAdapter extends RecyclerView.Adapter<RVAdapter.MovieViewHolder> {
+public class RVMainAdapter extends RecyclerView.Adapter<RVMainAdapter.MovieViewHolder> {
 
     public static class MovieViewHolder extends RecyclerView.ViewHolder {
 
@@ -36,7 +36,7 @@ public class RVAdapter extends RecyclerView.Adapter<RVAdapter.MovieViewHolder> {
 
     List<Movie> movies;
 
-    RVAdapter(List<Movie> movies){
+    RVMainAdapter(List<Movie> movies){
         this.movies = movies;
     }
 

@@ -28,8 +28,6 @@ import android.view.animation.AlphaAnimation;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import java.io.UnsupportedEncodingException;
-import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -51,7 +49,7 @@ public class MuveeMainActivity extends AppCompatActivity
     MenuItem searchMenuItem;
 
     private List<Movie> movies = new ArrayList<>();
-    public final RVAdapter adapter = new RVAdapter(movies);
+    public final RVMainAdapter adapter = new RVMainAdapter(movies);
 
     boolean isAtMainPage;
 
