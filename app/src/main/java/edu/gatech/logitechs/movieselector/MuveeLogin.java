@@ -214,13 +214,17 @@ public class MuveeLogin extends AppCompatActivity {
 
             //start authentication
             UserManager manager = new UserManager();
-            manager.authenticateUser(email, password, MuveeLogin.this, new Runnable() {
+            manager.authenticateUser(email, password, MuveeLogin.this, new Consumer() {
 
                 @Override
-                public void run() {
+                public void consume(String message) {
                     showProgress(false);
-                    mPasswordView.setError(getString(R.string.error_incorrect_password));
-                    mPasswordView.requestFocus();
+                    if (message.equals("valid")) {
+                        transition();
+                    } else {
+                        mPasswordView.setError(message);
+                        mPasswordView.requestFocus();
+                    }
                 }
             });
         }

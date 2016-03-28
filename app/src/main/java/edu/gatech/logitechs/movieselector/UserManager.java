@@ -225,7 +225,7 @@ public class UserManager {
      *
      * @return true if the input email and password match, false otherwise
      */
-    public void authenticateUser(String email, String pass, final MuveeLogin context, final Runnable runnable) {
+    public void authenticateUser(String email, String pass, final MuveeLogin context, final Consumer consumer) {
         Firebase userRef = ref.child("User");
         userRef.authWithPassword(email, pass, new Firebase.AuthResultHandler() {
             @Override
@@ -237,9 +237,8 @@ public class UserManager {
                     public void onDataChange(DataSnapshot snapshot) {
                         for (DataSnapshot dataSnapshot : snapshot.getChildren())
                             currentUser = dataSnapshot.getValue(User.class);
-                        context.transition();
-                        runnable.run();
                         context.finish();
+                        consumer.consume("valid");
                     }
 
                     @Override
@@ -252,8 +251,7 @@ public class UserManager {
 
             @Override
             public void onAuthenticationError(FirebaseError firebaseError) {
-                runnable.run();
-                // there was an error
+                consumer.consume(firebaseError.getMessage());                // there was an error
             }
         });
     }
@@ -288,6 +286,7 @@ public class UserManager {
                 }
                 userRef.removeEventListener(this);
                 runnable.run();
+
             }
 
             @Override
