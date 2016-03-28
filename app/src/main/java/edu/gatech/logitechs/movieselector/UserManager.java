@@ -280,7 +280,10 @@ public class UserManager {
             @Override
             public void onDataChange(DataSnapshot snapshot) {
                 for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
+                    User user = dataSnapshot.child("data").getValue(User.class);
+                    if(!user.isAdmin()) {
                         userList.add(dataSnapshot.child("data").getValue(User.class));
+                    }
                 }
                 runnable.run();
             }
