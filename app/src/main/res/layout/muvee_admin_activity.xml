@@ -21,7 +21,14 @@
 
     </android.support.design.widget.AppBarLayout>
 
-    <include layout="@layout/content_muvee_admin" />
+    <!--<include layout="@layout/muvee_admin_content_activity" />-->
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/users_recycler_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="56dp"
+        />
 
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/fab"
