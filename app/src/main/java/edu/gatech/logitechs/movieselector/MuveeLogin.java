@@ -285,8 +285,15 @@ public class MuveeLogin extends AppCompatActivity {
      * Transition to the main Movies page after login
      */
     public void transition() {
-        Intent myIntent = new Intent(this,MuveeMainActivity.class);
-        this.startActivity(myIntent);
+        String email = mEmailView.getText().toString();
+        String password = mPasswordView.getText().toString();
+        if (email.equals("admin@admin.com") && password.equals("admin")) {
+            Intent myIntent = new Intent(this,MuveeAdminActivity.class);
+            this.startActivity(myIntent);
+        } else {
+            Intent myIntent = new Intent(this,MuveeMainActivity.class);
+            this.startActivity(myIntent);
+        }
     }
 
     /**
@@ -324,7 +331,6 @@ public class MuveeLogin extends AppCompatActivity {
             showProgress(false);
 
             if (success) {
-<<<<<<< HEAD
                 if (mEmail.equals("admin@admin.com") && mPassword.equals("admin")) {
                     finish();
                     Intent myIntent = new Intent(MuveeLogin.this,MuveeAdminActivity.class);
@@ -334,13 +340,6 @@ public class MuveeLogin extends AppCompatActivity {
                     Intent myIntent = new Intent(MuveeLogin.this,MuveeMainActivity.class);
                     MuveeLogin.this.startActivity(myIntent);
                 }
-=======
-                finish();
-                //TODO check whether it's user or admin
-
-                Intent myIntent = new Intent(MuveeLogin.this,MuveeMainActivity.class);
-                MuveeLogin.this.startActivity(myIntent);
->>>>>>> origin/master
             } else {
                 mPasswordView.setError(getString(R.string.error_incorrect_password));
                 mPasswordView.requestFocus();
