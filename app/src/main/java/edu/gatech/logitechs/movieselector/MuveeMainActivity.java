@@ -80,7 +80,6 @@ public class MuveeMainActivity extends AppCompatActivity
                         myIntent.putExtra("description", movies.get(position).getDescription());
                         myIntent.putExtra("thumbnail", movies.get(position).getThumbnail());
                         MovieManager.queryMovieRating(movies.get(position), new Runnable() {
-
                             @Override
                             public void run() {
                             }
@@ -105,7 +104,7 @@ public class MuveeMainActivity extends AppCompatActivity
 
 //                //get view from layout XML
 //                LayoutInflater inflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-//                final View searchFieldLayout = inflater.inflate(R.layout.movie_about_dialog_view,
+//                final View searchFieldLayout = inflater.inflate(R.layout.muvee_about_dialog_view,
 //                        null, false);
 //                final EditText input = (EditText) searchFieldLayout.findViewById(R.id.search_field);
 //                // create the AlertDialog as final
@@ -229,7 +228,7 @@ public class MuveeMainActivity extends AppCompatActivity
             return true;
         } else if (id == R.id.action_about) {
             LayoutInflater inflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            aboutDialogLayout = inflater.inflate(R.layout.movie_about_dialog_view, null, false);
+            aboutDialogLayout = inflater.inflate(R.layout.muvee_about_dialog_view, null, false);
             Snackbar snackbar = Snackbar
                         .make(mainLayout, "Made with ❤️ from CS 2340", Snackbar.LENGTH_LONG)
                         .setAction("MORE INFO", new View.OnClickListener() {
