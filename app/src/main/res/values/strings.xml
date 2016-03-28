@@ -120,5 +120,4 @@
 
     <string name="team_name">❤ LogiTechs</string>
     <string name="title_activity_muvee_admin">MuveeAdminActivity</string>
-    <string name="title_activity_muvee_admin_user_privileges">MuveeAdminUserPrivileges</string>
 </resources>

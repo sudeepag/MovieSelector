@@ -69,14 +69,6 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="edu.gatech.logitechs.movieselector.MuveeLogin" />
         </activity>
-        <activity
-            android:name=".MuveeAdminUserPrivileges"
-            android:label="@string/title_activity_muvee_admin_user_privileges"
-            android:parentActivityName=".MuveeAdminActivity">
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value="edu.gatech.logitechs.movieselector.MuveeAdminActivity" />
-        </activity>
     </application>
 
 </manifest>
