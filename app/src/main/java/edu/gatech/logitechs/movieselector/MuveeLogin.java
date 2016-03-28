@@ -324,6 +324,7 @@ public class MuveeLogin extends AppCompatActivity {
             showProgress(false);
 
             if (success) {
+<<<<<<< HEAD
                 if (mEmail.equals("admin@admin.com") && mPassword.equals("admin")) {
                     finish();
                     Intent myIntent = new Intent(MuveeLogin.this,MuveeAdminActivity.class);
@@ -333,6 +334,13 @@ public class MuveeLogin extends AppCompatActivity {
                     Intent myIntent = new Intent(MuveeLogin.this,MuveeMainActivity.class);
                     MuveeLogin.this.startActivity(myIntent);
                 }
+=======
+                finish();
+                //TODO check whether it's user or admin
+
+                Intent myIntent = new Intent(MuveeLogin.this,MuveeMainActivity.class);
+                MuveeLogin.this.startActivity(myIntent);
+>>>>>>> origin/master
             } else {
                 mPasswordView.setError(getString(R.string.error_incorrect_password));
                 mPasswordView.requestFocus();
