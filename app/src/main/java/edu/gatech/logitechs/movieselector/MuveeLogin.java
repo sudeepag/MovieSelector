@@ -285,17 +285,14 @@ public class MuveeLogin extends AppCompatActivity {
      * Transition to the main Movies page after login
      */
     public void transition() {
-        //TODO change this to
-        //if (user.isAdmin())
-        String email = mEmailView.getText().toString();
-        String password = mPasswordView.getText().toString();
-        if (email.equals("admin@admin.com") && password.equals("admin")) {
-            Intent myIntent = new Intent(this,MuveeAdminActivity.class);
-            this.startActivity(myIntent);
+        Intent myIntent;
+        if (UserManager.getCurrentUser().isAdmin()) {
+            myIntent = new Intent(this,MuveeAdminActivity.class);
+            UserManager.poppulateUserList(this);
         } else {
-            Intent myIntent = new Intent(this,MuveeMainActivity.class);
-            this.startActivity(myIntent);
+            myIntent = new Intent(this,MuveeMainActivity.class);
         }
+        this.startActivity(myIntent);
     }
 
     /**

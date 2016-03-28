@@ -34,6 +34,17 @@ public class RVAdminAdapter extends RecyclerView.Adapter<RVAdminAdapter.UserView
         this.users = users;
     }
 
+    /*
+    * Updates the list of users after fetching it remotely
+    *
+    * @param newUsers  The new list of users returned remotely
+    *
+     */
+    public void updateUserList(List<User> newUsers) {
+        users = newUsers;
+        this.notifyDataSetChanged();
+    }
+
     @Override
     public void onAttachedToRecyclerView(RecyclerView recyclerView) {
         super.onAttachedToRecyclerView(recyclerView);
