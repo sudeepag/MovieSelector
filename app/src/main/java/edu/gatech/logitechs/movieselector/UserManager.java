@@ -4,8 +4,6 @@ package edu.gatech.logitechs.movieselector;
  * Created by matth_000 on 2/7/2016.
  */
 
-import android.content.Context;
-
 import com.firebase.client.AuthData;
 import com.firebase.client.ChildEventListener;
 import com.firebase.client.DataSnapshot;
@@ -20,10 +18,10 @@ import java.util.Map;
 
 public class UserManager {
 
-    private static Firebase ref = new Firebase("https://muvee.firebaseio.com/");
-    public static User currentUser;
-    public static List<User> userList;
-    private static ChildEventListener eventListener = new ChildEventListener() {
+    private static final Firebase ref = new Firebase("https://muvee.firebaseio.com/");
+    private static User currentUser;
+    private static List<User> userList;
+    private static final ChildEventListener eventListener = new ChildEventListener() {
 
         @Override
         public void onChildAdded(DataSnapshot dataSnapshot, String s) {
@@ -54,41 +52,6 @@ public class UserManager {
             System.out.println("The read failed: " + firebaseError.getMessage());
         }
     };
-
-
-    /**
-     * constructor for user manager
-     * creates listener for added changed or deleted user values that updates list of users
-     */
-    public UserManager() {
-//       Firebase userRef = ref.child("User");
-//        userRef.addChildEventListener(new ChildEventListener() {
-//            // Retrieve new posts as they are added to the database
-//            @Override
-//            public void onChildAdded(DataSnapshot snapshot, String previousChildKey) {
-//                User newUser = snapshot.getValue(User.class);
-//                userList.put(newUser.getEmail(), newUser);
-//
-//            }
-//            public void onChildRemoved(DataSnapshot snapshot) {
-//                User newUser = snapshot.getValue(User.class);
-//                userList.remove(newUser.getEmail());
-//            }
-//            public void onChildChanged(DataSnapshot snapshot, String previousChildKey) {
-//                User newUser = snapshot.getValue(User.class);
-//                userList.put(newUser.getEmail(), newUser);
-//            }
-//            public void onChildMoved(DataSnapshot snapshot, String previousChildKey) {
-//                User newUser = snapshot.getValue(User.class);
-//                userList.put(newUser.getEmail(), newUser);
-//            }
-//            public void onCancelled(FirebaseError firebaseError) {
-//                System.out.println("The read failed: " + firebaseError.getMessage());
-//            }
-//            //... ChildEventListener also defines onChildChanged, onChildRemoved,
-//            //    onChildMoved and onCanceled, covered in later sections.
-//        });
-    }
 
     /**
      * Method to add user to database of users
@@ -179,7 +142,6 @@ public class UserManager {
      * @param runnable  the runnable to run after the server call has been resolved
      */
     public void addUser(final User user, final MuveeRegistration context, final Runnable runnable) {
-        String newEmail = user.getEmail();
 
         Firebase userRef = ref.child("User");
 //        userRef.setValue(user);
@@ -192,7 +154,7 @@ public class UserManager {
                             @Override
                             public void onAuthenticated(AuthData authData) {
                                 // Authentication just completed successfully :)
-                                Map<String, Object> map = new HashMap<String, Object>();
+                                Map<String, Object> map = new HashMap<>();
                                 map.put("data", user);
                                 ref.child("users").child(authData.getUid()).setValue(map);
                                 context.transition();
@@ -220,12 +182,11 @@ public class UserManager {
     }
 
     /**
-     * Authenticate users under the assumption that no duplacte usernames are
+     * Authenticate users under the assumption that no duplicate user-names are
      * allowed (enforced in the addUser method above)
      *
-     * @return true if the input email and password match, false otherwise
      */
-    public void authenticateUser(String email, String pass, final MuveeLogin context, final Consumer consumer) {
+    public void authenticateUser(String email, String pass, final Consumer consumer) {
         final Firebase userRef = ref.child("User");
         userRef.authWithPassword(email, pass, new Firebase.AuthResultHandler() {
             @Override
@@ -272,8 +233,8 @@ public class UserManager {
         Firebase userRef = ref.child("users").child(id).child("data").child("banned");
         userRef.setValue(false);
     }
-    public static void poppulateUserList(Context context, final Runnable runnable) {
-        userList = new ArrayList<User>();
+    public static void populateUserList(final Runnable runnable) {
+        userList = new ArrayList<>();
         final Firebase userRef = ref.child("users");
         userRef.addValueEventListener(new ValueEventListener() {
             @Override
@@ -294,16 +255,5 @@ public class UserManager {
                 System.out.println("The read failed: " + firebaseError.getMessage());
             }
         });
-    }
-
-    public int square(Integer n) {
-        int q = 0;
-        if (n == 1) {
-            return 1;
-        }
-        while(q < square(n - 1) + 2 * n + 1) {
-            q++;
-        }
-        return q;
     }
 }

@@ -3,7 +3,6 @@ package edu.gatech.logitechs.movieselector;
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.annotation.TargetApi;
-import android.app.Activity;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -214,7 +213,7 @@ public class MuveeLogin extends AppCompatActivity {
 
             //start authentication
             UserManager manager = new UserManager();
-            manager.authenticateUser(email, password, MuveeLogin.this, new Consumer() {
+            manager.authenticateUser(email, password, new Consumer() {
 
                 @Override
                 public void consume(String message) {
