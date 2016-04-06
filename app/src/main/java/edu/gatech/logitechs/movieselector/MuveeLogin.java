@@ -3,7 +3,6 @@ package edu.gatech.logitechs.movieselector;
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.annotation.TargetApi;
-import android.app.Activity;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -214,13 +213,17 @@ public class MuveeLogin extends AppCompatActivity {
 
             //start authentication
             UserManager manager = new UserManager();
-            manager.authenticateUser(email, password, MuveeLogin.this, new Runnable() {
+            manager.authenticateUser(email, password, new Consumer() {
 
                 @Override
-                public void run() {
+                public void consume(String message) {
                     showProgress(false);
-                    mPasswordView.setError(getString(R.string.error_incorrect_password));
-                    mPasswordView.requestFocus();
+                    if (message.equals("valid")) {
+                        transition();
+                    } else {
+                        mPasswordView.setError(message);
+                        mPasswordView.requestFocus();
+                    }
                 }
             });
         }
@@ -285,8 +288,24 @@ public class MuveeLogin extends AppCompatActivity {
      * Transition to the main Movies page after login
      */
     public void transition() {
-        Intent myIntent = new Intent(this,MuveeMainActivity.class);
-        this.startActivity(myIntent);
+        Intent myIntent;
+        if (UserManager.getCurrentUser().isAdmin()) {
+            myIntent = new Intent(this,MuveeAdminActivity.class);
+            this.startActivity(myIntent);
+        } else {
+            if (UserManager.getCurrentUser().isBanned()) {
+                showProgress(false);
+                mPasswordView.setError("User is Banned");
+                mPasswordView.requestFocus();
+            } else if (UserManager.getCurrentUser().isLocked()) {
+                showProgress(false);
+                mPasswordView.setError("User is Locked");
+                mPasswordView.requestFocus();
+            } else {
+                myIntent = new Intent(this,MuveeMainActivity.class);
+                this.startActivity(myIntent);
+            }
+        }
     }
 
     /**
@@ -324,9 +343,17 @@ public class MuveeLogin extends AppCompatActivity {
             showProgress(false);
 
             if (success) {
-                finish();
-                Intent myIntent = new Intent(MuveeLogin.this,MuveeMainActivity.class);
-                MuveeLogin.this.startActivity(myIntent);
+                //TODO change this to
+                //if (user.isAdmin())
+                if (mEmail.equals("admin@admin.com") && mPassword.equals("admin")) {
+                    finish();
+                    Intent myIntent = new Intent(MuveeLogin.this,MuveeAdminActivity.class);
+                    MuveeLogin.this.startActivity(myIntent);
+                } else {
+                    finish();
+                    Intent myIntent = new Intent(MuveeLogin.this,MuveeMainActivity.class);
+                    MuveeLogin.this.startActivity(myIntent);
+                }
             } else {
                 mPasswordView.setError(getString(R.string.error_incorrect_password));
                 mPasswordView.requestFocus();

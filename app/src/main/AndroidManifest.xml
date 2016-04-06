@@ -21,6 +21,7 @@
             android:theme="@style/AppTheme.Login">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
@@ -58,6 +59,24 @@
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".MuveeMainActivity" />
+        </activity>
+        <activity
+            android:name=".MuveeAdminActivity"
+            android:label="Müveé Administrator"
+            android:parentActivityName=".MuveeLogin"
+            android:theme="@style/AppTheme">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="edu.gatech.logitechs.movieselector.MuveeLogin" />
+        </activity>
+        <activity
+            android:name=".MuveeAdminUserPriv"
+            android:label="@string/title_activity_muvee_admin_user_priv"
+            android:parentActivityName=".MuveeAdminActivity"
+            android:theme="@style/AppTheme">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="edu.gatech.logitechs.movieselector.MuveeAdminActivity" />
         </activity>
     </application>
 

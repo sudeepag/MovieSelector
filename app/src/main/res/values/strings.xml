@@ -119,4 +119,6 @@
     <string name="pref_default_display_password">1234</string>
 
     <string name="team_name">❤ LogiTechs</string>
+    <string name="title_activity_muvee_admin">MuveeAdminActivity</string>
+    <string name="title_activity_muvee_admin_user_priv">Edit User Privileges</string>
 </resources>

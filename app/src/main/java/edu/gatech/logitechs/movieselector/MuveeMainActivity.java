@@ -28,8 +28,6 @@ import android.view.animation.AlphaAnimation;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import java.io.UnsupportedEncodingException;
-import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -51,7 +49,7 @@ public class MuveeMainActivity extends AppCompatActivity
     MenuItem searchMenuItem;
 
     private List<Movie> movies = new ArrayList<>();
-    public final RVAdapter adapter = new RVAdapter(movies);
+    public final RVMainAdapter adapter = new RVMainAdapter(movies);
 
     boolean isAtMainPage;
 
@@ -82,7 +80,6 @@ public class MuveeMainActivity extends AppCompatActivity
                         myIntent.putExtra("description", movies.get(position).getDescription());
                         myIntent.putExtra("thumbnail", movies.get(position).getThumbnail());
                         MovieManager.queryMovieRating(movies.get(position), new Runnable() {
-
                             @Override
                             public void run() {
                             }
@@ -107,7 +104,7 @@ public class MuveeMainActivity extends AppCompatActivity
 
 //                //get view from layout XML
 //                LayoutInflater inflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-//                final View searchFieldLayout = inflater.inflate(R.layout.movie_about_dialog_view,
+//                final View searchFieldLayout = inflater.inflate(R.layout.muvee_about_dialog_view,
 //                        null, false);
 //                final EditText input = (EditText) searchFieldLayout.findViewById(R.id.search_field);
 //                // create the AlertDialog as final
@@ -207,6 +204,7 @@ public class MuveeMainActivity extends AppCompatActivity
         } else {
             logoutAction();
         }
+
     }
 
     @Override
@@ -230,7 +228,7 @@ public class MuveeMainActivity extends AppCompatActivity
             return true;
         } else if (id == R.id.action_about) {
             LayoutInflater inflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            aboutDialogLayout = inflater.inflate(R.layout.movie_about_dialog_view, null, false);
+            aboutDialogLayout = inflater.inflate(R.layout.muvee_about_dialog_view, null, false);
             Snackbar snackbar = Snackbar
                         .make(mainLayout, "Made with ❤️ from CS 2340", Snackbar.LENGTH_LONG)
                         .setAction("MORE INFO", new View.OnClickListener() {
@@ -319,18 +317,13 @@ public class MuveeMainActivity extends AppCompatActivity
      */
     private void getRecomendation() {
         rvDisappear();
-        ArrayList<Integer> requestedMovies = new ArrayList<Integer>();
-        requestedMovies.add(770860165);
-        requestedMovies.add(771203390);
-        requestedMovies.add(770863875);
-        requestedMovies.add(770739679);
         MovieManager.getRankedMovies(MuveeMainActivity.this, new Runnable() {
             @Override
             public void run() {
                 movies = MovieManager.getMovieList();
                 adapter.updateMovieList(movies);
             }
-        }, "Computer Science");
+        }, UserManager.getCurrentUser().getMajor());
 //        MovieManager.getMoviesFromIds(MuveeMainActivity.this, new Runnable() {
 //            @Override
 //            public void run() {

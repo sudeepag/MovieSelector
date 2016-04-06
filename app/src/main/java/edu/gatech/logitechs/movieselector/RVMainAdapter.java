@@ -11,7 +11,7 @@ import android.widget.TextView;
 
 import java.util.List;
 
-public class RVAdapter extends RecyclerView.Adapter<RVAdapter.MovieViewHolder> {
+public class RVMainAdapter extends RecyclerView.Adapter<RVMainAdapter.MovieViewHolder> {
 
     public static class MovieViewHolder extends RecyclerView.ViewHolder {
 
@@ -36,7 +36,7 @@ public class RVAdapter extends RecyclerView.Adapter<RVAdapter.MovieViewHolder> {
 
     List<Movie> movies;
 
-    RVAdapter(List<Movie> movies){
+    RVMainAdapter(List<Movie> movies){
         this.movies = movies;
     }
 
@@ -64,17 +64,17 @@ public class RVAdapter extends RecyclerView.Adapter<RVAdapter.MovieViewHolder> {
     }
 
     @Override
-    public void onBindViewHolder(MovieViewHolder MovieViewHolder, int i) {
-        MovieViewHolder.movieTitle.setText(movies.get(i).getTitle());
-        MovieViewHolder.movieDescription.setText(movies.get(i).getDescription());
+    public void onBindViewHolder(MovieViewHolder movieViewHolder, int i) {
+        movieViewHolder.movieTitle.setText(movies.get(i).getTitle());
+        movieViewHolder.movieDescription.setText(movies.get(i).getDescription());
         if (movies.get(i).getThumbnail() != null) {
             //Scale the Movie Thumbnail
-            MovieViewHolder.movieImage.setImageBitmap(Bitmap.createScaledBitmap(movies.get(i).getThumbnail(),
+            movieViewHolder.movieImage.setImageBitmap(Bitmap.createScaledBitmap(movies.get(i).getThumbnail(),
                     (int) (movies.get(i).getThumbnail().getWidth() * 4),
                     (int) (movies.get(i).getThumbnail().getHeight() * 4),
                     false));
         } else {
-            MovieViewHolder.movieImage.setImageBitmap(null);
+            movieViewHolder.movieImage.setImageBitmap(null);
         }
     }
 
