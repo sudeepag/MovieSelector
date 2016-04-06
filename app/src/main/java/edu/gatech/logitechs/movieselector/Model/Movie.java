@@ -1,4 +1,4 @@
-package edu.gatech.logitechs.movieselector;
+package edu.gatech.logitechs.movieselector.Model;
 
 import android.graphics.Bitmap;
 

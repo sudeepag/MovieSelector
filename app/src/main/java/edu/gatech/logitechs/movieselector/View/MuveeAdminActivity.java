@@ -1,4 +1,4 @@
-package edu.gatech.logitechs.movieselector;
+package edu.gatech.logitechs.movieselector.View;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -8,6 +8,10 @@ import android.support.v7.widget.Toolbar;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import edu.gatech.logitechs.movieselector.Controller.UserManager;
+import edu.gatech.logitechs.movieselector.Model.User;
+import edu.gatech.logitechs.movieselector.R;
 
 public class MuveeAdminActivity extends AppCompatActivity {
 

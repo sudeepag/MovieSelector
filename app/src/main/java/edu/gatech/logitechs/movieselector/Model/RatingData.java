@@ -1,11 +1,11 @@
-package edu.gatech.logitechs.movieselector;
+package edu.gatech.logitechs.movieselector.Model;
 
-import java.net.URLEncoder;
 import java.util.HashMap;
 
 /**
  * Created by akhilesh on 3/3/16.
  */
+
 public class RatingData {
     private HashMap<String, Integer> numRating;
     private HashMap<String, Double> sum;
@@ -15,9 +15,9 @@ public class RatingData {
 
     public RatingData() {
         super();
-        sum = new HashMap<String, Double>();
-        numRating = new HashMap<String, Integer>();
-        average = new HashMap<String, Double>();
+        sum = new HashMap<>();
+        numRating = new HashMap<>();
+        average = new HashMap<>();
     }
     public RatingData(String title, String uid) {
         this();
@@ -87,7 +87,7 @@ public class RatingData {
     }
 
     public void addRating(String major, double rating) {
-        int majorRating = numRating.get(major) == null ? 0 : numRating.get(major);;
+        int majorRating = numRating.get(major) == null ? 0 : numRating.get(major);
         double majorSum = sum.get(major) == null ? 0 : sum.get(major);
         numRating.put(major, majorRating + 1);
         sum.put(major, majorSum + rating);

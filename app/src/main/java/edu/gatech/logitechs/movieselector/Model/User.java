@@ -1,4 +1,4 @@
-package edu.gatech.logitechs.movieselector;
+package edu.gatech.logitechs.movieselector.Model;
 
 /**
  * Created by akhilesh on 2/7/16.
@@ -7,7 +7,6 @@ public class User {
     private String email;
     private String password;
     private String description;
-   // private Majors majorEnum;
     private String major;
     private String UID;
     private boolean admin;
@@ -43,6 +42,8 @@ public class User {
         this.major = major;
         this.description = description;
     }
+
+
 
     /**
      * getter for boolean isAdmin

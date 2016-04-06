@@ -1,4 +1,4 @@
-package edu.gatech.logitechs.movieselector;
+package edu.gatech.logitechs.movieselector.Model;
 
 import android.content.Context;
 import android.graphics.Bitmap;
@@ -12,7 +12,7 @@ import com.android.volley.toolbox.Volley;
 /**
  * Created by akhilesh on 2/23/16.
  */
-public class VolleySingleton {
+public final class VolleySingleton {
     private static VolleySingleton mInstance;
     private RequestQueue mRequestQueue;
     private ImageLoader mImageLoader;
@@ -25,7 +25,7 @@ public class VolleySingleton {
         mImageLoader = new ImageLoader(mRequestQueue,
                 new ImageLoader.ImageCache() {
                     private final LruCache<String, Bitmap>
-                            cache = new LruCache<String, Bitmap>(20);
+                            cache = new LruCache<>(20);
 
                     @Override
                     public Bitmap getBitmap(String url) {

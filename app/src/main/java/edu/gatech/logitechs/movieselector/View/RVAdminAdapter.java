@@ -1,4 +1,4 @@
-package edu.gatech.logitechs.movieselector;
+package edu.gatech.logitechs.movieselector.View;
 
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
@@ -10,6 +10,10 @@ import android.widget.Switch;
 import android.widget.TextView;
 
 import java.util.List;
+
+import edu.gatech.logitechs.movieselector.Controller.UserManager;
+import edu.gatech.logitechs.movieselector.Model.User;
+import edu.gatech.logitechs.movieselector.R;
 
 public class RVAdminAdapter extends RecyclerView.Adapter<RVAdminAdapter.UserViewHolder> {
 
