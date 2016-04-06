@@ -22,39 +22,49 @@ import edu.gatech.logitechs.movieselector.View.MuveeRegistration;
 
 public class UserManager {
 
-    private static final Firebase ref = new Firebase("https://muvee.firebaseio.com/");
+    /**
+     * REF is base reference to target of base firebase url
+     */
+    private static final Firebase REF = new Firebase("https://muvee.firebaseio.com/");
+    /**
+     * currentUser is the user currently using the app
+     */
     private static User currentUser;
+    /**
+     * userList is a master list of all users in the system
+     */
     private static List<User> userList;
-    private static final ChildEventListener eventListener = new ChildEventListener() {
+    /**
+     * DATASTRING is simply a hardcoded reference to a string containing "data"
+     */
+    private static final String DATASTRING = "data";
+    /**
+     * USERSTRING is simply a hardcoded reference to a string containing "users"
+     */
+    private static final String USERSTRING = "users";
 
+    /**
+     * EVENTLISTENER is a reference to the default event listener used in almost all cases
+     */
+    private static final ChildEventListener EVENTLISTENER = new ChildEventListener() {
         @Override
         public void onChildAdded(DataSnapshot dataSnapshot, String s) {
             currentUser = dataSnapshot.getValue(User.class);
-
         }
-
         @Override
         public void onChildChanged(DataSnapshot dataSnapshot, String s) {
             currentUser = dataSnapshot.getValue(User.class);
-
         }
-
         @Override
         public void onChildRemoved(DataSnapshot dataSnapshot) {
             currentUser = dataSnapshot.getValue(User.class);
-
         }
-
         @Override
         public void onChildMoved(DataSnapshot dataSnapshot, String s) {
             currentUser = dataSnapshot.getValue(User.class);
-
         }
-
         @Override
-        public void onCancelled(FirebaseError firebaseError) {
-            System.out.println("The read failed: " + firebaseError.getMessage());
-        }
+        public void onCancelled(FirebaseError firebaseError) {}
     };
 
     /**
@@ -66,26 +76,31 @@ public class UserManager {
         return currentUser;
     }
 
+    /**
+     * getter for userList
+     *
+     * @return the userList
+     */
     public static List<User> getUserList() {
         return  userList;
     }
 
-    /*
+    /**
     * Essentially a setter for current user
     *
     * @param user  the new current user
      */
     public static void updateCurrentUser(User user) {
-        Map<String, Object> map = new HashMap<>();
-        map.put("data", user);
-        ref.child("users").child(user.getUID()).setValue(map);
-        Firebase userRef = ref.child("users");
+        final Map<String, Object> map = new HashMap<>();
+        map.put(DATASTRING, user);
+        REF.child(USERSTRING).child(user.getUID()).setValue(map);
+        Firebase userRef =REF.child(USERSTRING);
         userRef = userRef.child(currentUser.getUID());
-        userRef.addChildEventListener(eventListener);
+        userRef.addChildEventListener(EVENTLISTENER);
 
     }
 
-    /*
+    /**
     * Changes password for the input user
     *
     * @param  user  the user who's password is being changed
@@ -94,45 +109,40 @@ public class UserManager {
     * @param  consumer  the consumer to handle error messages from firebase
      */
     public static void changePassword(final User user, final String password, final Runnable runnable, final Consumer consumer) {
-        ref.changePassword(user.getEmail(), user.getPassword(), password, new Firebase.ResultHandler() {
+        REF.changePassword(user.getEmail(), user.getPassword(), password, new Firebase.ResultHandler() {
             @Override
             public void onSuccess() {
                 user.setPassword(password);
                 updateCurrentUser(user);
-                System.out.println("changed password");
                 runnable.run();
             }
 
             @Override
             public void onError(FirebaseError firebaseError) {
-                System.out.println("failed changed password");
-                System.out.println(firebaseError.getMessage());
                 consumer.consume(firebaseError.getMessage());
             }
         });
     }
 
-    /*
+    /**
     * Changes password for the input user
     *
     * @param  user  the user who's password is being changed
-    * @param  password  The new password for the user
+    * @param  email the new email for the user
     * @param  runnable  The Runnable to execute upon completion of the synchronous method
     * @param  consumer  the consumer to handle error messages from firebase
      */
     public static void changeEmail(final User user, final String email, final Runnable runnable, final Consumer consumer) {
-        ref.changeEmail(user.getEmail(), user.getPassword(), email, new Firebase.ResultHandler() {
+        REF.changeEmail(user.getEmail(), user.getPassword(), email, new Firebase.ResultHandler() {
             @Override
             public void onSuccess() {
                 user.setEmail(email);
                 updateCurrentUser(user);
-                System.out.println("changed email");
                 runnable.run();
             }
 
             @Override
             public void onError(FirebaseError firebaseError) {
-                System.out.println(firebaseError.getCode());
                 consumer.consume(firebaseError.getMessage());
             }
         });
@@ -147,69 +157,67 @@ public class UserManager {
      */
     public void addUser(final User user, final MuveeRegistration context, final Runnable runnable) {
 
-        Firebase userRef = ref.child("User");
+        final Firebase userRef = REF.child("User");
         userRef.createUser(user.getEmail(), user.getPassword(), new Firebase.ValueResultHandler<Map<String, Object>>() {
             @Override
             public void onSuccess(Map<String, Object> result) {
-                ref.authWithPassword(user.getEmail(), user.getPassword(),
+                REF.authWithPassword(user.getEmail(), user.getPassword(),
                         new Firebase.AuthResultHandler() {
                             @Override
                             public void onAuthenticated(AuthData authData) {
-                                Map<String, Object> map = new HashMap<>();
-                                map.put("data", user);
-                                ref.child("users").child(authData.getUid()).setValue(map);
-                                context.transition();
-                                context.finish();
-                            }
-
-                            @Override
+                                onAuthenticatedHelper(user, context, authData);
+                            }  @Override
                             public void onAuthenticationError(FirebaseError error) {
                                 runnable.run();
                             }
                         });
                 currentUser = user;
                 user.setUID((String) result.get("uid"));
-            }
-
-            @Override
+            }  @Override
             public void onError(FirebaseError firebaseError) {
-                System.out.println(firebaseError.getMessage());
-                System.out.println("Error2");
                 runnable.run();
             }
         });
     }
 
     /**
+     * Helper method to authenticate user during adding
+     * @param user the user that is being authenticated
+     * @param context the context in which the authentication call is being run; completion handler
+     * @param authData The data which is being used to authenticate the new user
+     */
+    public void onAuthenticatedHelper(User user, MuveeRegistration context, AuthData authData) {
+        final Map<String, Object> map = new HashMap<>();
+        map.put(DATASTRING, user);
+        REF.child(USERSTRING).child(authData.getUid()).setValue(map);
+        context.transition();
+        context.finish();
+    }
+
+    /**
      * Authenticate users under the assumption that no duplicate user-names are
      * allowed (enforced in the addUser method above)
      *
+     * @param email the user's email
+     * @param pass  the user's password
+     * @param consumer  Consumer object that acts as completion handler
      */
     public void authenticateUser(String email, String pass, final Consumer consumer) {
-        final Firebase userRef = ref.child("User");
-        userRef.authWithPassword(email, pass, new Firebase.AuthResultHandler() {
+        REF.child("User").authWithPassword(email, pass, new Firebase.AuthResultHandler() {
             @Override
-            public void onAuthenticated(AuthData authData) {
-                Firebase userRef = ref.child("users");
-                final Firebase innerRef = userRef.child(authData.getUid());
-                innerRef.addValueEventListener(new ValueEventListener() {
+            public void onAuthenticated(final AuthData authData) {
+                REF.child(USERSTRING).child(authData.getUid()).addValueEventListener(new ValueEventListener() {
                     @Override
                     public void onDataChange(DataSnapshot snapshot) {
-                        for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
+                        for (final DataSnapshot dataSnapshot : snapshot.getChildren()) {
                             currentUser = dataSnapshot.getValue(User.class);
                         }
                         consumer.consume("valid");
-                        innerRef.removeEventListener(this);
-                    }
-
-                    @Override
-                    public void onCancelled(FirebaseError firebaseError) {
-                        System.out.println("The read failed: " + firebaseError.getMessage());
-                    }
+                        REF.child(USERSTRING).child(authData.getUid()).removeEventListener(this);
+                    }   @Override
+                    public void onCancelled(FirebaseError firebaseError) {}
                 });
-
             }
-
             @Override
             public void onAuthenticationError(FirebaseError firebaseError) {
                 consumer.consume(firebaseError.getMessage());
@@ -217,32 +225,58 @@ public class UserManager {
         });
     }
 
+    /**
+     * Method to lock a user's account by modifying
+     *
+     * @param id the ID of the user who's account is being locked
+     */
     public static void lockUser(String id) {
-        Firebase userRef = ref.child("users").child(id).child("data").child("locked");
+        final Firebase userRef = REF.child(USERSTRING).child(id).child(DATASTRING).child("locked");
         userRef.setValue(true);
     }
+
+    /**
+     * Method to unlock a user's account
+     * @param id the ID of the user who's account is being locked
+     */
     public static void unlockUser(String id) {
-        Firebase userRef = ref.child("users").child(id).child("data").child("locked");
+        final Firebase userRef = REF.child(USERSTRING).child(id).child(DATASTRING).child("locked");
         userRef.setValue(false);
     }
+
+    /**
+     * method to ban a user
+     * @param id the ID of the user being banned
+     */
     public static void banUser(String id) {
-        Firebase userRef = ref.child("users").child(id).child("data").child("banned");
+        final Firebase userRef = REF.child(USERSTRING).child(id).child(DATASTRING).child("banned");
         userRef.setValue(true);
     }
+
+    /**
+     * method to unban a user
+     * @param id ID of the user being unbanned
+     */
     public static void unbanUser(String id) {
-        Firebase userRef = ref.child("users").child(id).child("data").child("banned");
+        final Firebase userRef = REF.child(USERSTRING).child(id).child(DATASTRING).child("banned");
         userRef.setValue(false);
     }
+
+    /**
+     * Method to update the use list from firebase
+     *
+     * @param runnable runnable to be run on completion of the retrieval to synchronize async call
+     */
     public static void populateUserList(final Runnable runnable) {
         userList = new ArrayList<>();
-        final Firebase userRef = ref.child("users");
+        final Firebase userRef = REF.child(USERSTRING);
         userRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot snapshot) {
-                for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
-                    User user = dataSnapshot.child("data").getValue(User.class);
+                for (final DataSnapshot dataSnapshot : snapshot.getChildren()) {
+                    final User user = dataSnapshot.child(DATASTRING).getValue(User.class);
                     if(!user.isAdmin()) {
-                        userList.add(dataSnapshot.child("data").getValue(User.class));
+                        userList.add(dataSnapshot.child(DATASTRING).getValue(User.class));
                     }
                 }
                 userRef.removeEventListener(this);
@@ -251,9 +285,7 @@ public class UserManager {
             }
 
             @Override
-            public void onCancelled(FirebaseError firebaseError) {
-                System.out.println("The read failed: " + firebaseError.getMessage());
-            }
+            public void onCancelled(FirebaseError firebaseError) {}
         });
     }
 }
