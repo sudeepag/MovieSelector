@@ -1,4 +1,4 @@
-package edu.gatech.logitechs.movieselector;
+package edu.gatech.logitechs.movieselector.View;
 
 /**
  * Created by jiangshen on 2/27/16.
@@ -17,7 +17,7 @@ public class RecyclerItemClickListener implements RecyclerView.OnItemTouchListen
      * Interface for click listener
      */
     public interface OnItemClickListener {
-        public void onItemClick(View view, int position);
+        void onItemClick(View view, int position);
     }
 
     GestureDetector mGestureDetector;

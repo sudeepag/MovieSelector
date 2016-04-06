@@ -12,6 +12,9 @@ import org.junit.Test;
 
 import java.lang.reflect.Method;
 
+import edu.gatech.logitechs.movieselector.Controller.UserManager;
+import edu.gatech.logitechs.movieselector.Model.User;
+
 /**
  * To work on unit tests, switch the Test Artifact in the Build Variants view.
  */

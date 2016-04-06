@@ -15,7 +15,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name=".MuveeLogin"
+            android:name=".View.MuveeLogin"
             android:label="@string/app_name"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.Login">
@@ -26,57 +26,57 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".MuveeMainActivity"
+            android:name=".View.MuveeMainActivity"
             android:label="@string/app_name"
-            android:parentActivityName=".MuveeLogin"
+            android:parentActivityName=".View.MuveeLogin"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value=".MuveeLogin" />
+                android:value=".View.MuveeLogin" />
         </activity>
         <activity
-            android:name=".MuveeRegistration"
+            android:name=".View.MuveeRegistration"
             android:label="@string/app_name"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.Registration" />
         <activity
-            android:name=".MuveeSettings"
+            android:name=".View.MuveeSettings"
             android:label="Settings"
-            android:parentActivityName=".MuveeMainActivity"
+            android:parentActivityName=".View.MuveeMainActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.Preference">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value=".MuveeMainActivity" />
+                android:value=".View.MuveeMainActivity" />
         </activity>
         <activity
-            android:name=".MuveeDetails"
+            android:name=".View.MuveeDetails"
             android:label="Müveé Details"
-            android:parentActivityName=".MuveeMainActivity"
+            android:parentActivityName=".View.MuveeMainActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.MovieDetails">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value=".MuveeMainActivity" />
+                android:value=".View.MuveeMainActivity" />
         </activity>
         <activity
-            android:name=".MuveeAdminActivity"
+            android:name=".View.MuveeAdminActivity"
             android:label="Müveé Administrator"
-            android:parentActivityName=".MuveeLogin"
+            android:parentActivityName=".View.MuveeLogin"
             android:theme="@style/AppTheme">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="edu.gatech.logitechs.movieselector.MuveeLogin" />
+                android:value=".View.MuveeLogin" />
         </activity>
         <activity
-            android:name=".MuveeAdminUserPriv"
+            android:name=".View.MuveeAdminUserPriv"
             android:label="@string/title_activity_muvee_admin_user_priv"
-            android:parentActivityName=".MuveeAdminActivity"
+            android:parentActivityName=".View.MuveeAdminActivity"
             android:theme="@style/AppTheme">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="edu.gatech.logitechs.movieselector.MuveeAdminActivity" />
+                android:value=".View.MuveeAdminActivity" />
         </activity>
     </application>
 

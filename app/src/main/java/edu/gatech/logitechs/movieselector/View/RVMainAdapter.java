@@ -1,4 +1,4 @@
-package edu.gatech.logitechs.movieselector;
+package edu.gatech.logitechs.movieselector.View;
 
 import android.graphics.Bitmap;
 import android.support.v7.widget.CardView;
@@ -10,6 +10,9 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import java.util.List;
+
+import edu.gatech.logitechs.movieselector.Model.Movie;
+import edu.gatech.logitechs.movieselector.R;
 
 public class RVMainAdapter extends RecyclerView.Adapter<RVMainAdapter.MovieViewHolder> {
 
@@ -70,8 +73,8 @@ public class RVMainAdapter extends RecyclerView.Adapter<RVMainAdapter.MovieViewH
         if (movies.get(i).getThumbnail() != null) {
             //Scale the Movie Thumbnail
             movieViewHolder.movieImage.setImageBitmap(Bitmap.createScaledBitmap(movies.get(i).getThumbnail(),
-                    (int) (movies.get(i).getThumbnail().getWidth() * 4),
-                    (int) (movies.get(i).getThumbnail().getHeight() * 4),
+                    movies.get(i).getThumbnail().getWidth() * 4,
+                    movies.get(i).getThumbnail().getHeight() * 4,
                     false));
         } else {
             movieViewHolder.movieImage.setImageBitmap(null);

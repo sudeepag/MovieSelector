@@ -1,4 +1,4 @@
-package edu.gatech.logitechs.movieselector;
+package edu.gatech.logitechs.movieselector.View;
 
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
@@ -30,6 +30,10 @@ import android.widget.TextView;
 import com.firebase.client.Firebase;
 
 import android.view.View.OnTouchListener;
+
+import edu.gatech.logitechs.movieselector.Controller.UserManager;
+import edu.gatech.logitechs.movieselector.Model.Consumer;
+import edu.gatech.logitechs.movieselector.R;
 
 
 /**

@@ -1,4 +1,4 @@
-package edu.gatech.logitechs.movieselector;
+package edu.gatech.logitechs.movieselector.View;
 
 import android.annotation.TargetApi;
 import android.content.Context;
@@ -30,6 +30,12 @@ import android.widget.TextView;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import edu.gatech.logitechs.movieselector.Controller.MovieManager;
+import edu.gatech.logitechs.movieselector.Controller.UserManager;
+import edu.gatech.logitechs.movieselector.Model.Movie;
+import edu.gatech.logitechs.movieselector.Model.User;
+import edu.gatech.logitechs.movieselector.R;
 
 public class MuveeMainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {

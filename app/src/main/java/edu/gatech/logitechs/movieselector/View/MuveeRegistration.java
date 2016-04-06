@@ -1,4 +1,4 @@
-package edu.gatech.logitechs.movieselector;
+package edu.gatech.logitechs.movieselector.View;
 
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
@@ -24,6 +24,10 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
+
+import edu.gatech.logitechs.movieselector.Controller.UserManager;
+import edu.gatech.logitechs.movieselector.Model.User;
+import edu.gatech.logitechs.movieselector.R;
 
 public class MuveeRegistration extends AppCompatActivity{
 
@@ -157,11 +161,11 @@ public class MuveeRegistration extends AppCompatActivity{
             mConfirmPasswordView.setError(getString(R.string.error_empty_password));
             focusView = mConfirmPasswordView;
             cancel = true;
-        } else if (!isPasswordValid(password)) {
+        } else if (isPasswordValid(password)) {
             mPasswordView.setError(getString(R.string.error_invalid_password));
             focusView = mPasswordView;
             cancel = true;
-        } else if (!isPasswordValid(confirmPassword)) {
+        } else if (isPasswordValid(confirmPassword)) {
              mConfirmPasswordView.setError(getString(R.string.error_invalid_password));
              focusView = mConfirmPasswordView;
              cancel = true;
@@ -226,7 +230,7 @@ public class MuveeRegistration extends AppCompatActivity{
         return email.contains("@");
     }
     private boolean isPasswordValid(String password) {
-        return password.length() > 4;
+        return password.length() <= 4;
     }
 
     private boolean isMajorValid(String major) {

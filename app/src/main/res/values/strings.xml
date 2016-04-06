@@ -6,7 +6,7 @@
     <string name="prompt_password">Password</string>
     <string name="action_sign_in">Sign in</string>
     <string name="action_sign_in_short">Sign in</string>
-    <string name="action_sign_in_loading">Signing in...</string>
+    <string name="action_sign_in_loading">Signing in…</string>
     <string name="action_sign_out">Sign out</string>
     <string name="error_invalid_email">This email address is invalid</string>
     <string name="error_invalid_password">This password is too short</string>
@@ -27,8 +27,8 @@
     <string name="prompt_confirm_password">Confirm Password</string>
     <string name="action_sign_up">Sign Up</string>
     <string name="error_password_mismatch">Passwords are not the same</string>
-    <string name="action_sign_up_loading">Creating Account...</string>
-    <string name="prompt_registration_error">Registration failed please try again...</string>
+    <string name="action_sign_up_loading">Creating Account…</string>
+    <string name="prompt_registration_error">Registration failed please try again…</string>
 
     <string-array name="majors_list">
         <item>Choose a Major</item>

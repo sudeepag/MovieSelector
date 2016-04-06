@@ -1,4 +1,4 @@
-package edu.gatech.logitechs.movieselector;
+package edu.gatech.logitechs.movieselector.View;
 
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -11,6 +11,11 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.RatingBar;
 import android.widget.TextView;
+
+import edu.gatech.logitechs.movieselector.Controller.MovieManager;
+import edu.gatech.logitechs.movieselector.Controller.UserManager;
+import edu.gatech.logitechs.movieselector.Model.RatingData;
+import edu.gatech.logitechs.movieselector.R;
 
 public class MuveeDetails extends AppCompatActivity {
 

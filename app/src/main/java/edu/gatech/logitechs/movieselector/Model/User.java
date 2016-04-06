@@ -1,4 +1,4 @@
-package edu.gatech.logitechs.movieselector;
+package edu.gatech.logitechs.movieselector.Model;
 
 /**
  * Created by akhilesh on 2/7/16.
@@ -7,7 +7,6 @@ public class User {
     private String email;
     private String password;
     private String description;
-   // private Majors majorEnum;
     private String major;
     private String UID;
     private boolean admin;
@@ -45,45 +44,6 @@ public class User {
     }
 
 
-    /**
-     * Setter for the major of a given user
-     *
-     * @param name  takes in UPPERCASE, abbreviated name of major
-     * @return true if the major was added correctly, false if major was not member of enum
-     */
-//    public boolean setMajorEnum(String name) {
-//        try {
-//            if (Majors.valueOf(name) instanceof Majors) {
-//                if (Majors.CS == Majors.valueOf(name)) {
-//                    this.majorEnum = Majors.CS;
-//                } else if (Majors.EE == Majors.valueOf(name)) {
-//                    this.majorEnum = Majors.EE;
-//                } else if (Majors.ISYE == Majors.valueOf(name)) {
-//                    this.majorEnum = Majors.ISYE;
-//                } else if (Majors.MATH == Majors.valueOf(name)) {
-//                    this.majorEnum = Majors.MATH;
-//                } else if (Majors.PHYS == Majors.valueOf(name)) {
-//                    this.majorEnum = Majors.PHYS;
-//                } else if (Majors.CHEM == Majors.valueOf(name)) {
-//                    this.majorEnum = Majors.CHEM;
-//                } else if (Majors.CHEME == Majors.valueOf(name)) {
-//                    this.majorEnum = Majors.CHEME;
-//                } else {
-//                    return false;
-//                }
-//            }
-//        } catch (Exception e) {
-//            return false;
-//        }
-//        return true;
-//    }
-
-    /**
-     * @return User's major as a string
-     */
- //   public String getMajorString() {
-//        return majorEnum.getMajorString();
-//    }
 
     /**
      * getter for boolean isAdmin

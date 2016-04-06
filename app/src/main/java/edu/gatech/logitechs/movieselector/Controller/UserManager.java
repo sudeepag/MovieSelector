@@ -1,4 +1,4 @@
-package edu.gatech.logitechs.movieselector;
+package edu.gatech.logitechs.movieselector.Controller;
 
 /**
  * Created by matth_000 on 2/7/2016.
@@ -15,6 +15,10 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
+import edu.gatech.logitechs.movieselector.Model.Consumer;
+import edu.gatech.logitechs.movieselector.Model.User;
+import edu.gatech.logitechs.movieselector.View.MuveeRegistration;
 
 public class UserManager {
 
@@ -144,8 +148,6 @@ public class UserManager {
     public void addUser(final User user, final MuveeRegistration context, final Runnable runnable) {
 
         Firebase userRef = ref.child("User");
-//        userRef.setValue(user);
-//        return true;
         userRef.createUser(user.getEmail(), user.getPassword(), new Firebase.ValueResultHandler<Map<String, Object>>() {
             @Override
             public void onSuccess(Map<String, Object> result) {
@@ -153,7 +155,6 @@ public class UserManager {
                         new Firebase.AuthResultHandler() {
                             @Override
                             public void onAuthenticated(AuthData authData) {
-                                // Authentication just completed successfully :)
                                 Map<String, Object> map = new HashMap<>();
                                 map.put("data", user);
                                 ref.child("users").child(authData.getUid()).setValue(map);
@@ -164,7 +165,6 @@ public class UserManager {
                             @Override
                             public void onAuthenticationError(FirebaseError error) {
                                 runnable.run();
-                                // Something went wrong :(
                             }
                         });
                 currentUser = user;
@@ -176,7 +176,6 @@ public class UserManager {
                 System.out.println(firebaseError.getMessage());
                 System.out.println("Error2");
                 runnable.run();
-                // there was an error
             }
         });
     }
@@ -196,8 +195,9 @@ public class UserManager {
                 innerRef.addValueEventListener(new ValueEventListener() {
                     @Override
                     public void onDataChange(DataSnapshot snapshot) {
-                        for (DataSnapshot dataSnapshot : snapshot.getChildren())
+                        for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
                             currentUser = dataSnapshot.getValue(User.class);
+                        }
                         consumer.consume("valid");
                         innerRef.removeEventListener(this);
                     }

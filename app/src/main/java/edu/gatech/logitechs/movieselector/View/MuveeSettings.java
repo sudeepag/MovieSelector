@@ -1,4 +1,4 @@
-package edu.gatech.logitechs.movieselector;
+package edu.gatech.logitechs.movieselector.View;
 
 
 import android.annotation.TargetApi;
@@ -23,6 +23,11 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import edu.gatech.logitechs.movieselector.Controller.UserManager;
+import edu.gatech.logitechs.movieselector.Model.Consumer;
+import edu.gatech.logitechs.movieselector.Model.User;
+import edu.gatech.logitechs.movieselector.R;
+
 /**
  * A {@link PreferenceActivity} that presents a set of application settings. On
  * handset devices, settings are presented as a single list. On tablets,
@@ -39,7 +44,6 @@ public class MuveeSettings extends AppCompatPreferenceActivity {
     private static UserManager manager;
     private static User currUser;
 
-    private static Map<String, Integer> majorToInt;
     private static Map<Integer, String> intToMajor;
     private static String newPass;
     private static String newEmail;
@@ -95,14 +99,19 @@ public class MuveeSettings extends AppCompatPreferenceActivity {
     private static void updateUserProfileServer(String key, String value) {
         copiedSp = PreferenceManager.getDefaultSharedPreferences(thisActivity);
         copiedEditor = copiedSp.edit();
-        if (key.equals("change_email")) {
-            newEmail = value;
-        } else if (key.equals("change_password")) {
-            newPass = value;
-        } else if (key.equals("change_major")) {
-            currUser.setMajor(intToMajor.get(Integer.valueOf(value)));
-        } else if (key.equals("change_description")) {
-            currUser.setDescription(value);
+        switch (key) {
+            case "change_email":
+                newEmail = value;
+                break;
+            case "change_password":
+                newPass = value;
+                break;
+            case "change_major":
+                currUser.setMajor(intToMajor.get(Integer.valueOf(value)));
+                break;
+            case "change_description":
+                currUser.setDescription(value);
+                break;
         }
     }
 
@@ -187,11 +196,11 @@ public class MuveeSettings extends AppCompatPreferenceActivity {
         currUser = manager.getCurrentUser();
 
         majors = getResources().getStringArray(R.array.pref_example_list_titles);
-        majorToInt = new HashMap<>();
+        Map<String, Integer> majorToInt = new HashMap<>();
         intToMajor = new HashMap<>();
 
         for (int i = 0; i < majors.length; i++) {
-            majorToInt.put(majors[i],i);
+            majorToInt.put(majors[i], i);
             intToMajor.put(i, majors[i]);
         }
 

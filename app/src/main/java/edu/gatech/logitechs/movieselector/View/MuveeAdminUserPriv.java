@@ -1,4 +1,4 @@
-package edu.gatech.logitechs.movieselector;
+package edu.gatech.logitechs.movieselector.View;
 
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
@@ -9,9 +9,11 @@ import android.view.View;
 import android.widget.TextView;
 import android.widget.ToggleButton;
 
+import edu.gatech.logitechs.movieselector.Model.User;
+import edu.gatech.logitechs.movieselector.R;
+
 public class MuveeAdminUserPriv extends AppCompatActivity {
 
-    private User currUser;
     private TextView banTextView;
     private TextView lockTextView;
     @Override
