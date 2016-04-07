@@ -27,6 +27,7 @@ import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.logging.Logger;
 
 import edu.gatech.logitechs.movieselector.Model.Movie;
 import edu.gatech.logitechs.movieselector.Model.RatingData;
@@ -58,7 +59,9 @@ public final class MovieManager {
                     final Movie movie = new Movie(runnable, context, object);
                     movieList.add(movie);
                 }
-            }  catch (JSONException e){}
+            }  catch (JSONException e){
+                Logger logger = Logger.getAnonymousLogger();
+                logger.fine(e.getMessage());}
         }
     };
 
@@ -98,6 +101,8 @@ public final class MovieManager {
         try {
             query = URLEncoder.encode(searchTerm, "utf-8");
         } catch (UnsupportedEncodingException e) {
+            Logger logger = Logger.getAnonymousLogger();
+            logger.fine(e.getMessage());
         }
         String url = "http://api.rottentomatoes.com/api/public/v1.0/movies.json?apikey=yedukp76ffytfuy24zsqk7f5&q="+query;
 
@@ -172,6 +177,8 @@ public final class MovieManager {
         try {
             key = URLEncoder.encode(movie.getTitle(), "UTF-8");
         } catch (UnsupportedEncodingException e) {
+            Logger logger = Logger.getAnonymousLogger();
+            logger.fine(e.getMessage());
         }
         map.put("data", movie);
         assert key != null;
@@ -185,6 +192,8 @@ public final class MovieManager {
         try {
             key = URLEncoder.encode(movie.getTitle(), "UTF-8");
         } catch (UnsupportedEncodingException e) {
+            Logger logger = Logger.getAnonymousLogger();
+            logger.fine(e.getMessage());
         }
         lastMovie = movie;
         assert key != null;

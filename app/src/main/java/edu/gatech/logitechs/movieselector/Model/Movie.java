@@ -10,6 +10,8 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.logging.Logger;
+
 /**
  * Created by akhilesh on 2/23/16.
  */
@@ -23,7 +25,6 @@ public class Movie {
     private String actor2;
     private Bitmap thumbnail;
 
-    private static final String MOVIE_LABEL = "movies";
     private static final String TITLE_LABEL = "title";
     private static final String YEAR_LABEL = "year";
     private static final String NAME_STRING = "name";
@@ -43,6 +44,12 @@ public class Movie {
         super();
     }
 
+    /**
+     * alternate constructor for defining a movie from a JSONobject
+     * @param runnable what is called when finished
+     * @param context the context for volley to run in
+     * @param object thhe JSON object to extract data from
+     */
     public Movie (final Runnable runnable, Context context, JSONObject object) {
         try {
             title = object.getString(TITLE_LABEL);
@@ -79,36 +86,38 @@ public class Movie {
                 }
             });
         } catch (JSONException e) {
+            Logger logger = Logger.getAnonymousLogger();
+            logger.fine(e.getMessage());
         }
     }
 
     /**
      * Partial constructor for movie
-     * @param title  title of the movie
-     * @param year  the year the movie was released
-     * @param cScore   rating score of the movie
+     * @param aTitle  aTitle of the movie
+     * @param aYear  the year the movie was released
+     * @param criticScore   rating score of the movie
      */
-    public Movie(String title, int year, int cScore) {
-        this(title, year, cScore, "", "", "");
+    public Movie(String aTitle, int aYear, int criticScore) {
+        this(aTitle, aYear, criticScore, "", "", "");
     }
 
     /**
      * Partial constructor for movie
-     * @param title  title of the movie
-     * @param year  the year the movie was released
-     * @param cScore   rating score of the movie
-     * @param description  the string description of the movie
-     * @param actor1  the first actor listed in the movie's cast
-     * @param actor2 the second actor listed in the movie's cast
+     * @param aTitle  aTitle of the movie
+     * @param aYear  the year the movie was released
+     * @param criticsScore   rating score of the movie
+     * @param aDescription  the string description of the movie
+     * @param anActor1  the first actor listed in the movie's cast
+     * @param anActor2 the second actor listed in the movie's cast
      */
-    public Movie(String title, int year, int cScore, String description,
-                 String actor1, String actor2) {
-        this.title = title;
-        this.year = year;
-        this.cScore = cScore;
-        this.description = description;
-        this.actor1 = actor1;
-        this.actor2 = actor2;
+    public Movie(String aTitle, int aYear, int criticsScore, String aDescription,
+                 String anActor1, String anActor2) {
+        this.title = aTitle;
+        this.year = aYear;
+        this.cScore = criticsScore;
+        this.description = aDescription;
+        this.actor1 = anActor1;
+        this.actor2 = anActor2;
     }
 
     /**
@@ -162,18 +171,18 @@ public class Movie {
     /**
      * The setter for the thumbnail
      *
-     * @param thumbnail  the thumnail assigned to the movie
+     * @param aThumbnail  the thumnail assigned to the movie
      */
-    public void setThumbnail(Bitmap thumbnail) {
-        this.thumbnail = thumbnail;
+    public void setThumbnail(Bitmap aThumbnail) {
+        this.thumbnail = aThumbnail;
     }
 
     /**
      * set the id for firebase retrieval purposes
-     * @param id the new id of the movie
+     * @param anID the new id of the movie
      */
-    public void setId(String id)  {
-        this.id = id;
+    public void setId(String anID)  {
+        this.id = anID;
     }
 
 }
