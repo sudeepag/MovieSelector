@@ -93,9 +93,9 @@ public class UserManager {
     public static void updateCurrentUser(User user) {
         final Map<String, Object> map = new HashMap<>();
         map.put(DATASTRING, user);
-        REF.child(USERSTRING).child(user.getUID()).setValue(map);
+        REF.child(USERSTRING).child(user.getUid()).setValue(map);
         Firebase userRef =REF.child(USERSTRING);
-        userRef = userRef.child(currentUser.getUID());
+        userRef = userRef.child(currentUser.getUid());
         userRef.addChildEventListener(EVENTLISTENER);
 
     }
@@ -166,14 +166,18 @@ public class UserManager {
                             @Override
                             public void onAuthenticated(AuthData authData) {
                                 onAuthenticatedHelper(user, context, authData);
-                            }  @Override
+                            }
+
+                            @Override
                             public void onAuthenticationError(FirebaseError error) {
                                 runnable.run();
                             }
                         });
                 currentUser = user;
-                user.setUID((String) result.get("uid"));
-            }  @Override
+                user.setUid((String) result.get("uid"));
+            }
+
+            @Override
             public void onError(FirebaseError firebaseError) {
                 runnable.run();
             }
@@ -214,10 +218,14 @@ public class UserManager {
                         }
                         consumer.consume("valid");
                         REF.child(USERSTRING).child(authData.getUid()).removeEventListener(this);
-                    }   @Override
-                    public void onCancelled(FirebaseError firebaseError) {}
+                    }
+
+                    @Override
+                    public void onCancelled(FirebaseError firebaseError) {
+                    }
                 });
             }
+
             @Override
             public void onAuthenticationError(FirebaseError firebaseError) {
                 consumer.consume(firebaseError.getMessage());

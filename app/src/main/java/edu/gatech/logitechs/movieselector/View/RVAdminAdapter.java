@@ -41,10 +41,10 @@ public class RVAdminAdapter extends RecyclerView.Adapter<RVAdminAdapter.UserView
                 public void onCheckedChanged(CompoundButton compoundButton, boolean bChecked) {
                     if (bChecked) {
                         banSwitch.setText("Banned");
-                        UserManager.banUser(((User) banSwitch.getTag()).getUID());
+                        UserManager.banUser(((User) banSwitch.getTag()).getUid());
                     } else {
                         banSwitch.setText("Unbanned");
-                        UserManager.unbanUser(((User) banSwitch.getTag()).getUID());
+                        UserManager.unbanUser(((User) banSwitch.getTag()).getUid());
                     }
                 }
             });
@@ -60,10 +60,10 @@ public class RVAdminAdapter extends RecyclerView.Adapter<RVAdminAdapter.UserView
                 public void onCheckedChanged(CompoundButton compoundButton, boolean bChecked) {
                     if (bChecked) {
                         lockSwitch.setText("Locked");
-                        UserManager.lockUser(((User) banSwitch.getTag()).getUID());
+                        UserManager.lockUser(((User) banSwitch.getTag()).getUid());
                     } else {
                         lockSwitch.setText("Unlocked");
-                        UserManager.unlockUser(((User) banSwitch.getTag()).getUID());
+                        UserManager.unlockUser(((User) banSwitch.getTag()).getUid());
 
                     }
                 }

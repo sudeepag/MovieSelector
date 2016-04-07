@@ -4,13 +4,21 @@ package edu.gatech.logitechs.movieselector.Model;
  * Created by akhilesh on 2/7/16.
  */
 public class User {
+    /** email for a given user */
     private String email;
+    /** password for a given user */
     private String password;
+    /** description for a given user */
     private String description;
+    /** major for a given user */
     private String major;
-    private String UID;
+    /** firebase id for a given user */
+    private String uid;
+    /** admin status for a given user */
     private boolean admin;
+    /** locked status for a given user */
     private boolean locked;
+    /** banned status for a given user */
     private boolean banned;
 
     /**
@@ -111,19 +119,19 @@ public class User {
     }
 
     /**
-     * getter for UID
+     * getter for uid
      * @return the userID for the user
      */
-    public String getUID() {
-        return UID;
+    public String getUid() {
+        return uid;
     }
 
     /**
-     * setter for UID
-     * @param UID the UserID of the user
+     * setter for uid
+     * @param uid the UserID of the user
      */
-    public void setUID(String UID) {
-        this.UID = UID;
+    public void setUid(String uid) {
+        this.uid = uid;
     }
 
     /**
