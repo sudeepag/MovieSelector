@@ -8,7 +8,6 @@ import android.content.Context;
 import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
-import com.android.volley.toolbox.ImageLoader;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.firebase.client.ChildEventListener;
 import com.firebase.client.DataSnapshot;
@@ -33,82 +32,51 @@ import edu.gatech.logitechs.movieselector.Model.Movie;
 import edu.gatech.logitechs.movieselector.Model.RatingData;
 import edu.gatech.logitechs.movieselector.Model.VolleySingleton;
 
-public class MovieManager {
+public final class MovieManager {
     private static List<Movie> movieList;
     private static Firebase ref = new Firebase("https://muvee.firebaseio.com/");
     private static RatingData currentMovie;
     private static Movie lastMovie;
+    private static Runnable runnable;
+    private static Context context;
     private static List<String> orderedIds;
     private static final String MOVIE_LABEL = "movies";
-    private static final String TITLE_LABEL = "title";
-    private static final String YEAR_LABEL = "year";
 
+    private static final Response.Listener<JSONObject> LISTENER = new Response.Listener<JSONObject>() {
+        @Override
+        public void onResponse(JSONObject response) {
+            try {
+                JSONArray array = response.getJSONArray(MOVIE_LABEL);
+                movieList = new ArrayList<>(array.length());
+                if (array.length() == 0) {
+                    Movie movie = new Movie("Sorry", 0, 0, "No movies found, please try again", "", "");
+                    movie.setThumbnail(null);
+                    movieList.add(movie);
+                }
+                for (int i = 0; i < array.length(); i++) {
+                    JSONObject object = array.getJSONObject(i);
+                    final Movie movie = new Movie(runnable, context, object);
+                    movieList.add(movie);
+                }
+            }  catch (JSONException e){}
+        }
+    };
+
+    private MovieManager () {
+
+    }
     /*
     * A getter for movies recently released on DVD
     *
     * @param context     Context of the call to get; used to return to flow
     * @param runnable    Runnable to execute upon completion of synchronous call to Rotten Tomatoes
      */
-    public static void getDVD(final Context context, final Runnable runnable) {
-        final String url = "http://api.rottentomatoes.com/api/public/v1.0/lists/" +
-                "dvds/new_releases.json?apikey=yedukp76ffytfuy24zsqk7f5";
+    public static void getDVD(final Context aContext, final Runnable aRunnable) {
+        MovieManager.context = aContext;
+        MovieManager.runnable = aRunnable;
+        final String url = "http://api.rottentomatoes.com/api/public/v1.0/lists/dvds/new_releases.json?apikey=yedukp76ffytfuy24zsqk7f5";
         JsonObjectRequest jsObjRequest = new JsonObjectRequest
-            (Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
-
-                @Override
-                public void onResponse(JSONObject response) {
-                    try {
-                        JSONArray array = response.getJSONArray(MOVIE_LABEL);
-                        movieList = new ArrayList<>(array.length());
-                        for (int i = 0; i < array.length();i++) {
-                            try {
-                                JSONObject object = array.getJSONObject(i);
-                                String title = object.getString(TITLE_LABEL);
-                                int year = object.getInt(YEAR_LABEL);
-                                String uID = object.getString("id");
-                                String description = object.getString("synopsis");
-                                if (description.equals("")) {
-                                    description = "Description Unavailable";
-                                }
-
-                                JSONObject rating = object.getJSONObject("ratings");
-                                int criticsScore = rating.getInt("criticsScore");
-
-
-                                JSONArray cast = object.getJSONArray("abridged_cast");
-                                String actor1 = "";
-                                String actor2 = "";
-                                if (cast.length() >= 2) {
-                                    actor1 = cast.getJSONObject(0).getString("name");
-                                    actor2 = cast.getJSONObject(1).getString("name");
-                                } else if (cast.length() >= 1) {
-                                    actor1 = cast.getJSONObject(0).getString("name");
-                                }
-                                final Movie movie = new Movie(title, year, criticsScore,
-                                        description, actor1, actor2);
-                                movie.setId(uID);
-                                movieList.add(movie);
-                                JSONObject posters = object.getJSONObject("posters");
-                                String url = posters.getString("thumbnail");
-                                VolleySingleton.getInstance(context).getImageLoader().get(url, new ImageLoader.ImageListener() {
-                                    @Override
-                                    public void onErrorResponse(VolleyError error) {
-
-                                    }
-
-                                    @Override
-                                    public void onResponse(ImageLoader.ImageContainer response, boolean isImmediate) {
-                                        movie.setThumbnail(response.getBitmap());
-                                        runnable.run();
-                                    }
-                                });
-                            } catch (JSONException e) {
-                            }
-                        }
-                    }  catch (JSONException e) {
-                    }
-                }
-            }, new Response.ErrorListener() {
+            (Request.Method.GET, url, null, LISTENER, new Response.ErrorListener() {
                 @Override
                 public void onErrorResponse(VolleyError error) {
                 }
@@ -123,8 +91,10 @@ public class MovieManager {
     * @param context     Context of the call to get; used to return to flow
     * @param runnable    Runnable to execute upon completion of synchronous call to Rotten Tomatoes
      */
-    public static void searchTitles(String searchTerm, final Context context, final Runnable runnable) {
-        String query = "";
+    public static void searchTitles(String searchTerm, final Context aContext, final Runnable aRunnable) {
+        MovieManager.context = aContext;
+        MovieManager.runnable = aRunnable;
+        String query = null;
         try {
             query = URLEncoder.encode(searchTerm, "utf-8");
         } catch (UnsupportedEncodingException e) {
@@ -132,62 +102,7 @@ public class MovieManager {
         String url = "http://api.rottentomatoes.com/api/public/v1.0/movies.json?apikey=yedukp76ffytfuy24zsqk7f5&q="+query;
 
         JsonObjectRequest jsObjRequest = new JsonObjectRequest
-                (Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
-
-                    @Override
-                    public void onResponse(JSONObject response) {
-                        try {
-                            JSONArray array = response.getJSONArray(MOVIE_LABEL);
-                            movieList = new ArrayList<>(array.length());
-                            for (int i = 0; i < array.length();i++) {
-                                try {
-                                    JSONObject object = array.getJSONObject(i);
-                                    String title = object.getString(TITLE_LABEL);
-                                    int year = object.getInt(YEAR_LABEL);
-                                    String uID = object.getString("id");
-                                    String description = object.getString("synopsis");
-                                    if (description.equals("")) {
-                                        description = "Description Unavailable";
-                                    }
-
-                                    JSONObject rating = object.getJSONObject("ratings");
-                                    int criticsScore = rating.getInt("criticsScore");
-
-
-                                    JSONArray cast = object.getJSONArray("abridged_cast");
-                                    String actor1 = "";
-                                    String actor2 = "";
-                                    if (cast.length() >= 2) {
-                                        actor1 = cast.getJSONObject(0).getString("name");
-                                        actor2 = cast.getJSONObject(1).getString("name");
-                                    } else if (cast.length() >= 1) {
-                                        actor1 = cast.getJSONObject(0).getString("name");
-                                    }
-                                    final Movie movie = new Movie(title, year, criticsScore,
-                                            description, actor1, actor2);
-                                    movie.setId(uID);
-                                    movieList.add(movie);
-                                    JSONObject posters = object.getJSONObject("posters");
-                                    String url = posters.getString("thumbnail");
-                                    VolleySingleton.getInstance(context).getImageLoader().get(url, new ImageLoader.ImageListener() {
-                                        @Override
-                                        public void onErrorResponse(VolleyError error) {
-
-                                        }
-
-                                        @Override
-                                        public void onResponse(ImageLoader.ImageContainer response, boolean isImmediate) {
-                                            movie.setThumbnail(response.getBitmap());
-                                            runnable.run();
-                                        }
-                                    });
-                                } catch (JSONException e) {
-                                }
-                            }
-                        }  catch (JSONException e) {
-                        }
-                    }
-                }, new Response.ErrorListener() {
+                (Request.Method.GET, url, null, LISTENER, new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
                         // TODO Auto-generated method stub
@@ -196,67 +111,29 @@ public class MovieManager {
         VolleySingleton.getInstance(context).addToRequestQueue(jsObjRequest);
     }
 
-    public static void getMoviesFromIds(final Context context, final Runnable runnable, String id) {
+    public static void getMoviesFromIds(final Context aContext, final Runnable aRunnable, String id) {
+        MovieManager.context = aContext;
+        MovieManager.runnable = aRunnable;
+
         String url = String.format("http://api.rottentomatoes.com/api/public/v1.0/movies/%s.json?apikey=%s",id, "yedukp76ffytfuy24zsqk7f5");
         JsonObjectRequest jsObjRequest = new JsonObjectRequest
-                (Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
-                    @Override
-                    public void onResponse(JSONObject response) {
-                        JSONObject object = response;
-                        try {
-                            String title = object.getString(TITLE_LABEL);
-                            int year = object.getInt(YEAR_LABEL);
-                            String description = object.getString("synopsis");
-                            if (description.equals("")) {
-                                description = "Description Unavailable";
-                            }
-
-                            JSONObject rating = object.getJSONObject("ratings");
-                            int criticsScore = rating.getInt("criticsScore");
-
-
-                            JSONArray cast = object.getJSONArray("abridged_cast");
-                            String actor1 = "";
-                            String actor2 = "";
-                            if (cast.length() >= 2) {
-                                actor1 = cast.getJSONObject(0).getString("name");
-                                actor2 = cast.getJSONObject(1).getString("name");
-                            } else if (cast.length() >= 1) {
-                                actor1 = cast.getJSONObject(0).getString("name");
-                            }
-                            final Movie movie = new Movie(title, year, criticsScore,
-                                    description, actor1, actor2);
-                            movie.setId(object.getString("id"));
-                            movieList.add(movie);
-                            Collections.sort(movieList, new Comparator<Movie>() {
-                                @Override
-                                public int compare(Movie lhs, Movie rhs) {
-                                    return orderedIds.indexOf(lhs.getId()) - orderedIds.indexOf(rhs.getId());
-                                }
-                            });
-                            JSONObject posters = object.getJSONObject("posters");
-                            String url = posters.getString("thumbnail");
-                            VolleySingleton.getInstance(context).getImageLoader().get(url, new ImageLoader.ImageListener() {
-                                @Override
-                                public void onErrorResponse(VolleyError error) {
-
-                                }
-
-                                @Override
-                                public void onResponse(ImageLoader.ImageContainer response, boolean isImmediate) {
-                                    movie.setThumbnail(response.getBitmap());
-                                    runnable.run();
-                                }
-                            });
-                        } catch (JSONException e) {
+            (Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
+                @Override
+                public void onResponse(JSONObject response) {
+                    Movie movie = new Movie(runnable, context, response);
+                    movieList.add(movie);
+                    Collections.sort(movieList, new Comparator<Movie>() {
+                        @Override
+                        public int compare(Movie lhs, Movie rhs) {
+                            return orderedIds.indexOf(lhs.getId()) - orderedIds.indexOf(rhs.getId());
                         }
-
-                    }
-                }, new Response.ErrorListener() {
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
-                    }
-                });
+                    });
+                }
+            }, new Response.ErrorListener() {
+                @Override
+                public void onErrorResponse(VolleyError error) {
+                }
+            });
         VolleySingleton.getInstance(context).addToRequestQueue(jsObjRequest);
     }
 
@@ -267,72 +144,17 @@ public class MovieManager {
     * @param context     Context of the call to get; used to return to flow
     * @param runnable    Runnable to execute upon completion of synchronous call to Rotten Tomatoes
      */
-    public static void getRecent(final Context context, final Runnable runnable) {
+    public static void getRecent(final Context aContext, final Runnable aRunnable) {
+        MovieManager.context = aContext;
+        MovieManager.runnable = aRunnable;
         String url = "http://api.rottentomatoes.com/api/public/v1.0/lists/movies/in_theaters.json?apikey=yedukp76ffytfuy24zsqk7f5";
         JsonObjectRequest jsObjRequest = new JsonObjectRequest
-                (Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
-
-                    @Override
-                    public void onResponse(JSONObject response) {
-                        try {
-                            JSONArray array = response.getJSONArray(MOVIE_LABEL);
-                            movieList = new ArrayList<>(array.length());
-                            for (int i = 0; i < array.length();i++) {
-                                try {
-
-                                    JSONObject object = array.getJSONObject(i);
-                                    String title = object.getString(TITLE_LABEL);
-                                    int year = object.getInt(YEAR_LABEL);
-                                    String uID = object.getString("id");
-                                    String description = object.getString("synopsis");
-                                    if (description.equals("")) {
-                                        description = "Description Unavailable";
-                                    }
-
-                                    JSONObject rating = object.getJSONObject("ratings");
-                                    int criticsScore = rating.getInt("criticsScore");
-
-
-                                    JSONArray cast = object.getJSONArray("abridged_cast");
-                                    String actor1 = "";
-                                    String actor2 = "";
-                                    if (cast.length() >= 2) {
-                                        actor1 = cast.getJSONObject(0).getString("name");
-                                        actor2 = cast.getJSONObject(1).getString("name");
-                                    } else if (cast.length() >= 1) {
-                                        actor1 = cast.getJSONObject(0).getString("name");
-                                    }
-                                    final Movie movie = new Movie(title, year, criticsScore,
-                                            description, actor1, actor2);
-                                    movie.setId(uID);
-                                    movieList.add(movie);
-                                    JSONObject posters = object.getJSONObject("posters");
-                                    String url = posters.getString("thumbnail");
-                                    VolleySingleton.getInstance(context).getImageLoader().get(url, new ImageLoader.ImageListener() {
-                                        @Override
-                                        public void onErrorResponse(VolleyError error) {
-
-                                        }
-
-                                        @Override
-                                        public void onResponse(ImageLoader.ImageContainer response, boolean isImmediate) {
-                                            movie.setThumbnail(response.getBitmap());
-                                            runnable.run();
-                                        }
-                                    });
-                                } catch (JSONException e) {
-                                }
-                            }
-                        }  catch (JSONException e) {
-                        }
-
-                    }
-                }, new Response.ErrorListener() {
+                (Request.Method.GET, url, null, LISTENER, new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
                     }
                 });
-        VolleySingleton.getInstance(context).addToRequestQueue(jsObjRequest);
+        VolleySingleton.getInstance(aContext).addToRequestQueue(jsObjRequest);
     }
 
     /*
@@ -341,11 +163,6 @@ public class MovieManager {
     * @return The a paramatrized list of movies
      */
     public static List<Movie> getMovieList() {
-        if (movieList.size() == 0) {
-            Movie movie = new Movie("Sorry", 0, 0, "No movies found, please try again", "", "");
-            movie.setThumbnail(null);
-            movieList.add(movie);
-        }
         return movieList;
     }
 
@@ -362,7 +179,7 @@ public class MovieManager {
         movieRef.setValue(map);
     }
 
-    public static void queryMovieRating(Movie movie, final Runnable runnable) {
+    public static void queryMovieRating(Movie movie, final Runnable aRunnable) {
         currentMovie = null;
         String key = null;
         try {
@@ -375,30 +192,17 @@ public class MovieManager {
             @Override
             public void onChildAdded(DataSnapshot dataSnapshot, String s) {
                 currentMovie = dataSnapshot.getValue(RatingData.class);
-                runnable.run();
+                aRunnable.run();
             }
-
             @Override
             public void onChildChanged(DataSnapshot dataSnapshot, String s) {
                 currentMovie = dataSnapshot.getValue(RatingData.class);
-                runnable.run();
-
+                aRunnable.run();
             }
-
             @Override
-            public void onChildRemoved(DataSnapshot dataSnapshot) {
-                currentMovie = dataSnapshot.getValue(RatingData.class);
-                runnable.run();
-
-            }
-
+            public void onChildRemoved(DataSnapshot dataSnapshot) {}
             @Override
-            public void onChildMoved(DataSnapshot dataSnapshot, String s) {
-                currentMovie = dataSnapshot.getValue(RatingData.class);
-                runnable.run();
-
-            }
-
+            public void onChildMoved(DataSnapshot dataSnapshot, String s) {}
             @Override
             public void onCancelled(FirebaseError firebaseError) {
             }
@@ -408,12 +212,12 @@ public class MovieManager {
 
     public static RatingData getCurrentMovie() {
         if (currentMovie == null) {
-            return new RatingData(lastMovie.getTitle(),  lastMovie.getId());
+            return new RatingData(lastMovie.getTitle(), lastMovie.getId());
         }
        return currentMovie;
     }
 
-    public static void getRankedMovies(final Context context, final Runnable runnable, final String major) {
+    public static void getRankedMovies(final Context aContext, final Runnable aRunnable, final String major) {
         Firebase movieRef = ref.child(MOVIE_LABEL);
         movieList = new ArrayList<>();
         orderedIds = new ArrayList<>();
@@ -424,33 +228,20 @@ public class MovieManager {
             public void onChildAdded(DataSnapshot dataSnapshot, String s) {
                 for (DataSnapshot child : dataSnapshot.getChildren()) {
                     RatingData data = child.getValue(RatingData.class);
-                    if(data.getAverage().containsKey(major)) {
-                        getMoviesFromIds(context, runnable, data.getUid());
+                    if (data.getAverage().containsKey(major)) {
+                        getMoviesFromIds(aContext, aRunnable, data.getUid());
                         orderedIds.add(0, data.getUid());
                     }
                 }
             }
-
             @Override
-            public void onChildChanged(DataSnapshot dataSnapshot, String s) {
-
-            }
-
+            public void onChildChanged(DataSnapshot dataSnapshot, String s) {}
             @Override
-            public void onChildRemoved(DataSnapshot dataSnapshot) {
-
-            }
-
+            public void onChildRemoved(DataSnapshot dataSnapshot) {}
             @Override
-            public void onChildMoved(DataSnapshot dataSnapshot, String s) {
-
-            }
-
+            public void onChildMoved(DataSnapshot dataSnapshot, String s) {}
             @Override
-            public void onCancelled(FirebaseError firebaseError) {
-
-            }
+            public void onCancelled(FirebaseError firebaseError) {}
         });
     }
-
 }
