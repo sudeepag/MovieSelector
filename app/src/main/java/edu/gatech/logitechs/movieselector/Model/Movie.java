@@ -16,25 +16,45 @@ import java.util.logging.Logger;
  * Created by akhilesh on 2/23/16.
  */
 public class Movie {
+    /** movie's title */
     private String title;
+    /** movie's production year */
     private int year;
+
+    /** movie's critic score in rotten tomatoes */
     private int cScore;
+    /** movie's id in firebase */
     private String id;
+    /** movie's description from rotten tomatoes */
     private String description;
+    /** movie's lead actorr according rotten tomatoes */
     private String actor1;
+    /** movie's second actor acording to rotten tomatoes */
     private String actor2;
+    /** movie's thumbnail image from rotten tomatoes */
     private Bitmap thumbnail;
 
+    /** title key in Rotten Tomatoes  */
     private static final String TITLE_LABEL = "title";
+    /** year key in Rotten Tomatoes  */
     private static final String YEAR_LABEL = "year";
+    /** name key in Rotten Tomatoes  */
     private static final String NAME_STRING = "name";
+    /** id key in Rotten Tomatoes  */
     private static final String ID_STRING = "id";
+    /** synopsis key in Rotten Tomatoes  */
     private static final String SYNOPSIS_STRING = "synopsis";
+    /** message if no description is available  */
     private static final String DESCRIPTION_UNAVAILABLE = "Desciprion unavailable";
+    /** critics score key in Rotten Tomatoes  */
     private static final String CRITICS_SCORE = "critics_score";
+    /** rating key in Rotten Tomatoes  */
     private static final String RATING_STRING = "ratings";
+    /** abridged cast key in Rotten Tomatoes  */
     private static final String ABRIDGED_CAST = "abridged_cast";
+    /** posters key in Rotten Tomatoes  */
     private static final String POSTERS = "posters";
+    /** thumbnail key in Rotten Tomatoes  */
     private static final String THUMBNAIL = "thumbnail";
 
     /**
@@ -60,11 +80,11 @@ public class Movie {
                 description = DESCRIPTION_UNAVAILABLE;
             }
 
-            JSONObject rating = object.getJSONObject(RATING_STRING);
+            final JSONObject rating = object.getJSONObject(RATING_STRING);
             cScore = rating.getInt(CRITICS_SCORE);
 
 
-            JSONArray cast = object.getJSONArray(ABRIDGED_CAST);
+            final JSONArray cast = object.getJSONArray(ABRIDGED_CAST);
             actor1 = null;
             actor2 = null;
             if (cast.length() >= 2) {
@@ -73,8 +93,8 @@ public class Movie {
             } else if (cast.length() >= 1) {
                 actor1 = cast.getJSONObject(0).getString(NAME_STRING);
             }
-            JSONObject posters = object.getJSONObject(POSTERS);
-            String url = posters.getString(THUMBNAIL);
+            final JSONObject posters = object.getJSONObject(POSTERS);
+            final String url = posters.getString(THUMBNAIL);
             VolleySingleton.getInstance(context).getImageLoader().get(url, new ImageLoader.ImageListener() {
                 @Override
                 public void onErrorResponse(VolleyError error) {
@@ -86,7 +106,7 @@ public class Movie {
                 }
             });
         } catch (JSONException e) {
-            Logger logger = Logger.getAnonymousLogger();
+            final Logger logger = Logger.getAnonymousLogger();
             logger.fine(e.getMessage());
         }
     }
