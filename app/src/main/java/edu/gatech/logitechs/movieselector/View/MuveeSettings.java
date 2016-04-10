@@ -12,7 +12,6 @@ import android.os.Bundle;
 import android.preference.EditTextPreference;
 import android.preference.ListPreference;
 import android.preference.Preference;
-import android.preference.PreferenceActivity;
 import android.support.v7.app.ActionBar;
 import android.preference.PreferenceFragment;
 import android.preference.PreferenceManager;
@@ -29,7 +28,7 @@ import edu.gatech.logitechs.movieselector.Model.User;
 import edu.gatech.logitechs.movieselector.R;
 
 /**
- * A {@link PreferenceActivity} that presents a set of application settings. On
+ * A link that presents a set of application settings. On
  * handset devices, settings are presented as a single list. On tablets,
  * settings are split by category, with category headers shown to the left of
  * the list of settings.
@@ -41,22 +40,40 @@ import edu.gatech.logitechs.movieselector.R;
  */
 public class MuveeSettings extends AppCompatPreferenceActivity {
 
+    /**
+     * The instance of UserManager to interact with backend
+     */
     private static UserManager manager;
+    /**
+     * keeps track of the current user
+     */
     private static User currUser;
 
+    /**
+     * map to convert the int input from user to a string major
+     */
     private static Map<Integer, String> intToMajor;
+    /**
+     * the new password for the user
+     */
     private static String newPass;
+    /**
+     * the new email for the user
+     */
     private static String newEmail;
 
-    static Activity thisActivity = null;
-
-    String majors[];
-
-    SharedPreferences sp;
-    SharedPreferences.Editor editor;
-
-    static SharedPreferences copiedSp;
-    static SharedPreferences.Editor copiedEditor;
+    /**
+     * the current activity
+     */
+    private static Activity thisActivity = null;
+//    /**
+//     * The preferences for all of the view files
+//     */
+//    private static SharedPreferences copiedSp;
+//    /**
+//     * The preferences for all of the edit fields in view files
+//     */
+//    private static SharedPreferences.Editor copiedEditor;
 
 
     /**
@@ -90,8 +107,6 @@ public class MuveeSettings extends AppCompatPreferenceActivity {
      * @param value     the preference value
      */
     private static void updateUserProfileServer(String key, String value) {
-        copiedSp = PreferenceManager.getDefaultSharedPreferences(thisActivity);
-        copiedEditor = copiedSp.edit();
         switch (key) {
             case "change_email":
                 newEmail = value;
@@ -116,31 +131,25 @@ public class MuveeSettings extends AppCompatPreferenceActivity {
                 manager.changePassword(currUser, newPass, new Runnable() {
                     @Override
                     public void run() {
-                        System.out.println("sucess");
-                        //TODO success
+                        // success
                     }
                 }, new Consumer() {
                     @Override
                     public void consume(String input) {
-                        System.out.println(input);
                     }
                 });
-            System.out.println("chang password to" + newPass);
             }
             if (newEmail != null) {
                 manager.changeEmail(currUser, newEmail, new Runnable() {
                     @Override
                     public void run() {
-                        System.out.println("sucess");
-                        //TODO success
+                        // success
                     }}, new Consumer() {
                     @Override
                     public void consume(String input) {
-                        System.out.println(input);
-                        //TODO: put error scenario for change email
+                        //put error scenario for change email
                     }
                 });
-                System.out.println("chang email to" + newEmail);
             }
         } else {
             manager.updateCurrentUser(currUser);
@@ -192,7 +201,7 @@ public class MuveeSettings extends AppCompatPreferenceActivity {
         manager = new UserManager();
         currUser = manager.getCurrentUser();
 
-        majors = getResources().getStringArray(R.array.pref_example_list_titles);
+        final String majors[] = getResources().getStringArray(R.array.pref_example_list_titles);
         final Map<String, Integer> majorToInt = new HashMap<>();
         intToMajor = new HashMap<>();
 
@@ -201,8 +210,8 @@ public class MuveeSettings extends AppCompatPreferenceActivity {
             intToMajor.put(i, majors[i]);
         }
 
-        sp = PreferenceManager.getDefaultSharedPreferences(MuveeSettings.this);
-        editor = sp.edit();
+        final SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(MuveeSettings.this);
+        final SharedPreferences.Editor editor = sp.edit();
         editor.putString("change_email", newEmail == null ? currUser.getEmail() : newEmail);
         editor.putString("change_password", newPass == null ? currUser.getPassword() : newPass);
         editor.putString("change_major", String.valueOf(majorToInt.get(currUser.getMajor())));
@@ -277,21 +286,10 @@ public class MuveeSettings extends AppCompatPreferenceActivity {
             bindPreferenceSummaryToValue(findPreference("change_password"));
             bindPreferenceSummaryToValue(findPreference("change_major"));
             bindPreferenceSummaryToValue(findPreference("change_description"));
-
-//            SharedPreferences sp = getPreferenceScreen().getSharedPreferences();
-
-//            EditTextPreference change_email_pref = (EditTextPreference) findPreference("change_email");
-//            change_email_pref.setSummary(sp.getString("change_email", "FERRK UUUU"));
-
-//            EditText edit = ((EditTextPreference) findPreference("change_password")).getEditText();
-//            String pref = edit.getTransformationMethod().getTransformation(objValue.toString(), edit).toString();
-//            prePreference.setSummary(pref);
-
         }
 
         @Override
-         public boolean onOptionsItemSelected(MenuItem item) {
-            final int id = item.getItemId();
+        public boolean onOptionsItemSelected(MenuItem item) {final int id = item.getItemId();
             if (id == android.R.id.home) {
                 startActivity(new Intent(getActivity(), MuveeSettings.class));
                 return true;
