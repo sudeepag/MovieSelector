@@ -102,11 +102,12 @@ public class MuveeMainActivity extends AppCompatActivity
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
-               @Override
-               public void onClick(View view) {
-                    getRecomendation();
-               }
-           });
+
+            @Override
+            public void onClick(View view) {
+                getRecomendation();
+            }
+        });
 
 //                //get view from layout XML
 //                LayoutInflater inflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
@@ -167,7 +168,6 @@ public class MuveeMainActivity extends AppCompatActivity
         @Override
         public boolean onQueryTextSubmit(String query) {
             MenuItemCompat.collapseActionView(searchMenuItem);
-//            rvDisappear();
             MovieManager.searchTitles(query, MuveeMainActivity.this, new Runnable() {
                 @Override
                 public void run() {
@@ -177,13 +177,10 @@ public class MuveeMainActivity extends AppCompatActivity
             });
             navigationView.getMenu().getItem(0).setChecked(false);
             navigationView.getMenu().getItem(1).setChecked(false);
-//            rvAppear();
             return false;
         }
-
         @Override
         public boolean onQueryTextChange(String newText) {
-            // newText is text entered by user to SearchView
             return false;
         }
     };
@@ -366,7 +363,7 @@ public class MuveeMainActivity extends AppCompatActivity
         new AlertDialog.Builder(MuveeMainActivity.this)
                 .setTitle(R.string.app_name)
                 .setMessage(R.string.prompt_logout)
-        .setPositiveButton("Yes",
+                .setPositiveButton("Yes",
                 new DialogInterface.OnClickListener() {
                     @TargetApi(11)
                     public void onClick(DialogInterface dialog, int id) {
@@ -384,7 +381,7 @@ public class MuveeMainActivity extends AppCompatActivity
                         finish();
                     }
                 })
-        .setNegativeButton("No", new DialogInterface.OnClickListener() {
+            .setNegativeButton("No", new DialogInterface.OnClickListener() {
             @TargetApi(11)
             public void onClick(DialogInterface dialog, int id) {
                 dialog.cancel();

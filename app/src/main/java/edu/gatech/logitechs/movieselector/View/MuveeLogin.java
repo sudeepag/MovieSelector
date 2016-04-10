@@ -63,8 +63,8 @@ public class MuveeLogin extends AppCompatActivity {
         //Linking UI to Code
 
         //Custom fonts for welcome text
-        Typeface tf = Typeface.createFromAsset(getAssets(), "fonts/akaDora.ttf");
-        TextView tv = (TextView) findViewById(R.id.welcome_text);
+        final Typeface tf = Typeface.createFromAsset(getAssets(), "fonts/akaDora.ttf");
+        final TextView tv = (TextView) findViewById(R.id.welcome_text);
         tv.setTypeface(tf);
 
         final TextView linkSignup = (TextView) findViewById(R.id.signup_link);
@@ -88,7 +88,7 @@ public class MuveeLogin extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 // Start the Signup activity
-                Intent intent = new Intent(getApplicationContext(), MuveeRegistration.class);
+                final Intent intent = new Intent(getApplicationContext(), MuveeRegistration.class);
                 //startActivityForResult(intent, REQUEST_SIGNUP);
                 MuveeLogin.this.startActivity(intent);
             }
@@ -110,7 +110,7 @@ public class MuveeLogin extends AppCompatActivity {
                 return false;
             }
         });
-        Button mEmailSignInButton = (Button) findViewById(R.id.email_sign_in_button);
+        final Button mEmailSignInButton = (Button) findViewById(R.id.email_sign_in_button);
         mEmailSignInButton.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -127,7 +127,7 @@ public class MuveeLogin extends AppCompatActivity {
     @Override
     public void onBackPressed() {
         //first bring down the keyboard
-        InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
+        final InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
         imm.hideSoftInputFromWindow(this.getCurrentFocus().getWindowToken(), 0);
         if (isLoading) {
             //system loading pressed back button -> do cancel async task action;
@@ -167,8 +167,8 @@ public class MuveeLogin extends AppCompatActivity {
         mPasswordView.setError(null);
 
         // Store values at the time of the login attempt.
-        String email = mEmailView.getText().toString();
-        String password = mPasswordView.getText().toString();
+        final String email = mEmailView.getText().toString();
+        final String password = mPasswordView.getText().toString();
 
         boolean cancel = false;
         View focusView = null;
@@ -206,9 +206,9 @@ public class MuveeLogin extends AppCompatActivity {
 
             //Force bring down the keyboard
             // Check if no view has focus:
-            View view = this.getCurrentFocus();
+            final View view = this.getCurrentFocus();
             if (view != null) {
-                InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
+                final InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
                 imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
             }
 
@@ -216,13 +216,13 @@ public class MuveeLogin extends AppCompatActivity {
             showProgress(true);
 
             //start authentication
-            UserManager manager = new UserManager();
+            final UserManager manager = new UserManager();
             manager.authenticateUser(email, password, new Consumer() {
 
                 @Override
                 public void consume(String message) {
                     showProgress(false);
-                    if (message.equals("valid")) {
+                    if ("valid".equals(message)) {
                         transition();
                     } else {
                         mPasswordView.setError(message);
@@ -253,6 +253,7 @@ public class MuveeLogin extends AppCompatActivity {
 
     /**
      * Shows the progress UI and hides the login form.
+     * @param show object containing what is currently visible to the user
      */
     @TargetApi(Build.VERSION_CODES.HONEYCOMB_MR2)
     private void showProgress(final boolean show) {
@@ -261,7 +262,7 @@ public class MuveeLogin extends AppCompatActivity {
         // the progress spinner.
         isLoading = show;
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB_MR2) {
-            int shortAnimTime = getResources().getInteger(android.R.integer.config_longAnimTime);
+            final int shortAnimTime = getResources().getInteger(android.R.integer.config_longAnimTime);
 
             mProgressView.setVisibility(show ? View.VISIBLE : View.GONE);
             mProgressView.animate().setDuration(shortAnimTime).alpha(
@@ -349,13 +350,13 @@ public class MuveeLogin extends AppCompatActivity {
             if (success) {
                 //TODO change this to
                 //if (user.isAdmin())
-                if (mEmail.equals("admin@admin.com") && mPassword.equals("admin")) {
+                if ("admin@admin.com".equals(mEmail) && "admin".equals(mPassword)) {
                     finish();
-                    Intent myIntent = new Intent(MuveeLogin.this,MuveeAdminActivity.class);
+                    final Intent myIntent = new Intent(MuveeLogin.this,MuveeAdminActivity.class);
                     MuveeLogin.this.startActivity(myIntent);
                 } else {
                     finish();
-                    Intent myIntent = new Intent(MuveeLogin.this,MuveeMainActivity.class);
+                    final Intent myIntent = new Intent(MuveeLogin.this,MuveeMainActivity.class);
                     MuveeLogin.this.startActivity(myIntent);
                 }
             } else {

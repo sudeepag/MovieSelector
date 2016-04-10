@@ -45,8 +45,8 @@ public class MuveeRegistration extends AppCompatActivity{
         setContentView(R.layout.muvee_registration_activity);
 
         //custom fonts for welcome text
-        Typeface tf = Typeface.createFromAsset(getAssets(), "fonts/akaDora.ttf");
-        TextView tv = (TextView) findViewById(R.id.signup_text);
+        final Typeface tf = Typeface.createFromAsset(getAssets(), "fonts/akaDora.ttf");
+        final TextView tv = (TextView) findViewById(R.id.signup_text);
         tv.setTypeface(tf);
 
         // Set up the login form.
@@ -59,7 +59,7 @@ public class MuveeRegistration extends AppCompatActivity{
             @Override
             public boolean onEditorAction(TextView textView, int id, KeyEvent keyEvent) {
                 if (id == R.id.login || id == EditorInfo.IME_ACTION_DONE) {
-                    System.out.println("asd");
+                    System.out.println("asd"); //TODO can this be removed?
                     return true;
                 }
                 return false;
@@ -67,13 +67,13 @@ public class MuveeRegistration extends AppCompatActivity{
         });
 
         mMajorsView = (Spinner)findViewById(R.id.drop_majors);
-        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,
+        final ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,
                 R.array.majors_list, android.R.layout.simple_spinner_item);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         mMajorsView.setAdapter(adapter);
 
         //sign up button
-        Button mEmailSignUpButton = (Button) findViewById(R.id.email_sign_up_button);
+        final Button mEmailSignUpButton = (Button) findViewById(R.id.email_sign_up_button);
         mEmailSignUpButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -88,7 +88,7 @@ public class MuveeRegistration extends AppCompatActivity{
             @Override
             public void onClick(View v) {
                 // Start the Signup activity
-                Intent intent = new Intent(MuveeRegistration.this, MuveeLogin.class);
+                final Intent intent = new Intent(MuveeRegistration.this, MuveeLogin.class);
                 intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 startActivity(intent);
                 finish();
@@ -125,16 +125,16 @@ public class MuveeRegistration extends AppCompatActivity{
         mPasswordView.setError(null);
 
         // Store values at the time of the login attempt.
-        String email = mEmailView.getText().toString();
-        String password = mPasswordView.getText().toString();
-        String confirmPassword = mConfirmPasswordView.getText().toString();
-        String major = mMajorsView.getSelectedItem().toString();
-        String description = mDescriptionView.getText().toString();
+        final String email = mEmailView.getText().toString();
+        final String password = mPasswordView.getText().toString();
+        final String confirmPassword = mConfirmPasswordView.getText().toString();
+        final String major = mMajorsView.getSelectedItem().toString();
+        final String description = mDescriptionView.getText().toString();
 
         boolean cancel = false;
         View focusView = null;
 
-        TextView majorErrorText = (TextView)mMajorsView.getSelectedView();
+        final TextView majorErrorText = (TextView)mMajorsView.getSelectedView();
         majorErrorText.setError(null);
 
 //        //checks if description was written
@@ -150,8 +150,8 @@ public class MuveeRegistration extends AppCompatActivity{
             cancel = true;
         }
 
-        //checks for valid password/confirm password
-         if (TextUtils.isEmpty(password)) {
+         //checks for valid password/confirm password
+        if (TextUtils.isEmpty(password)) {
             //if password is empty
             mPasswordView.setError(getString(R.string.error_empty_password));
             focusView = mPasswordView;
@@ -166,13 +166,13 @@ public class MuveeRegistration extends AppCompatActivity{
             focusView = mPasswordView;
             cancel = true;
         } else if (isPasswordValid(confirmPassword)) {
-             mConfirmPasswordView.setError(getString(R.string.error_invalid_password));
-             focusView = mConfirmPasswordView;
-             cancel = true;
-         } else if (!password.equals(confirmPassword)) {
-             mConfirmPasswordView.setError(getString(R.string.error_password_mismatch));
-             focusView = mConfirmPasswordView;
-             cancel = true;
+            mConfirmPasswordView.setError(getString(R.string.error_invalid_password));
+            focusView = mConfirmPasswordView;
+            cancel = true;
+        } else if (!password.equals(confirmPassword)) {
+            mConfirmPasswordView.setError(getString(R.string.error_password_mismatch));
+            focusView = mConfirmPasswordView;
+            cancel = true;
         }
 
         // Check for a valid email address.
@@ -195,9 +195,9 @@ public class MuveeRegistration extends AppCompatActivity{
 
             //Force bring down the keyboard
             // Check if no view has focus:
-            View view = this.getCurrentFocus();
+            final View view = this.getCurrentFocus();
             if (view != null) {
-                InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
+                final InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
                 imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
             }
 
@@ -205,7 +205,7 @@ public class MuveeRegistration extends AppCompatActivity{
             showProgress(true);
 
             //start authentication
-            UserManager manager = new UserManager();
+            final UserManager manager = new UserManager();
             manager.addUser(new User(email, password, major, description), MuveeRegistration.this, new Runnable() {
                 @Override
                 public void run() {
@@ -226,19 +226,37 @@ public class MuveeRegistration extends AppCompatActivity{
             });
         }
     }
+
+    /**
+     * Validates the user's input for the email field
+     * @param email the input email to check
+     * @return true if it is a valid email
+     */
     private boolean isEmailValid(String email) {
         return email.contains("@");
     }
+
+    /**
+     * Validator the user's input password
+     * @param password the user's input password
+     * @return true if the password meets requirements
+     */
     private boolean isPasswordValid(String password) {
         return password.length() <= 4;
     }
 
+    /**
+     * validator for the major field
+     * @param major the user's input major
+     * @return true if the input is a valid major
+     */
     private boolean isMajorValid(String major) {
-        return !major.equals("Choose a Major");
+        return !("Choose a Major").equals(major);
     }
 
     /**
      * Shows the progress UI and hides the login form.
+     * @param show the object containing what is currently visible to the user
      */
     @TargetApi(Build.VERSION_CODES.HONEYCOMB_MR2)
     private void showProgress(final boolean show) {
@@ -248,11 +266,11 @@ public class MuveeRegistration extends AppCompatActivity{
 
         //isLoading = show;
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB_MR2) {
-            int shortAnimTime = getResources().getInteger(android.R.integer.config_longAnimTime);
+            final int shortAnimTime = getResources().getInteger(android.R.integer.config_longAnimTime);
 
             mProgressView.setVisibility(show ? View.VISIBLE : View.GONE);
             mProgressView.animate().setDuration(shortAnimTime).alpha(
-                    show ? 1 : 0).setListener(new AnimatorListenerAdapter() {
+                show ? 1 : 0).setListener(new AnimatorListenerAdapter() {
                 @Override
                 public void onAnimationEnd(Animator animation) {
                     mProgressView.setVisibility(show ? View.VISIBLE : View.GONE);
@@ -261,7 +279,7 @@ public class MuveeRegistration extends AppCompatActivity{
 
             mSignupFormView.setVisibility(show ? View.GONE : View.VISIBLE);
             mSignupFormView.animate().setDuration(shortAnimTime).alpha(
-                    show ? 0 : 1).setListener(new AnimatorListenerAdapter() {
+                show ? 0 : 1).setListener(new AnimatorListenerAdapter() {
                 @Override
                 public void onAnimationEnd(Animator animation) {
                     mSignupFormView.setVisibility(show ? View.GONE : View.VISIBLE);
@@ -279,7 +297,7 @@ public class MuveeRegistration extends AppCompatActivity{
      * Transitions to the main movie activity
      */
     public void transition() {
-        Intent myIntent = new Intent(this,MuveeMainActivity.class);
+        final Intent myIntent = new Intent(this,MuveeMainActivity.class);
         this.startActivity(myIntent);
     }
 }

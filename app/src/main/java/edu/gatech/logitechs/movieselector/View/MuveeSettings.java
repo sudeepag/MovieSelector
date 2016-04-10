@@ -66,19 +66,12 @@ public class MuveeSettings extends AppCompatPreferenceActivity {
     private static Preference.OnPreferenceChangeListener sBindPreferenceSummaryToValueListener = new Preference.OnPreferenceChangeListener() {
         @Override
         public boolean onPreferenceChange(Preference preference, Object value) {
-            String stringValue = value.toString();
-
+            final String stringValue = value.toString();
             if (preference instanceof ListPreference) {
-                // For list preferences, look up the correct display value in
-                // the preference's 'entries' list.
-                ListPreference listPreference = (ListPreference) preference;
-                int index = listPreference.findIndexOfValue(stringValue);
-
+                final ListPreference listPreference = (ListPreference) preference;
+                final int index = listPreference.findIndexOfValue(stringValue);
                 updateUserProfileServer(preference.getKey(), String.valueOf(index));
-
-                // Set the summary to reflect the new value.
                 preference.setSummary(index >= 0 ? listPreference.getEntries()[index] : null);
-
             } else if (preference instanceof EditTextPreference) {
                 updateUserProfileServer(preference.getKey(), stringValue);
                 preference.setSummary(stringValue);
@@ -158,6 +151,8 @@ public class MuveeSettings extends AppCompatPreferenceActivity {
     /**
      * Helper method to determine if the device has an extra-large screen. For
      * example, 10" tablets are extra-large.
+     * @param context the context of the screen being used
+     * @return true if the device has an extra-large screen
      */
     private static boolean isXLargeTablet(Context context) {
         return (context.getResources().getConfiguration().screenLayout
@@ -172,6 +167,8 @@ public class MuveeSettings extends AppCompatPreferenceActivity {
      * dependent on the type of preference.
      *
      * @see #sBindPreferenceSummaryToValueListener
+     *
+     * @param preference new preference of the user
      */
     private static void bindPreferenceSummaryToValue(Preference preference) {
         // Set the listener to watch for value changes.
@@ -196,7 +193,7 @@ public class MuveeSettings extends AppCompatPreferenceActivity {
         currUser = manager.getCurrentUser();
 
         majors = getResources().getStringArray(R.array.pref_example_list_titles);
-        Map<String, Integer> majorToInt = new HashMap<>();
+        final Map<String, Integer> majorToInt = new HashMap<>();
         intToMajor = new HashMap<>();
 
         for (int i = 0; i < majors.length; i++) {
@@ -217,7 +214,7 @@ public class MuveeSettings extends AppCompatPreferenceActivity {
      * Set up the {@link android.app.ActionBar}, if the API is available.
      */
     private void setupActionBar() {
-        ActionBar actionBar = getSupportActionBar();
+        final ActionBar actionBar = getSupportActionBar();
         if (actionBar != null) {
             // Show the Up button in the action bar.
             actionBar.setDisplayHomeAsUpEnabled(true);
@@ -226,7 +223,7 @@ public class MuveeSettings extends AppCompatPreferenceActivity {
 
     @Override
     public boolean onMenuItemSelected(int featureId, MenuItem item) {
-        int id = item.getItemId();
+        final int id = item.getItemId();
         if (id == android.R.id.home) {
             if (!super.onMenuItemSelected(featureId, item)) {
                 NavUtils.navigateUpFromSameTask(this);
@@ -256,6 +253,9 @@ public class MuveeSettings extends AppCompatPreferenceActivity {
     /**
      * This method stops fragment injection in malicious applications.
      * Make sure to deny any unknown fragments here.
+     *
+     * @param fragmentName the fragment being confirmed
+     * @return true if the fragment is valid
      */
     protected boolean isValidFragment(String fragmentName) {
         return PreferenceFragment.class.getName().equals(fragmentName)
@@ -291,7 +291,7 @@ public class MuveeSettings extends AppCompatPreferenceActivity {
 
         @Override
          public boolean onOptionsItemSelected(MenuItem item) {
-            int id = item.getItemId();
+            final int id = item.getItemId();
             if (id == android.R.id.home) {
                 startActivity(new Intent(getActivity(), MuveeSettings.class));
                 return true;

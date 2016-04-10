@@ -37,10 +37,10 @@ public class MuveeDetails extends AppCompatActivity {
         setContentView(R.layout.muvee_details_activity);
 
         //Get data from Intent
-        Intent intent = getIntent();
+        final Intent intent = getIntent();
         this.movieTitle = intent.getStringExtra("title");
         this.movieDescription = intent.getStringExtra("description");
-        Bundle extras = intent.getExtras();
+        final Bundle extras = intent.getExtras();
         this.movieThumbnail = (Bitmap) extras.get("thumbnail");
 
         dToolbar = (Toolbar) findViewById(R.id.details_toolbar);
@@ -77,6 +77,9 @@ public class MuveeDetails extends AppCompatActivity {
         overridePendingTransition(R.anim.pull_in_left, R.anim.push_out_right);
     }
 
+    /**
+     * Updates the ratings via the Movie and User manager classes
+     */
     public void updateRatings() {
         ratingMovie.addRating(UserManager.getCurrentUser().getMajor(), ratingBar.getRating());
         MovieManager.updateMovie(ratingMovie);

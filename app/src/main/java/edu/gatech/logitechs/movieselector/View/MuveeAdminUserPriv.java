@@ -20,7 +20,7 @@ public class MuveeAdminUserPriv extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.muvee_admin_user_priv_activity);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        final Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
         banTextView = (TextView)findViewById(R.id.ban_text);
@@ -30,7 +30,7 @@ public class MuveeAdminUserPriv extends AppCompatActivity {
         lockTextView.setVisibility(View.INVISIBLE);
 
 
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+        final FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -40,8 +40,13 @@ public class MuveeAdminUserPriv extends AppCompatActivity {
         });
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     }
+
+    /**
+     * Modify the state of the banned field for the admin
+     * @param view the current admin's view
+     */
     public void changeBanState(View view) {
-        boolean checked = ((ToggleButton)view).isChecked();
+        final boolean checked = ((ToggleButton)view).isChecked();
         if (checked) {
             banTextView.setText("unban");
             banTextView.setVisibility(View.VISIBLE);
@@ -50,8 +55,12 @@ public class MuveeAdminUserPriv extends AppCompatActivity {
         }
     }
 
+    /**
+     * Modify the state of the banned field for the admin
+     * @param view the current admin's view
+     */
     public void changeLockState(View view) {
-        boolean checked = ((ToggleButton)view).isChecked();
+        final boolean checked = ((ToggleButton)view).isChecked();
         if (checked) {
             lockTextView.setText("unlock");
             lockTextView.setVisibility(View.VISIBLE);

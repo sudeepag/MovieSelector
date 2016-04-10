@@ -16,20 +16,25 @@ import edu.gatech.logitechs.movieselector.R;
 public class MuveeAdminActivity extends AppCompatActivity {
 
     RecyclerView rv;
-
+    /**
+     * The list of user's visible to the admin
+     */
     private List<User> users = new ArrayList<>();
+    /**
+     * Adapter admins and their users
+     */
     public final RVAdminAdapter adapter = new RVAdminAdapter(users);
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.muvee_admin_activity);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        final Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
         rv = (RecyclerView) findViewById(R.id.users_recycler_view);
         rv.setHasFixedSize(true);
-        LinearLayoutManager layoutManager = new LinearLayoutManager(this);
+        final LinearLayoutManager layoutManager = new LinearLayoutManager(this);
         rv.setLayoutManager(layoutManager);
         rv.setAdapter(adapter);
 
@@ -38,6 +43,9 @@ public class MuveeAdminActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     }
 
+    /**
+     * Method to initialize the list of visible user's for the admin
+     */
     private void initListOfUsers() {
         UserManager.populateUserList(new Runnable() {
             @Override

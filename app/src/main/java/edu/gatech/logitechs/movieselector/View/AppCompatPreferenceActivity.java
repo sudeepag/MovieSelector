@@ -19,6 +19,9 @@ import android.view.ViewGroup;
  */
 public abstract class AppCompatPreferenceActivity extends PreferenceActivity {
 
+    /**
+     * The delegator for the movies
+     */
     private AppCompatDelegate mDelegate;
 
     @Override
@@ -106,10 +109,17 @@ public abstract class AppCompatPreferenceActivity extends PreferenceActivity {
         getDelegate().onDestroy();
     }
 
+    /**
+     * Updates the view to exclude options menu
+     */
     public void invalidateOptionsMenu() {
         getDelegate().invalidateOptionsMenu();
     }
 
+    /**
+     * getter for the Delegate object
+     * @return returns the delegate
+     */
     private AppCompatDelegate getDelegate() {
         if (mDelegate == null) {
             mDelegate = AppCompatDelegate.create(this, null);
