@@ -47,13 +47,27 @@ public class MuveeLogin extends AppCompatActivity {
     private UserLoginTask mAuthTask = null;
 
     // UI references.
+    /**
+     * TextView for email
+     */
     private AutoCompleteTextView mEmailView;
+    /**
+     * text field for password
+     */
     private EditText mPasswordView;
+    /**
+     * view for progress(indicate waitng screen)
+     */
     private View mProgressView;
+    /**
+     * view for the entire login form
+     */
     private View mLoginFormView;
 
-    //tracking variables
-    boolean isLoading;
+    /**
+     * variable to keep track of if the screen should be frozen when loading
+     */
+    private boolean isLoading;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -67,6 +81,10 @@ public class MuveeLogin extends AppCompatActivity {
         final TextView tv = (TextView) findViewById(R.id.welcome_text);
         tv.setTypeface(tf);
 
+        final int color1 = 160;
+        final int color2 = 189;
+        final int color3 = 255;
+        final int color4 = 224;
         final TextView linkSignup = (TextView) findViewById(R.id.signup_link);
         //Change the text color when the user touches it
         linkSignup.setOnTouchListener(new OnTouchListener() {
@@ -74,10 +92,10 @@ public class MuveeLogin extends AppCompatActivity {
             public boolean onTouch(View v, MotionEvent event) {
                 switch (event.getAction() & MotionEvent.ACTION_MASK) {
                     case MotionEvent.ACTION_DOWN:
-                        linkSignup.setTextColor(Color.argb(160, 189, 189, 189));
+                        linkSignup.setTextColor(Color.argb(color1, color2, color2, color2));
                         break;
                     case MotionEvent.ACTION_UP:
-                        linkSignup.setTextColor(Color.argb(255, 224, 224, 224));
+                        linkSignup.setTextColor(Color.argb(color3, color4, color4, color4));
                         break;
                 }
                 return false;
@@ -128,6 +146,7 @@ public class MuveeLogin extends AppCompatActivity {
     public void onBackPressed() {
         //first bring down the keyboard
         final InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
+        final int defaultAPI = 11;
         imm.hideSoftInputFromWindow(this.getCurrentFocus().getWindowToken(), 0);
         if (isLoading) {
             //system loading pressed back button -> do cancel async task action;
@@ -138,13 +157,13 @@ public class MuveeLogin extends AppCompatActivity {
                     .setMessage(R.string.prompt_exit)
                     .setPositiveButton("Yes",
                             new DialogInterface.OnClickListener() {
-                                @TargetApi(11)
+                                @TargetApi(defaultAPI)
                                 public void onClick(DialogInterface dialog, int id) {
                                     System.exit(0);
                                 }
                             })
                     .setNegativeButton("No", new DialogInterface.OnClickListener() {
-                        @TargetApi(11)
+                        @TargetApi(defaultAPI)
                         public void onClick(DialogInterface dialog, int id) {
                             dialog.cancel();
                         }
@@ -248,7 +267,8 @@ public class MuveeLogin extends AppCompatActivity {
      * @return              a boolean that tells whether the password is long enough
      */
     private boolean isPasswordValid(String password) {
-        return password.length() > 4;
+        final int minpasslength = 4;
+        return password.length() > minpasslength;
     }
 
     /**
@@ -319,7 +339,13 @@ public class MuveeLogin extends AppCompatActivity {
      */
     public class UserLoginTask extends AsyncTask<Void, Void, Boolean> {
 
+        /**
+         * The string representation of the user's email
+         */
         private final String mEmail;
+        /**
+         * The string representation of the user's password
+         */
         private final String mPassword;
 
         /**
@@ -334,8 +360,9 @@ public class MuveeLogin extends AppCompatActivity {
 
         @Override
         protected Boolean doInBackground(Void... params) {
+            final int sleeplength = 1000;
             try {
-                Thread.sleep(1000);
+                Thread.sleep(sleeplength);
             } catch (InterruptedException e) {
                 return false;
             }
