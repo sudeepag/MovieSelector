@@ -17,9 +17,14 @@ import edu.gatech.logitechs.movieselector.Model.RatingData;
 import edu.gatech.logitechs.movieselector.R;
 
 public class MuveeDetails extends AppCompatActivity {
-
+    /**
+     * rating bar to rate a movie
+     */
     private RatingBar ratingBar;
 
+    /**
+     * rating data to store the movies rating
+     */
     private RatingData ratingMovie;
 
     @Override
