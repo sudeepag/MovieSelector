@@ -16,39 +16,23 @@ import edu.gatech.logitechs.movieselector.R;
 
 public class RVMainAdapter extends RecyclerView.Adapter<RVMainAdapter.MovieViewHolder> {
 
-    public static class MovieViewHolder extends RecyclerView.ViewHolder {
 
-        CardView cv;
-        TextView movieTitle;
-        TextView movieDescription;
-        ImageView movieImage;
 
-        /*
-        * Constructor for the MovieViewHolder
-        *
-        * @param itemView   the view being added
-         */
-        public MovieViewHolder(View itemView) {
-            super(itemView);
-            cv = (CardView)itemView.findViewById(R.id.cv);
-            movieTitle = (TextView)itemView.findViewById(R.id.movie_title);
-            movieDescription = (TextView)itemView.findViewById(R.id.movie_description);
-            movieImage = (ImageView)itemView.findViewById(R.id.movie_image_holder);
-        }
+    private List<Movie> movies;
+
+    /**
+     * updates the list of movies
+     * @param newMovies the list of mew moview
+     */
+    RVMainAdapter(List<Movie> newMovies){
+        this.movies = newMovies;
     }
 
-    List<Movie> movies;
-
-    RVMainAdapter(List<Movie> movies){
-        this.movies = movies;
-    }
-
-    /*
+    /**
     * Updates the list of movies after fetching it remotely
     *
     * @param newMovies  The new list of movies returned remotely
-    *
-     */
+    */
     public void updateMovieList(List<Movie> newMovies) {
         movies = newMovies;
         this.notifyDataSetChanged();
@@ -62,8 +46,7 @@ public class RVMainAdapter extends RecyclerView.Adapter<RVMainAdapter.MovieViewH
     @Override
     public MovieViewHolder onCreateViewHolder(ViewGroup viewGroup, int i) {
         View v = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.muvee_card_view_row, viewGroup, false);
-        MovieViewHolder pvh = new MovieViewHolder(v);
-        return pvh;
+        return new MovieViewHolder(v);
     }
 
     @Override
@@ -84,5 +67,25 @@ public class RVMainAdapter extends RecyclerView.Adapter<RVMainAdapter.MovieViewH
     @Override
     public int getItemCount() {
         return movies.size();
+    }
+
+    public static class MovieViewHolder extends RecyclerView.ViewHolder {
+
+        private TextView movieTitle;
+        private TextView movieDescription;
+        private ImageView movieImage;
+
+        /**
+        * Constructor for the MovieViewHolder
+        *
+        * @param itemView   the view being added
+        */
+        public MovieViewHolder(View itemView) {
+            super(itemView);
+            CardView cv = (CardView)itemView.findViewById(R.id.cv);
+            movieTitle = (TextView)itemView.findViewById(R.id.movie_title);
+            movieDescription = (TextView)itemView.findViewById(R.id.movie_description);
+            movieImage = (ImageView)itemView.findViewById(R.id.movie_image_holder);
+        }
     }
 }
