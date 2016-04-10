@@ -35,6 +35,15 @@ import edu.gatech.logitechs.movieselector.Model.RatingData;
 import edu.gatech.logitechs.movieselector.Model.VolleySingleton;
 
 public final class MovieManager {
+
+
+    /**
+     * constructor for movie manage
+     */
+    private MovieManager() {
+
+    }
+
     /**
      * movies to be displayed
      */

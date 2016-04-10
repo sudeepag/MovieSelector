@@ -1,7 +1,6 @@
 package edu.gatech.logitechs.movieselector.View;
 
 import android.content.Intent;
-import android.graphics.Bitmap;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
@@ -19,17 +18,9 @@ import edu.gatech.logitechs.movieselector.R;
 
 public class MuveeDetails extends AppCompatActivity {
 
-    String movieTitle;
-    String movieDescription;
-    Bitmap movieThumbnail;
+    private RatingBar ratingBar;
 
-    Toolbar dToolbar;
-    TextView detailsTitle;
-    TextView detailsDescription;
-    FloatingActionButton fabWrite;
-    RatingBar ratingBar;
-
-    RatingData ratingMovie;
+    private RatingData ratingMovie;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,19 +29,17 @@ public class MuveeDetails extends AppCompatActivity {
 
         //Get data from Intent
         final Intent intent = getIntent();
-        this.movieTitle = intent.getStringExtra("title");
-        this.movieDescription = intent.getStringExtra("description");
-        final Bundle extras = intent.getExtras();
-        this.movieThumbnail = (Bitmap) extras.get("thumbnail");
+        final String movieTitle = intent.getStringExtra("title");
+        final String movieDescription = intent.getStringExtra("description");
 
-        dToolbar = (Toolbar) findViewById(R.id.details_toolbar);
+        final Toolbar dToolbar = (Toolbar) findViewById(R.id.details_toolbar);
         setSupportActionBar(dToolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
 
-        detailsTitle = (TextView) findViewById(R.id.details_title);
+        final TextView detailsTitle = (TextView) findViewById(R.id.details_title);
         detailsTitle.setText(movieTitle);
-        detailsDescription = (TextView) findViewById(R.id.details_description);
+        final TextView detailsDescription = (TextView) findViewById(R.id.details_description);
         detailsDescription.setText(movieDescription);
 
         ratingBar = (RatingBar) findViewById(R.id.rating_bar);
@@ -58,7 +47,7 @@ public class MuveeDetails extends AppCompatActivity {
         ratingMovie = MovieManager.getCurrentMovie();
         ratingBar.setRating((float) ratingMovie.calculateRating(UserManager.getCurrentUser().getMajor()));
 
-        fabWrite = (FloatingActionButton) findViewById(R.id.fab);
+        final FloatingActionButton fabWrite = (FloatingActionButton) findViewById(R.id.fab);
         fabWrite.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
