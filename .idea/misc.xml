@@ -81,6 +81,7 @@
     <option name="id" value="Android" />
   </component>
   <component name="QAPlugAnalysisUIOptions">
+    <option name="GROUP_BY_SEVERITY" value="true" />
     <option name="FILTER_RESOLVED_ITEMS" value="false" />
     <option name="SHOW_SONAR_WAY" value="false" />
   </component>
