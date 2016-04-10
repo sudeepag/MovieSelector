@@ -72,7 +72,7 @@ public class MuveeMainActivity extends AppCompatActivity
      */
     private static final int FIVE_HUNDRED = 500;
     /**
-     * the number e
+     * the number eleven
      */
     private static final int ELEVEN = 11;
     @Override
@@ -123,48 +123,6 @@ public class MuveeMainActivity extends AppCompatActivity
             }
         });
 
-//                //get view from layout XML
-//                LayoutInflater inflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-//                final View searchFieldLayout = inflater.inflate(R.layout.muvee_about_dialog_view,
-//                        null, false);
-//                final EditText input = (EditText) searchFieldLayout.findViewById(R.id.search_field);
-//                // create the AlertDialog as final
-//                final AlertDialog dialog = new AlertDialog.Builder(MuveeMainActivity.this)
-//                        .setTitle("Find Movie")
-//                        .setView(searchFieldLayout)
-//                        .setPositiveButton("OK", new DialogInterface.OnClickListener() {
-//                            @Override
-//                            public void onClick(DialogInterface dialog, int id) {
-//                                MovieManager.searchTitles(input.getText().toString(), MuveeMainActivity.this, new Runnable() {
-//                                    @Override
-//                                    public void run() {
-//                                        movies = MovieManager.getMovieList();
-//                                        adapter.updateMovieList(movies);
-//                                    }
-//                                });
-//                            }
-//                        })
-//                        .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
-//                            @Override
-//                            public void onClick(DialogInterface dialog, int id) {
-//                                dialog.cancel();
-//                            }
-//                        })
-//                        .create();
-//                // set the focus change listener of the EditText
-//                // this part will make the soft keyboard automatically visible
-//                input.setOnFocusChangeListener(new View.OnFocusChangeListener() {
-//                    @Override
-//                    public void onFocusChange(View v, boolean hasFocus) {
-//                        if (hasFocus) {
-//                            dialog.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_VISIBLE);
-//                        }
-//                    }
-//                });
-//                dialog.show();
-//            }
-//        });
-
         final DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         final ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
@@ -199,19 +157,6 @@ public class MuveeMainActivity extends AppCompatActivity
         }
     };
 
-    /**
-     * Executes when the activity stops
-     */
-//    protected void onStop() {
-////        update navigation headers
-////        manager = new UserManager();
-////        currUser = manager.getCurrentUser();
-////        String[] names = currUser.getEmail().split("@");
-////
-////        navHeader.setText(currUser.getEmail().split("@")[0]);
-////        navHeaderEmail.setText(currUser.getEmail());
-//        super.onStop();
-//    }
 
     @Override
     public void onBackPressed() {
