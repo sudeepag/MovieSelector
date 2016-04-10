@@ -15,7 +15,6 @@ import edu.gatech.logitechs.movieselector.R;
 
 public class MuveeAdminActivity extends AppCompatActivity {
 
-    RecyclerView rv;
     /**
      * The list of user's visible to the admin
      */
@@ -23,7 +22,7 @@ public class MuveeAdminActivity extends AppCompatActivity {
     /**
      * Adapter admins and their users
      */
-    public final RVAdminAdapter adapter = new RVAdminAdapter(users);
+    private final RVAdminAdapter adapter = new RVAdminAdapter(users);
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,7 +31,7 @@ public class MuveeAdminActivity extends AppCompatActivity {
         final Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        rv = (RecyclerView) findViewById(R.id.users_recycler_view);
+        final RecyclerView rv = (RecyclerView) findViewById(R.id.users_recycler_view);
         rv.setHasFixedSize(true);
         final LinearLayoutManager layoutManager = new LinearLayoutManager(this);
         rv.setLayoutManager(layoutManager);

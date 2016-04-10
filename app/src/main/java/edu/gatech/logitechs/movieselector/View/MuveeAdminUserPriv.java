@@ -9,12 +9,17 @@ import android.view.View;
 import android.widget.TextView;
 import android.widget.ToggleButton;
 
-import edu.gatech.logitechs.movieselector.Model.User;
 import edu.gatech.logitechs.movieselector.R;
 
 public class MuveeAdminUserPriv extends AppCompatActivity {
 
+    /**
+     * text view for when a user is banned
+     */
     private TextView banTextView;
+    /**
+     * text view for when a user is locked
+     */
     private TextView lockTextView;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
