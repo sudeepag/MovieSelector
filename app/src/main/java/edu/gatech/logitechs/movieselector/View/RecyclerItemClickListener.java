@@ -11,16 +11,16 @@ import android.view.MotionEvent;
 import android.view.View;
 
 public class RecyclerItemClickListener implements RecyclerView.OnItemTouchListener {
-    private OnItemClickListener mListener;
-
     /**
-     * Interface for click listener
+     * an item click listener
      */
-    public interface OnItemClickListener {
-        void onItemClick(View view, int position);
-    }
+    private OnItemClickListener mListener;
+    /**
+     * detector for gesture
+     */
+    private GestureDetector mGestureDetector;
 
-    GestureDetector mGestureDetector;
+
 
     /**
      * Initializes the listener
@@ -36,7 +36,8 @@ public class RecyclerItemClickListener implements RecyclerView.OnItemTouchListen
         });
     }
 
-    @Override public boolean onInterceptTouchEvent(RecyclerView view, MotionEvent e) {
+    @Override
+    public boolean onInterceptTouchEvent(RecyclerView view, MotionEvent e) {
         final View childView = view.findChildViewUnder(e.getX(), e.getY());
         if (childView != null && mListener != null && mGestureDetector.onTouchEvent(e)) {
             mListener.onItemClick(childView, view.getChildPosition(childView));
@@ -45,8 +46,23 @@ public class RecyclerItemClickListener implements RecyclerView.OnItemTouchListen
         return false;
     }
 
-    @Override public void onTouchEvent(RecyclerView view, MotionEvent motionEvent) { }
+    @Override
+    public void onTouchEvent(RecyclerView view, MotionEvent motionEvent) {
+
+    }
 
     @Override
     public void onRequestDisallowInterceptTouchEvent (boolean disallowIntercept){}
+
+    /**
+     * Interface for click listener
+     */
+    public interface OnItemClickListener {
+        /**
+         * abstract method to be called on an item click
+         * @param view view of the item being clicked
+         * @param position position of the clicked item
+         */
+        void onItemClick(View view, int position);
+    }
 }

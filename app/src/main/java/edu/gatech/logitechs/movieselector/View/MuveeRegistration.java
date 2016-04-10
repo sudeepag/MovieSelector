@@ -31,13 +31,55 @@ import edu.gatech.logitechs.movieselector.R;
 
 public class MuveeRegistration extends AppCompatActivity{
 
+    /**
+     * Autocomplete text view for the email
+     */
     private AutoCompleteTextView mEmailView;
+    /**
+     * text view for password
+     */
     private EditText mPasswordView;
+    /**
+     * text view to confirm password
+     */
     private EditText mConfirmPasswordView;
+    /**
+     * description text view
+     */
     private EditText mDescriptionView;
+    /**
+     * majot spinner
+     */
     private Spinner mMajorsView;
+    /**
+     * view for progress
+     */
     private View mProgressView;
+    /**
+     * view for the signup form
+     */
     private View mSignupFormView;
+
+    /**
+     * color for links
+     */
+    private static final int LINK_COLOR = Color.argb(160, 189, 189, 189);
+
+    /**
+     * color for canceling link
+     */
+    private static final int LINK_CANCEL_COLOR =Color.argb(255, 224, 224, 224);
+
+    /**
+     * target api level
+     */
+    private static final int API_LEVEL = 11;
+    /**
+     * minimum password length
+     */
+    private static final int MINIMUM_PASSWORD_LENGTH = 11;
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,7 +101,6 @@ public class MuveeRegistration extends AppCompatActivity{
             @Override
             public boolean onEditorAction(TextView textView, int id, KeyEvent keyEvent) {
                 if (id == R.id.login || id == EditorInfo.IME_ACTION_DONE) {
-                    System.out.println("asd"); //TODO can this be removed?
                     return true;
                 }
                 return false;
@@ -100,10 +141,10 @@ public class MuveeRegistration extends AppCompatActivity{
                 // change the background color
                 switch (event.getAction() & MotionEvent.ACTION_MASK) {
                     case MotionEvent.ACTION_DOWN:
-                        linkCancel.setTextColor(Color.argb(160, 189, 189, 189));
+                        linkCancel.setTextColor(LINK_COLOR);
                         break;
                     case MotionEvent.ACTION_UP:
-                        linkCancel.setTextColor(Color.argb(255, 224, 224, 224));
+                        linkCancel.setTextColor(LINK_CANCEL_COLOR);
                         break;
                 }
                 return false;
@@ -165,12 +206,8 @@ public class MuveeRegistration extends AppCompatActivity{
             mPasswordView.setError(getString(R.string.error_invalid_password));
             focusView = mPasswordView;
             cancel = true;
-        } else if (isPasswordValid(confirmPassword)) {
-            mConfirmPasswordView.setError(getString(R.string.error_invalid_password));
-            focusView = mConfirmPasswordView;
-            cancel = true;
-        } else if (!password.equals(confirmPassword)) {
-            mConfirmPasswordView.setError(getString(R.string.error_password_mismatch));
+        } else {
+            mConfirmPasswordView.setError(isPasswordValid(confirmPassword) ? getString(R.string.error_invalid_password) : getString(R.string.error_password_mismatch));
             focusView = mConfirmPasswordView;
             cancel = true;
         }
@@ -214,7 +251,7 @@ public class MuveeRegistration extends AppCompatActivity{
                             .setMessage(R.string.prompt_registration_error)
                             .setPositiveButton("Okay",
                                     new DialogInterface.OnClickListener() {
-                                        @TargetApi(11)
+                                        @TargetApi(API_LEVEL)
                                         public void onClick(DialogInterface dialog, int id) {
                                             dialog.cancel();
                                         }
@@ -242,7 +279,7 @@ public class MuveeRegistration extends AppCompatActivity{
      * @return true if the password meets requirements
      */
     private boolean isPasswordValid(String password) {
-        return password.length() <= 4;
+        return password.length() <= MINIMUM_PASSWORD_LENGTH;
     }
 
     /**
