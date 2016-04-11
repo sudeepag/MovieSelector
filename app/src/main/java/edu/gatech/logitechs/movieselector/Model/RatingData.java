@@ -133,7 +133,7 @@ public class RatingData {
         final double majorSum = sum.get(major) == null ? 0 : sum.get(major);
         numRating.put(major, majorRating + 1);
         sum.put(major, majorSum + rating);
-        final double average = sum.get(major) == null ? 0 : sum.get(major)/(numRating.get(major) == null ? 1 : numRating.get(major));
+        final double average = sum.get(major) / numRating.get(major);
         this.average.put(major, average);
     }
 

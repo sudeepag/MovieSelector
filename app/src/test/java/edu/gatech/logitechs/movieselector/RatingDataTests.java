@@ -44,12 +44,18 @@ public class RatingDataTests {
         assertEquals(sum, ratingData.getSum());
         ratingData.addRating("major", 2.0);
         average.put("major", 3.0);
-        numEntries.put("major", 1);
+        numEntries.put("major", 2);
         sum.put("major", 6.0);
         assertEquals(average, ratingData.getAverage());
         assertEquals(numEntries, ratingData.getNumRating());
         assertEquals(sum, ratingData.getSum());
-        assertEquals(5,4);
+        ratingData.addRating("otherMajor", 3);
+        average.put("otherMajor", 3.0);
+        numEntries.put("otherMajor", 1);
+        sum.put("otherMajor", 3.0);
+        assertEquals(average, ratingData.getAverage());
+        assertEquals(numEntries, ratingData.getNumRating());
+        assertEquals(sum, ratingData.getSum());
     }
 
     @Test
