@@ -5,6 +5,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import java.util.HashMap;
+import java.util.Map;
 
 import edu.gatech.logitechs.movieselector.Model.RatingData;
 
@@ -59,7 +60,16 @@ public class RatingDataTests {
     }
 
     @Test
-    public void testCalculateRating() throws Exception {
-
+    public void testCalculateRating() {
+        Map<String, Double> average = new HashMap<>();
+        RatingData data = new RatingData();
+        assertEquals(0.0, data.calculateRating("CS"));
+        data.addRating("CS", 5);
+        assertEquals(5, data.calculateRating("CS"));
+        data.addRating("CS", 0);
+        assertEquals(2.5, data.calculateRating("CS"));
+        data.addRating("CS", 1);
+        assertEquals(2, data.calculateRating("CS"));
     }
+
 }
