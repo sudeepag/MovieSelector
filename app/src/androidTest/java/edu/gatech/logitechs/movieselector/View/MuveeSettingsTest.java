@@ -4,9 +4,13 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import static org.junit.Assert.*;
 
 import edu.gatech.logitechs.movieselector.Model.User;
+import edu.gatech.logitechs.movieselector.R;
 import edu.gatech.logitechs.movieselector.View.MuveeSettings;
 
 /**
@@ -40,6 +44,15 @@ public class MuveeSettingsTest {
         assertEquals(value, muveeSettings.getNewPass());
         key = "change_major";
         value = "0";
+
+        final String majors[] = muveeSettings.getResources().getStringArray(R.array.pref_example_list_titles);
+        final Map<String, Integer> majorToInt = new HashMap<>();
+        Map intToMajor = new HashMap<>();
+
+        for (int i = 0; i < majors.length; i++) {
+            majorToInt.put(majors[i], i);
+            intToMajor.put(i, majors[i]);
+        }
         muveeSettings.updateUserProfileServer(key, value);
         assertEquals("Computer Science", user.getMajor());
         key = "change_description";
