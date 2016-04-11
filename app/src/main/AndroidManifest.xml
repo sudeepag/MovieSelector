@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="edu.gatech.logitechs.movieselector">
+    package="edu.gatech.logitechs.movieselector" >
 
     <!-- To auto-complete the email text field in the login form with the user's emails -->
     <uses-permission android:name="android.permission.GET_ACCOUNTS" />
@@ -13,12 +13,12 @@
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:supportsRtl="true"
-        android:theme="@style/AppTheme">
+        android:theme="@style/AppTheme" >
         <activity
             android:name=".View.MuveeLogin"
             android:label="@string/app_name"
             android:screenOrientation="portrait"
-            android:theme="@style/AppTheme.Login">
+            android:theme="@style/AppTheme.Login" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -30,7 +30,7 @@
             android:label="@string/app_name"
             android:parentActivityName=".View.MuveeLogin"
             android:screenOrientation="portrait"
-            android:theme="@style/AppTheme">
+            android:theme="@style/AppTheme" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".View.MuveeLogin" />
@@ -45,7 +45,7 @@
             android:label="Settings"
             android:parentActivityName=".View.MuveeMainActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/AppTheme.Preference">
+            android:theme="@style/AppTheme.Preference" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".View.MuveeMainActivity" />
@@ -55,7 +55,7 @@
             android:label="Müveé Details"
             android:parentActivityName=".View.MuveeMainActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/AppTheme.MovieDetails">
+            android:theme="@style/AppTheme.MovieDetails" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".View.MuveeMainActivity" />
@@ -64,7 +64,7 @@
             android:name=".View.MuveeAdminActivity"
             android:label="Müveé Administrator"
             android:parentActivityName=".View.MuveeLogin"
-            android:theme="@style/AppTheme">
+            android:theme="@style/AppTheme" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".View.MuveeLogin" />
@@ -73,7 +73,7 @@
             android:name=".View.MuveeAdminUserPriv"
             android:label="@string/title_activity_muvee_admin_user_priv"
             android:parentActivityName=".View.MuveeAdminActivity"
-            android:theme="@style/AppTheme">
+            android:theme="@style/AppTheme" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".View.MuveeAdminActivity" />
