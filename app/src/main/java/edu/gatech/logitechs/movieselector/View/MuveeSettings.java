@@ -2,7 +2,6 @@ package edu.gatech.logitechs.movieselector.View;
 
 
 import android.annotation.TargetApi;
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -62,10 +61,6 @@ public class MuveeSettings extends AppCompatPreferenceActivity {
      */
     private static String newEmail;
 
-    /**
-     * the current activity
-     */
-    private static Activity thisActivity = null;
 //    /**
 //     * The preferences for all of the view files
 //     */
@@ -196,7 +191,6 @@ public class MuveeSettings extends AppCompatPreferenceActivity {
         super.onCreate(savedInstanceState);
         setupActionBar();
 
-        thisActivity = this;
 
         manager = new UserManager();
         currUser = manager.getCurrentUser();

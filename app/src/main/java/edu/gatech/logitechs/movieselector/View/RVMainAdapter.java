@@ -25,10 +25,10 @@ public class RVMainAdapter extends RecyclerView.Adapter<RVMainAdapter.MovieViewH
 
     /**
      * constructor
-     * @param movies the set of movies to display
+     * @param newMovies the set of movies to display
      */
-    RVMainAdapter(List<Movie> movies){
-        this.movies = movies;
+    RVMainAdapter(List<Movie> newMovies){
+        this.movies = newMovies;
     }
 
     /**
