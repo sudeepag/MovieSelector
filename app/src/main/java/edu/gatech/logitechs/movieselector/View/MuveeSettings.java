@@ -101,7 +101,7 @@ public class MuveeSettings extends AppCompatPreferenceActivity {
      * @param key       the preference key
      * @param value     the preference value
      */
-    private static void updateUserProfileServer(String key, String value) {
+    public static void updateUserProfileServer(String key, String value) {
         switch (key) {
             case "change_email":
                 newEmail = value;
@@ -116,6 +116,22 @@ public class MuveeSettings extends AppCompatPreferenceActivity {
                 currUser.setDescription(value);
                 break;
         }
+    }
+
+    /**
+     * Returns the new password
+     * @return String representation of new password
+     */
+    public String getNewPass() {
+        return newPass;
+    }
+
+    /**
+     * Returns the new email
+     * @return String representation of the new email
+     */
+    public String getNewEmail() {
+        return newEmail;
     }
 
     @Override
