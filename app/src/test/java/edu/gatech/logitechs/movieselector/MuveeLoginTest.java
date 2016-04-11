@@ -34,6 +34,24 @@ public class MuveeLoginTest {
         assertFalse(muveeLogin.isPasswordValid("mnsnej$sms"));
         assertFalse(muveeLogin.isPasswordValid("ta&istois"));
         assertFalse(muveeLogin.isPasswordValid("m#er#dE#"));
-        assertTrue(muveeLogin.isPasswordValid("ćçßš*()-={}8kŁ;Ÿ"));
+    }
+
+    @Test
+    public void testValidEmail() throws Exception {
+        String longString;
+        for (int i = 0; i < 255; i++) {
+            longString += "c";
+        }
+        assertFalse(muveeLogin.isEmailValid(longString));
+        assertFalse(muveeLogin.isEmailValid("email.com"));
+        assertFalse(muveeLogin.isEmailValid("email@email"));
+        assertFalse(muveeLogin.isEmailValid("email"));
+        assertFalse(muveeLogin.isEmailValid("email@email.xyz"));
+        String invalidChars = "()<>,;:\\/\"[]{}";
+        for (int j = 0; j < invalidChars.length(); j++) {
+            char c = invalidChars.charAt(j);
+            String testEmail = "email" + c + "email.com";
+            assertFalse(muveeLogin.isEmailValid(testEmail));
+        }
     }
 }
