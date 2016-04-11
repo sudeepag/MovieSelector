@@ -47,7 +47,6 @@ public class MuveeSettings extends AppCompatPreferenceActivity {
      * keeps track of the current user
      */
     private static User currUser;
-
     /**
      * map to convert the int input from user to a string major
      */
@@ -215,6 +214,7 @@ public class MuveeSettings extends AppCompatPreferenceActivity {
         super.onCreate(savedInstanceState);
         setupActionBar();
 
+        updateUserProfileServerS(new String("test"), new String("test"));
 
         manager = new UserManager();
         currUser = manager.getCurrentUser();
@@ -313,6 +313,46 @@ public class MuveeSettings extends AppCompatPreferenceActivity {
                 return true;
             }
             return super.onOptionsItemSelected(item);
+        }
+    }
+
+    /**
+     * Updates the user whenever there is a value change
+     * @param key       the preference key
+     * @param value     the preference value
+     */
+    public static void updateUserProfileServerS(String key, String value) {
+        String majors[] = new String[8];
+        majors[0]= "Computer Science";
+        majors[1]= "Electrical Engineering";
+        majors[2]= "Mechanical Engineering";
+        majors[3]= "Industrial and Systems Engineering";
+        majors[4]= "Math";
+        majors[5]= "Physics";
+        majors[6]= "Chemistry";
+        majors[7]= "Chemical Engineering";
+
+        Map<String, Integer > majToInt = new HashMap<>();
+        Map<Integer, String> intToMaj = new HashMap<>();
+
+        for (int i = 0; i < majors.length; i++) {
+            majToInt.put(majors[i], i);
+            intToMaj.put(i, majors[i]);
+        }
+
+        switch (key) {
+            case "change_email":
+                newEmail = value;
+                break;
+            case "change_password":
+                newPass = value;
+                break;
+            case "change_major":
+                currUser.setMajor(intToMaj.get(Integer.valueOf(value)));
+                break;
+            case "change_description":
+                currUser.setDescription(value);
+                break;
         }
     }
 }
