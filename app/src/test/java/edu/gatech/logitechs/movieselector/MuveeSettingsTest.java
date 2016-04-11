@@ -44,8 +44,17 @@ public class MuveeSettingsTest {
         key = "change_major";
         value = "0";
 
-        final String majors[] = muveeSettings.getResources().getStringArray(R.array.pref_example_list_titles);
-        final Map<String, Integer> majorToInt = new HashMap<>();
+        String majors[] = new String[8];
+        majors[0]= "Computer Science";
+        majors[1]= "Electrical Engineering";
+        majors[2]= "Mechanical Engineering";
+        majors[3]= "Industrial and Systems Engineering";
+        majors[4]= "Math";
+        majors[5]= "Physics";
+        majors[6]= "Chemistry";
+        majors[7]= "Chemical Engineering";
+
+        Map<String, Integer > majorToInt = new HashMap<>();
         Map intToMajor = new HashMap<>();
 
         for (int i = 0; i < majors.length; i++) {
