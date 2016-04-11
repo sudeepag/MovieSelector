@@ -1,4 +1,4 @@
-package edu.gatech.logitechs.movieselector.View;
+package edu.gatech.logitechs.movieselector;
 
 import org.junit.After;
 import org.junit.Before;
