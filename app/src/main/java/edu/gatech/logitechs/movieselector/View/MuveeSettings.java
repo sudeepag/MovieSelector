@@ -134,6 +134,14 @@ public class MuveeSettings extends AppCompatPreferenceActivity {
         return newEmail;
     }
 
+    /**
+     * Returns the current user
+     * @return User object representation of the user
+     */
+    public User getCurrUser() {
+        return currUser;
+    }
+
     @Override
     protected void onDestroy() {
 //        TODO update the current User to the server here

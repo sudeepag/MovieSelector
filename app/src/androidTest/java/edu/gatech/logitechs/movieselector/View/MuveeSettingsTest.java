@@ -18,7 +18,6 @@ import edu.gatech.logitechs.movieselector.View.MuveeSettings;
  */
 public class MuveeSettingsTest {
     private MuveeSettings muveeSettings = new MuveeSettings();
-    private User user = new User();
 
     @Before
     public void setUp() throws Exception {
@@ -54,10 +53,10 @@ public class MuveeSettingsTest {
             intToMajor.put(i, majors[i]);
         }
         muveeSettings.updateUserProfileServer(key, value);
-        assertEquals("Computer Science", user.getMajor());
+        assertEquals("Computer Science", muveeSettings.getCurrUser().getMajor());
         key = "change_description";
         value = "I love android studio";
         muveeSettings.updateUserProfileServer(key, value);
-        assertEquals(value, user.getDescription());
+        assertEquals(value, muveeSettings.getCurrUser().getDescription());
     }
 }
