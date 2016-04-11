@@ -59,6 +59,26 @@ public class MuveeSettings extends AppCompatPreferenceActivity {
      * the new email for the user
      */
     private static String newEmail;
+    /**
+     * identifier for change email field
+     */
+    private static final String CHANGE_EMAIL = "change_email";
+    /**
+     * identifier for change password field
+     */
+    private static final String CHANGE_PASSWORD = "change_password";
+    /**
+     * identifier for change major field
+     */
+    private static final String CHANGE_MAJOR = "change_major";
+    /**
+     * identifier for change description field
+     */
+    private static final String CHANGE_DESCRIPTION = "change_description";
+    /**
+     * identifier for number of majors
+     */
+    private static final int NUM_MAJORS = 8;
 
 //    /**
 //     * The preferences for all of the view files
@@ -102,16 +122,16 @@ public class MuveeSettings extends AppCompatPreferenceActivity {
      */
     public static void updateUserProfileServer(String key, String value) {
         switch (key) {
-            case "change_email":
+            case CHANGE_EMAIL:
                 newEmail = value;
                 break;
-            case "change_password":
+            case CHANGE_PASSWORD:
                 newPass = value;
                 break;
-            case "change_major":
+            case CHANGE_MAJOR:
                 currUser.setMajor(intToMajor.get(Integer.valueOf(value)));
                 break;
-            case "change_description":
+            case CHANGE_DESCRIPTION:
                 currUser.setDescription(value);
                 break;
         }
@@ -211,10 +231,11 @@ public class MuveeSettings extends AppCompatPreferenceActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        final String test = "test";
         super.onCreate(savedInstanceState);
         setupActionBar();
 
-        updateUserProfileServerS(new String("test"), new String("test"));
+        updateUserProfileServerS(test, test);
 
         manager = new UserManager();
         currUser = manager.getCurrentUser();
@@ -230,10 +251,10 @@ public class MuveeSettings extends AppCompatPreferenceActivity {
 
         final SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(MuveeSettings.this);
         final SharedPreferences.Editor editor = sp.edit();
-        editor.putString("change_email", newEmail == null ? currUser.getEmail() : newEmail);
-        editor.putString("change_password", newPass == null ? currUser.getPassword() : newPass);
-        editor.putString("change_major", String.valueOf(majorToInt.get(currUser.getMajor())));
-        editor.putString("change_description", currUser.getDescription());
+        editor.putString(CHANGE_EMAIL, newEmail == null ? currUser.getEmail() : newEmail);
+        editor.putString(CHANGE_PASSWORD, newPass == null ? currUser.getPassword() : newPass);
+        editor.putString(CHANGE_MAJOR, String.valueOf(majorToInt.get(currUser.getMajor())));
+        editor.putString(CHANGE_DESCRIPTION, currUser.getDescription());
         editor.commit();
     }
 
@@ -289,6 +310,48 @@ public class MuveeSettings extends AppCompatPreferenceActivity {
                 || EditProfilePreferenceFragment.class.getName().equals(fragmentName);
     }
 
+    /**
+     * Updates the user whenever there is a value change
+     * @param key       the preference key
+     * @param value     the preference value
+     */
+    public static void updateUserProfileServerS(String key, String value) {
+        currUser = new User();
+        final String majors[] = new String[NUM_MAJORS];
+        int q = 0;
+        majors[q]= "Computer Science";
+        majors[q++]= "Electrical Engineering";
+        majors[q++]= "Mechanical Engineering";
+        majors[q++]= "Industrial and Systems Engineering";
+        majors[q++]= "Math";
+        majors[q++]= "Physics";
+        majors[q++]= "Chemistry";
+        majors[q++]= "Chemical Engineering";
+
+        final Map<String, Integer > majToInt = new HashMap<>();
+        final Map<Integer, String> intToMaj = new HashMap<>();
+
+        for (int i = 0; i < majors.length; i++) {
+            majToInt.put(majors[i], i);
+            intToMaj.put(i, majors[i]);
+        }
+
+        switch (key) {
+            case CHANGE_EMAIL:
+                newEmail = value;
+                break;
+            case CHANGE_PASSWORD:
+                newPass = value;
+                break;
+            case CHANGE_MAJOR:
+                currUser.setMajor(intToMaj.get(Integer.valueOf(value)));
+                break;
+            case CHANGE_DESCRIPTION:
+                currUser.setDescription(value);
+                break;
+        }
+    }
+
     public static class EditProfilePreferenceFragment extends PreferenceFragment {
         @Override
         public void onCreate(Bundle savedInstanceState) {
@@ -300,10 +363,10 @@ public class MuveeSettings extends AppCompatPreferenceActivity {
             // to their values. When their values change, their summaries are
             // updated to reflect the new value, per the Android Design
             // guidelines.
-            bindPreferenceSummaryToValue(findPreference("change_email"));
-            bindPreferenceSummaryToValue(findPreference("change_password"));
-            bindPreferenceSummaryToValue(findPreference("change_major"));
-            bindPreferenceSummaryToValue(findPreference("change_description"));
+            bindPreferenceSummaryToValue(findPreference(CHANGE_EMAIL));
+            bindPreferenceSummaryToValue(findPreference(CHANGE_PASSWORD));
+            bindPreferenceSummaryToValue(findPreference(CHANGE_MAJOR));
+            bindPreferenceSummaryToValue(findPreference(CHANGE_DESCRIPTION));
         }
 
         @Override
@@ -316,44 +379,5 @@ public class MuveeSettings extends AppCompatPreferenceActivity {
         }
     }
 
-    /**
-     * Updates the user whenever there is a value change
-     * @param key       the preference key
-     * @param value     the preference value
-     */
-    public static void updateUserProfileServerS(String key, String value) {
-        currUser = new User();
-        String majors[] = new String[8];
-        majors[0]= "Computer Science";
-        majors[1]= "Electrical Engineering";
-        majors[2]= "Mechanical Engineering";
-        majors[3]= "Industrial and Systems Engineering";
-        majors[4]= "Math";
-        majors[5]= "Physics";
-        majors[6]= "Chemistry";
-        majors[7]= "Chemical Engineering";
 
-        Map<String, Integer > majToInt = new HashMap<>();
-        Map<Integer, String> intToMaj = new HashMap<>();
-
-        for (int i = 0; i < majors.length; i++) {
-            majToInt.put(majors[i], i);
-            intToMaj.put(i, majors[i]);
-        }
-
-        switch (key) {
-            case "change_email":
-                newEmail = value;
-                break;
-            case "change_password":
-                newPass = value;
-                break;
-            case "change_major":
-                currUser.setMajor(intToMaj.get(Integer.valueOf(value)));
-                break;
-            case "change_description":
-                currUser.setDescription(value);
-                break;
-        }
-    }
 }

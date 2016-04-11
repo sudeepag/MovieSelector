@@ -163,12 +163,9 @@ public class UserManager {
             public void onSuccess(Map<String, Object> result) {
                 REF.authWithPassword(user.getEmail(), user.getPassword(),
                         new Firebase.AuthResultHandler() {
-                            @Override
                             public void onAuthenticated(AuthData authData) {
                                 onAuthenticatedHelper(user, context, authData);
                             }
-
-                            @Override
                             public void onAuthenticationError(FirebaseError error) {
                                 runnable.run();
                             }
@@ -176,7 +173,6 @@ public class UserManager {
                 currentUser = user;
                 user.setUid((String) result.get("uid"));
             }
-
             @Override
             public void onError(FirebaseError firebaseError) {
                 runnable.run();
@@ -211,7 +207,6 @@ public class UserManager {
             @Override
             public void onAuthenticated(final AuthData authData) {
                 REF.child(USERSTRING).child(authData.getUid()).addValueEventListener(new ValueEventListener() {
-                    @Override
                     public void onDataChange(DataSnapshot snapshot) {
                         for (final DataSnapshot dataSnapshot : snapshot.getChildren()) {
                             currentUser = dataSnapshot.getValue(User.class);
@@ -219,13 +214,10 @@ public class UserManager {
                         consumer.consume("valid");
                         REF.child(USERSTRING).child(authData.getUid()).removeEventListener(this);
                     }
-
-                    @Override
                     public void onCancelled(FirebaseError firebaseError) {
                     }
                 });
             }
-
             @Override
             public void onAuthenticationError(FirebaseError firebaseError) {
                 consumer.consume(firebaseError.getMessage());
