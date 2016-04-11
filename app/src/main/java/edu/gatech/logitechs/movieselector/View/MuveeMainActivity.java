@@ -326,7 +326,6 @@ public class MuveeMainActivity extends AppCompatActivity
                 new DialogInterface.OnClickListener() {
                     @TargetApi(ELEVEN)
                     public void onClick(DialogInterface dialog, int id) {
-
                         final Intent myIntent = new Intent(MuveeMainActivity.this, MuveeLogin.class);
                         myIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);// clear back stack
                         startActivity(myIntent);
@@ -340,7 +339,4 @@ public class MuveeMainActivity extends AppCompatActivity
             }
         }).show();
     }
-
-
-
 }

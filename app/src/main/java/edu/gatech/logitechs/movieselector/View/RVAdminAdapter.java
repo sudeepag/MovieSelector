@@ -94,13 +94,7 @@ public class RVAdminAdapter extends RecyclerView.Adapter<RVAdminAdapter.UserView
             banSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
                 @Override
                 public void onCheckedChanged(CompoundButton compoundButton, boolean bChecked) {
-                    if (bChecked) {
-                        banSwitch.setText("Banned");
-                        UserManager.banUser(((User) banSwitch.getTag()).getUid());
-                    } else {
-                        banSwitch.setText("Unbanned");
-                        UserManager.unbanUser(((User) banSwitch.getTag()).getUid());
-                    }
+                    banUser(bChecked);
                 }
             });
             if (banSwitch.isChecked()) {
@@ -130,6 +124,20 @@ public class RVAdminAdapter extends RecyclerView.Adapter<RVAdminAdapter.UserView
                 lockSwitch.setText("Unlocked");
             }
 
+        }
+
+        /**
+         * Bans the user based on the selections made on the switch button;
+         * @param b     Shows the state of the switch
+         */
+        public void banUser(boolean b) {
+            if (b) {
+                banSwitch.setText("Banned");
+                UserManager.banUser(((User) banSwitch.getTag()).getUid());
+            } else {
+                banSwitch.setText("Unbanned");
+                UserManager.unbanUser(((User) banSwitch.getTag()).getUid());
+            }
         }
     }
 }

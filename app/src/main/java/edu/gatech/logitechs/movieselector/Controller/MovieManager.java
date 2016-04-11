@@ -264,7 +264,6 @@ public final class MovieManager {
             public void onCancelled(FirebaseError firebaseError) {
             }
         });
-
     }
 
 
