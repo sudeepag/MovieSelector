@@ -39,7 +39,7 @@ public class MuveeLoginTest {
     @Test
     public void testValidEmail() throws Exception {
         assertTrue(muveeLogin.isEmailValid("email@email.com"));
-        String longString;
+        String longString = "";
         for (int i = 0; i < 255; i++) {
             longString += "c";
         }

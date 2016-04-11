@@ -257,7 +257,7 @@ public class MuveeLogin extends AppCompatActivity {
      * @param email     the email to validate
      * @return          a boolean that tells whether the email is in properly formatted
      */
-    private boolean isEmailValid(String email) {
+    public boolean isEmailValid(String email) {
 
         if (email.length() > 254) {
             return false;
