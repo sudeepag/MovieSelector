@@ -322,6 +322,7 @@ public class MuveeSettings extends AppCompatPreferenceActivity {
      * @param value     the preference value
      */
     public static void updateUserProfileServerS(String key, String value) {
+        currUser = new User();
         String majors[] = new String[8];
         majors[0]= "Computer Science";
         majors[1]= "Electrical Engineering";

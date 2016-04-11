@@ -267,9 +267,28 @@ public class MuveeLogin extends AppCompatActivity {
      * @return              a boolean that tells whether the password is long enough
      */
     private boolean isPasswordValid(String password) {
-        boolean passed;
         final int minpasslength = 4;
-        return password.length() > minpasslength;
+        final int maxpasslength = 20;
+
+        final char dollar = '$';
+        final char hex = '#';
+        final char and = '&';
+
+        if (password.length() < minpasslength || password.length() > maxpasslength) {
+            return false;
+        }
+
+        for (int i = 0;i < password.length(); i++) {
+            char c = password.charAt(i);
+            if (c == dollar) {
+                return false;
+            } else if (c == hex) {
+                return false;
+            } else if (c == and) {
+                return false;
+            }
+        }
+        return true;
     }
 
     /**
