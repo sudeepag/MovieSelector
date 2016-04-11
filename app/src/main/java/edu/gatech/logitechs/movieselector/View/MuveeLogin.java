@@ -266,7 +266,7 @@ public class MuveeLogin extends AppCompatActivity {
      * @param password      the password to validate
      * @return              a boolean that tells whether the password is long enough
      */
-    private boolean isPasswordValid(String password) {
+    public boolean isPasswordValid(String password) {
         final int minpasslength = 4;
         final int maxpasslength = 20;
 

@@ -13,6 +13,8 @@ import static org.junit.Assert.*;
  */
 public class MuveeLoginTest {
 
+    private MuveeLogin muveeLogin = new MuveeLogin();
+
     @Before
     public void setUp() throws Exception {
 
@@ -24,8 +26,14 @@ public class MuveeLoginTest {
     }
 
     @Test
-    public void testValidPassword() {
-
+    public void testValidPassword() throws Exception {
+        assertTrue(muveeLogin.isPasswordValid("abcdefg"));
+        assertFalse(muveeLogin.isPasswordValid(""));
+        assertFalse(muveeLogin.isPasswordValid("abc"));
+        assertFalse(muveeLogin.isPasswordValid("holacomoestasbonjourcommentcava"));
+        assertFalse(muveeLogin.isPasswordValid("mnsnej$sms"));
+        assertFalse(muveeLogin.isPasswordValid("ta&istois"));
+        assertFalse(muveeLogin.isPasswordValid("m#er#dE#"));
+        assertTrue(muveeLogin.isPasswordValid("ćçßš*()-={}8kŁ;Ÿ"));
     }
-
 }
