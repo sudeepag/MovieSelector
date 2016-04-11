@@ -63,13 +63,13 @@ public class RatingDataTests {
     public void testCalculateRating() {
         Map<String, Double> average = new HashMap<>();
         RatingData data = new RatingData();
-        assertEquals(0.0, data.calculateRating("CS"));
+        assert(0.0 == data.calculateRating("CS"));
         data.addRating("CS", 5);
-        assertEquals(5, data.calculateRating("CS"));
+        assert(5 == data.calculateRating("CS"));
         data.addRating("CS", 0);
-        assertEquals(2.5, data.calculateRating("CS"));
+        assert(2.5 == data.calculateRating("CS"));
         data.addRating("CS", 1);
-        assertEquals(2, data.calculateRating("CS"));
+        assert(2 == data.calculateRating("CS"));
     }
 
 }

@@ -143,7 +143,10 @@ public class RatingData {
      * @return the average movie rating for the given major
      */
     public double calculateRating(String major) {
-        final double average = sum.get(major) == null ? 0 : sum.get(major)/(numRating.get(major) == null ? 1 : numRating.get(major));
+        if (sum.get(major) == null) {
+            return 0;
+        }
+        final double average = sum.get(major) / numRating.get(major);
         this.average.put(major, average);
         return average;
     }
