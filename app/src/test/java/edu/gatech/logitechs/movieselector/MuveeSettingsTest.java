@@ -41,5 +41,6 @@ public class MuveeSettingsTest {
         value = "I love android studio";
         muveeSettings.updateUserProfileServerS(key, value);
         assertEquals(value, muveeSettings.getCurrUser().getDescription());
+
     }
 }

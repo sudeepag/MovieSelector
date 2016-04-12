@@ -320,13 +320,13 @@ public class MuveeSettings extends AppCompatPreferenceActivity {
         final String majors[] = new String[NUM_MAJORS];
         int q = 0;
         majors[q]= "Computer Science";
-        majors[q++]= "Electrical Engineering";
-        majors[q++]= "Mechanical Engineering";
-        majors[q++]= "Industrial and Systems Engineering";
-        majors[q++]= "Math";
-        majors[q++]= "Physics";
-        majors[q++]= "Chemistry";
-        majors[q++]= "Chemical Engineering";
+        majors[++q]= "Electrical Engineering";
+        majors[++q]= "Mechanical Engineering";
+        majors[++q]= "Industrial and Systems Engineering";
+        majors[++q]= "Math";
+        majors[++q]= "Physics";
+        majors[++q]= "Chemistry";
+        majors[++q]= "Chemical Engineering";
 
         final Map<String, Integer > majToInt = new HashMap<>();
         final Map<Integer, String> intToMaj = new HashMap<>();
