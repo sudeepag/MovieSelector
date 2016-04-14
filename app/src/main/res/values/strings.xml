@@ -1,6 +1,9 @@
 <resources>
     <string name="app_name">Müveé</string>
 
+    <string name="facebook_app_id">1780275615534731</string>
+    <string name="fb_login_protocol_scheme">fb1780275615534731</string>
+
     <!-- Strings related to login -->
     <string name="prompt_email">Email</string>
     <string name="prompt_password">Password</string>

@@ -14,7 +14,7 @@
     <style name="AppTheme.Login" parent="Theme.AppCompat.Light.NoActionBar">
         <!-- Customize your theme here. -->
         <item name="colorPrimary">@color/colorPrimary</item>
-        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorPrimaryDark">@color/colorPrimary</item>
         <item name="colorAccent">@color/colorAccent</item>
         <!-- TextLayout Colors -->
         <item name="android:textColorHint">#fff</item>
@@ -27,7 +27,7 @@
     <style name="AppTheme.Registration" parent="Theme.AppCompat.Light.NoActionBar">
         <!-- Customize your theme here. -->
         <item name="colorPrimary">@color/colorAlternate</item>
-        <item name="colorPrimaryDark">@color/colorAlternateDark</item>
+        <item name="colorPrimaryDark">@color/colorAlternate</item>
         <item name="colorAccent">@color/colorAccent</item>
         <!-- TextLayout Colors -->
         <item name="android:textColorHint">#fff</item>

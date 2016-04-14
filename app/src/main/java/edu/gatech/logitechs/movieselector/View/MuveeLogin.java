@@ -6,6 +6,9 @@ import android.annotation.TargetApi;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
+import android.content.pm.Signature;
 import android.graphics.Color;
 import android.graphics.Typeface;
 import android.support.v7.app.AlertDialog;
@@ -16,6 +19,8 @@ import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.util.Base64;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.MotionEvent;
 import android.view.View;
@@ -27,9 +32,22 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import com.facebook.AccessToken;
+import com.facebook.CallbackManager;
+import com.facebook.FacebookCallback;
+import com.facebook.FacebookException;
+import com.facebook.FacebookSdk;
+import com.facebook.Profile;
+import com.facebook.ProfileTracker;
+import com.facebook.appevents.AppEventsLogger;
+import com.facebook.login.LoginResult;
+import com.facebook.login.widget.LoginButton;
 import com.firebase.client.Firebase;
 
 import android.view.View.OnTouchListener;
+
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 
 import edu.gatech.logitechs.movieselector.Controller.UserManager;
 import edu.gatech.logitechs.movieselector.Model.Consumer;
@@ -69,10 +87,64 @@ public class MuveeLogin extends AppCompatActivity {
      */
     private boolean isLoading;
 
+    /**
+     * facebook callbackmanager
+     */
+    CallbackManager callbackManager;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        FacebookSdk.sdkInitialize(getApplicationContext());
+        AppEventsLogger.activateApp(this);
+
+        try {
+            PackageInfo info = getPackageManager().getPackageInfo(
+                    "edu.gatech.logitechs.movieselector",
+                    PackageManager.GET_SIGNATURES);
+            for (Signature signature : info.signatures) {
+                MessageDigest md = MessageDigest.getInstance("SHA");
+                md.update(signature.toByteArray());
+                Log.d("KeyHash:", Base64.encodeToString(md.digest(), Base64.DEFAULT));
+            }
+        } catch (PackageManager.NameNotFoundException e) {
+
+        } catch (NoSuchAlgorithmException e) {
+
+        }
+
         setContentView(R.layout.muvee_login_activity);
+
+        AppEventsLogger.activateApp(this);
+        callbackManager = CallbackManager.Factory.create();
+
+        LoginButton btnFBLogin = (LoginButton) findViewById(R.id.fb_login_button);
+        btnFBLogin.registerCallback(callbackManager, new FacebookCallback<LoginResult>() {
+            @Override
+            public void onSuccess(LoginResult loginResult) {
+                ProfileTracker mProfileTracker;
+                if(Profile.getCurrentProfile() == null) {
+                    mProfileTracker = new ProfileTracker() {
+                        @Override
+                        protected void onCurrentProfileChanged(Profile oldProf, Profile newProf) {
+                            // profile2 is the new profile
+                            Profile.setCurrentProfile(newProf);
+                        }
+                    };
+                    mProfileTracker.startTracking();
+                }
+            }
+            @Override
+            public void onCancel() {
+                System.out.println("Canceled");
+            }
+
+            @Override
+            public void onError(FacebookException e) {
+                System.out.println("Error");
+            }
+        });
 
         //Linking UI to Code
 
@@ -140,6 +212,12 @@ public class MuveeLogin extends AppCompatActivity {
 
         //Code Initializers
         isLoading = false;
+    }
+
+    @Override
+    protected void onActivityResult(final int requestCode, final int resultCode, final Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        callbackManager.onActivityResult(requestCode, resultCode, data);
     }
 
     @Override
@@ -373,6 +451,7 @@ public class MuveeLogin extends AppCompatActivity {
                 mPasswordView.requestFocus();
             } else {
                 myIntent = new Intent(this,MuveeMainActivity.class);
+                myIntent.putExtra("username", mEmailView.getText().toString());
                 this.startActivity(myIntent);
             }
         }

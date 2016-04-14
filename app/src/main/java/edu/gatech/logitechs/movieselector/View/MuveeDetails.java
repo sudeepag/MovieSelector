@@ -11,6 +11,8 @@ import android.view.View;
 import android.widget.RatingBar;
 import android.widget.TextView;
 
+import com.facebook.login.LoginManager;
+
 import edu.gatech.logitechs.movieselector.Controller.MovieManager;
 import edu.gatech.logitechs.movieselector.Controller.UserManager;
 import edu.gatech.logitechs.movieselector.Model.RatingData;
@@ -69,6 +71,13 @@ public class MuveeDetails extends AppCompatActivity {
         }
         super.onBackPressed();
         overridePendingTransition(R.anim.pull_in_left, R.anim.push_out_right);
+    }
+
+    @Override
+    protected void onStop() {
+        //Log out of Facebook when user forces app to quit
+        LoginManager.getInstance().logOut();
+        super.onStop();
     }
 
     /**

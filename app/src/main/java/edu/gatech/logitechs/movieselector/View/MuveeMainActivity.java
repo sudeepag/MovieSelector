@@ -26,6 +26,13 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.animation.AlphaAnimation;
 import android.widget.LinearLayout;
+import android.widget.TextView;
+
+import com.facebook.Profile;
+import com.facebook.login.LoginManager;
+import com.facebook.login.widget.ProfilePictureView;
+
+import org.w3c.dom.Text;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -129,8 +136,22 @@ public class MuveeMainActivity extends AppCompatActivity
         drawer.setDrawerListener(toggle);
         toggle.syncState();
 
+        // Get the elements from Navigation Header
         navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+//        View headerView = navigationView.inflateHeaderView(R.layout.muvee_main_nav_header);
+
+        TextView emailHeader = (TextView) navigationView.getHeaderView(0).findViewById(R.id.nav_header_email);
+        emailHeader.setText(UserManager.getCurrentUser().getEmail());
+
+        TextView textHeader = (TextView) navigationView.getHeaderView(0).findViewById(R.id.nav_header_text);
+        ProfilePictureView prof = (ProfilePictureView) navigationView.getHeaderView(0).findViewById(R.id.profilePicture);
+        prof.setPresetSize(ProfilePictureView.SMALL);
+
+        if (Profile.getCurrentProfile() != null) {
+            textHeader.setText(getResources().getString(R.string.app_name) + " | Online | " + Profile.getCurrentProfile().getName());
+            prof.setProfileId(Profile.getCurrentProfile().getId());
+        }
     }
 
     /**
@@ -315,6 +336,13 @@ public class MuveeMainActivity extends AppCompatActivity
         rv.startAnimation(anim);
     }
 
+    @Override
+    protected void onStop() {
+        //Log out of Facebook when user forces app to quit
+        LoginManager.getInstance().logOut();
+        super.onStop();
+    }
+
     /**
      * Perform logout
      */
@@ -329,6 +357,7 @@ public class MuveeMainActivity extends AppCompatActivity
                         final Intent myIntent = new Intent(MuveeMainActivity.this, MuveeLogin.class);
                         myIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);// clear back stack
                         startActivity(myIntent);
+                        LoginManager.getInstance().logOut();
                         finish();
                     }
                 })
