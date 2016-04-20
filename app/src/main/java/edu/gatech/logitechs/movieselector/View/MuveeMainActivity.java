@@ -151,6 +151,10 @@ public class MuveeMainActivity extends AppCompatActivity
         if (Profile.getCurrentProfile() != null) {
             textHeader.setText(getResources().getString(R.string.app_name) + " | Online | " + Profile.getCurrentProfile().getName());
             prof.setProfileId(Profile.getCurrentProfile().getId());
+        } else {
+            String name = UserManager.getCurrentUser().getEmail().split("@")[0];
+            textHeader.setText(getResources().getString(R.string.app_name) + " | Local | " + name);
+
         }
     }
 
