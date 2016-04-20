@@ -78,15 +78,6 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".View.MuveeLogin" />
         </activity>
-        <activity
-            android:name=".View.MuveeAdminUserPriv"
-            android:label="@string/title_activity_muvee_admin_user_priv"
-            android:parentActivityName=".View.MuveeAdminActivity"
-            android:theme="@style/AppTheme" >
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value=".View.MuveeAdminActivity" />
-        </activity>
     </application>
 
 </manifest>

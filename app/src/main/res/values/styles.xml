@@ -48,7 +48,7 @@
         <!-- Customize your theme here. -->
         <item name="colorPrimary">#03A9F4</item>
         <item name="colorPrimaryDark">#0288D1</item>
-        <item name="colorAccent">#FF5252</item>
+        <item name="colorAccent">@color/colorAlternateAccent</item>
         <item name="android:textColorPrimary">#FFffffff</item>
         <item name="colorControlNormal">#fff</item>
     </style>

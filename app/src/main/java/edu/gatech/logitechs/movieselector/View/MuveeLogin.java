@@ -315,7 +315,6 @@ public class MuveeLogin extends AppCompatActivity {
             //start authentication
             final UserManager manager = new UserManager();
             manager.authenticateUser(email, password, new Consumer() {
-
                 @Override
                 public void consume(String message) {
                     showProgress(false);

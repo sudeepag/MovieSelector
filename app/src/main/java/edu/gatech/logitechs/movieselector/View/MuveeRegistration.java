@@ -77,9 +77,7 @@ public class MuveeRegistration extends AppCompatActivity{
     /**
      * minimum password length
      */
-    private static final int MINIMUM_PASSWORD_LENGTH = 11;
-
-
+    private static final int MINIMUM_PASSWORD_LENGTH = 5;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

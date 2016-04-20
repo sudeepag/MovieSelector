@@ -1,13 +1,22 @@
 package edu.gatech.logitechs.movieselector.View;
 
+import android.annotation.TargetApi;
+import android.app.AlertDialog;
+import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.text.Editable;
+import android.text.TextWatcher;
+import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.RatingBar;
 import android.widget.TextView;
 
@@ -58,8 +67,9 @@ public class MuveeDetails extends AppCompatActivity {
         fabWrite.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Snackbar.make(view, "Write a Review :)", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
+//                Snackbar.make(view, "Write a Review :)", Snackbar.LENGTH_LONG)
+//                        .setAction("Action", null).show();
+                postReviewDialog();
             }
         });
     }
@@ -78,6 +88,59 @@ public class MuveeDetails extends AppCompatActivity {
         //Log out of Facebook when user forces app to quit
         LoginManager.getInstance().logOut();
         super.onStop();
+    }
+
+    private void postReviewDialog() {
+        LayoutInflater inflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        final View postReviewDialogView = inflater.inflate(R.layout.muvee_post_review_dialog_view, null, false);
+        final EditText reviewText = (EditText) postReviewDialogView.findViewById(R.id.review_text);
+        final TextView charCount = (TextView) postReviewDialogView.findViewById(R.id.char_count);
+
+        final TextWatcher mTextEditorWatcher = new TextWatcher() {
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+            }
+
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                //This sets a TextView to the current length
+
+                int len = s.length();
+                int color = 0;
+                Log.d("WTF", "changed " + len);
+                if (len == 0) {
+                    color = getResources().getColor(R.color.colorAlternateAccent);
+                }
+                if (len > 0 || len < 255) {
+                    color = getResources().getColor(R.color.colorPrimary);
+//                    charCount.setTextColor(getResources().getColor(R.color.colorPrimary));
+                } else if (len == 0){
+                    Log.d("WTF", "FUCK");
+                    charCount.setTextColor(getResources().getColor(R.color.colorAlternateAccent));
+                }
+                charCount.setTextColor(color);
+                charCount.setText(String.valueOf(len));
+
+            }
+
+            public void afterTextChanged(Editable s) {
+            }
+        };
+
+        reviewText.addTextChangedListener(mTextEditorWatcher);
+
+        new AlertDialog.Builder(MuveeDetails.this).setView(postReviewDialogView)
+                .setTitle("Post a review")
+                .setPositiveButton("Post", new DialogInterface.OnClickListener() {
+                    @TargetApi(11)
+                    public void onClick(DialogInterface dialog, int id) {
+                        Log.d("WTF", reviewText.getText().toString());
+                    }
+                })
+                .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                    @TargetApi(11)
+                    public void onClick(DialogInterface dialog, int id) {
+                        dialog.cancel();
+                    }
+                }).show();
     }
 
     /**
