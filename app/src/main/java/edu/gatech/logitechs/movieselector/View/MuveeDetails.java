@@ -62,7 +62,10 @@ public class MuveeDetails extends AppCompatActivity {
 
         ratingMovie = MovieManager.getCurrentMovie();
         ratingBar.setRating((float) ratingMovie.calculateRating(UserManager.getCurrentUser().getMajor()));
-
+        final TextView detailsReview = (TextView) findViewById(R.id.details_review);
+        if (ratingMovie.getReview() != null && !ratingMovie.getReview().equals("")) {
+            detailsReview.setText(ratingMovie.getReview());
+        }
         final FloatingActionButton fabWrite = (FloatingActionButton) findViewById(R.id.fab);
         fabWrite.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -76,9 +79,7 @@ public class MuveeDetails extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        if (ratingBar.getRating() != 0.0f) {
-            updateRatings();
-        }
+        updateRatings();
         super.onBackPressed();
         overridePendingTransition(R.anim.pull_in_left, R.anim.push_out_right);
     }
@@ -122,6 +123,11 @@ public class MuveeDetails extends AppCompatActivity {
             }
 
             public void afterTextChanged(Editable s) {
+                ratingMovie.setReview(s.toString());
+                final TextView detailsReview = (TextView) findViewById(R.id.details_review);
+                if (!ratingMovie.getReview().equals("")) {
+                    detailsReview.setText(ratingMovie.getReview());
+                }
             }
         };
 
@@ -147,7 +153,10 @@ public class MuveeDetails extends AppCompatActivity {
      * Updates the ratings via the Movie and User manager classes
      */
     public void updateRatings() {
-        ratingMovie.addRating(UserManager.getCurrentUser().getMajor(), ratingBar.getRating());
+
+        if (ratingBar.getRating() != 0.0f) {
+            ratingMovie.addRating(UserManager.getCurrentUser().getMajor(), ratingBar.getRating());
+        }
         MovieManager.updateMovie(ratingMovie);
     }
 

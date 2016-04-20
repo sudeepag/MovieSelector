@@ -19,6 +19,7 @@ public class RatingData {
     private String title;
     /** the movies uid in firebase */
     private String uid;
+    private String review;
 
     /**
      * constructor for rating data
@@ -151,4 +152,11 @@ public class RatingData {
         return average;
     }
 
+    public String getReview() {
+        return review;
+    }
+
+    public void setReview(String review) {
+        this.review = review;
+    }
 }

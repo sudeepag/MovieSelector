@@ -204,11 +204,12 @@ public class MuveeRegistration extends AppCompatActivity{
             mPasswordView.setError(getString(R.string.error_invalid_password));
             focusView = mPasswordView;
             cancel = true;
-        } else {
-            mConfirmPasswordView.setError(isPasswordValid(confirmPassword) ? getString(R.string.error_invalid_password) : getString(R.string.error_password_mismatch));
-            focusView = mConfirmPasswordView;
-            cancel = true;
         }
+//        } else {
+//            mConfirmPasswordView.setError(isPasswordValid(confirmPassword) ? getString(R.string.error_invalid_password) : getString(R.string.error_password_mismatch));
+//            focusView = mConfirmPasswordView;
+//            cancel = true;
+//        }
 
         // Check for a valid email address.
         if (TextUtils.isEmpty(email)) {

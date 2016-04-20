@@ -336,7 +336,8 @@ public class MuveeLogin extends AppCompatActivity {
      */
     public boolean isEmailValid(String email) {
 
-        if (email.length() > 254) {
+        final int maxLength = 254;
+        if (email.length() > maxLength) {
             return false;
         }
         if (!email.contains("@")) {
@@ -345,16 +346,15 @@ public class MuveeLogin extends AppCompatActivity {
         if (!email.contains(".")) {
             return false;
         }
-        String invalidChars = "()<>,;:\\/\"[]{}";
+        final String invalidChars = "()<>,;:\\/\"[]{}";
         for (int i = 0; i < email.length(); i++) {
             if (invalidChars.contains(String.valueOf(email.charAt(i)))) {
                 return false;
             }
         }
-        String[] elements = email.split("\\.");
-        String tld = elements[elements.length - 1];
+        final String[] elements = email.split("\\.");
+        final String tld = elements[elements.length - 1];
         final String[] validTlds = {"com", "edu", "org", "gov"};
-        boolean isValid = false;
         for (int j = 0; j < validTlds.length; j++) {
             if (validTlds[j].equals(tld)) {
                 return true;

@@ -220,6 +220,9 @@ public class UserManager {
             }
             @Override
             public void onAuthenticationError(FirebaseError firebaseError) {
+                if (firebaseError.getCode() == FirebaseError.INVALID_PASSWORD) {
+
+                }
                 consumer.consume(firebaseError.getMessage());
             }
         });
