@@ -15,6 +15,7 @@ import com.firebase.client.DataSnapshot;
 import com.firebase.client.Firebase;
 import com.firebase.client.FirebaseError;
 import com.firebase.client.Query;
+import com.firebase.client.ValueEventListener;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -85,7 +86,7 @@ public final class MovieManager {
                 final JSONArray array = response.getJSONArray(MOVIE_LABEL);
                 movieList = new ArrayList<>(array.length());
                 if (array.length() == 0) {
-                    final Movie movie = new Movie("Sorry", 0, 0, "No movies found, please try again", "", "");
+                    final Movie movie = new Movie("Sorry", 0, 0, "", "No movies found, please try again", "", "");
                     movieList.add(movie);
                 }
                 for (int i = 0; i < array.length(); i++) {
@@ -227,29 +228,29 @@ public final class MovieManager {
      * @param movie the movie whose rating you want
      * @param aRunnable the completion handler
      */
-    public static void queryMovieRating(Movie movie, final Runnable aRunnable) {
+    public static void queryMovieRating(final Movie movie, final Runnable aRunnable) {
         currentMovie = null;
         String key = movie.getId();
         lastMovie = movie;
-        assert key != null;
-        ref.child(MOVIE_LABEL).child(key).addChildEventListener(new ChildEventListener() {
+        final Firebase movieRef = ref.child(MOVIE_LABEL).child(key);
+        movieRef.addValueEventListener(new ValueEventListener() {
             @Override
-            public void onChildAdded(DataSnapshot dataSnapshot, String s) {
-                currentMovie = dataSnapshot.getValue(RatingData.class);
-                aRunnable.run();
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                movieRef.removeEventListener(this);
+                if(!dataSnapshot.exists()){
+                    aRunnable.run();
+                } else {
+                    movieRef.removeEventListener(this);
+                    for ( DataSnapshot ds : dataSnapshot.getChildren()){
+                        currentMovie = ds.getValue(RatingData.class);
+                    }
+                    aRunnable.run();
+                }
             }
-            public void onChildChanged(DataSnapshot dataSnapshot, String s) {
-                currentMovie = dataSnapshot.getValue(RatingData.class);
-                aRunnable.run();
-            }
-            @Override
-            public void onChildRemoved(DataSnapshot dataSnapshot) {
-            }
-            @Override
-            public void onChildMoved(DataSnapshot dataSnapshot, String s) {
-            }
+
             @Override
             public void onCancelled(FirebaseError firebaseError) {
+
             }
         });
     }
@@ -261,7 +262,9 @@ public final class MovieManager {
      */
     public static RatingData getCurrentMovie() {
         if (currentMovie == null) {
-            return new RatingData(lastMovie.getTitle(), lastMovie.getId());
+            currentMovie = new RatingData(lastMovie.getTitle(), lastMovie.getId());
+            currentMovie.setUrl(lastMovie.getUrl());
+            return currentMovie;
         }
         return currentMovie;
     }

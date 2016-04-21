@@ -221,9 +221,7 @@ public class MuveeDetails extends AppCompatActivity {
      */
     public void updateRatings() {
 
-        if (ratingBar.getRating() != 0.0f) {
-            ratingMovie.addRating(UserManager.getCurrentUser().getMajor(), ratingBar.getRating());
-        }
+        ratingMovie.addRating(UserManager.getCurrentUser().getMajor(), ratingBar.getRating());
         MovieManager.updateMovie(ratingMovie);
     }
 

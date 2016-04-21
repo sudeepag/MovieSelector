@@ -16,6 +16,7 @@ import java.util.logging.Logger;
  * Created by akhilesh on 2/23/16.
  */
 public class Movie {
+    private String url;
     /** movie's title */
     private String title;
     /** movie's production year */
@@ -93,6 +94,8 @@ public class Movie {
             } else if (cast.length() >= 1) {
                 actor1 = cast.getJSONObject(0).getString(NAME_STRING);
             }
+            final JSONObject links = object.getJSONObject("links");
+            this.url = links.getString("alternate");
             final JSONObject posters = object.getJSONObject(POSTERS);
             final String url = posters.getString(THUMBNAIL);
             VolleySingleton.getInstance(context).getImageLoader().get(url, new ImageLoader.ImageListener() {
@@ -117,8 +120,8 @@ public class Movie {
      * @param aYear  the year the movie was released
      * @param criticScore   rating score of the movie
      */
-    public Movie(String aTitle, int aYear, int criticScore) {
-        this(aTitle, aYear, criticScore, "", "", "");
+    public Movie(String aTitle, int aYear, int criticScore, String url) {
+        this(aTitle, aYear, criticScore, url, "", "", "");
     }
 
     /**
@@ -130,11 +133,12 @@ public class Movie {
      * @param anActor1  the first actor listed in the movie's cast
      * @param anActor2 the second actor listed in the movie's cast
      */
-    public Movie(String aTitle, int aYear, int criticsScore, String aDescription,
+    public Movie(String aTitle, int aYear, int criticsScore, String url, String aDescription,
                  String anActor1, String anActor2) {
         this.title = aTitle;
         this.year = aYear;
         this.cScore = criticsScore;
+        this.url = url;
         this.description = aDescription;
         this.actor1 = anActor1;
         this.actor2 = anActor2;
@@ -205,4 +209,11 @@ public class Movie {
         this.id = anID;
     }
 
+    public String getUrl() {
+        return url;
+    }
+
+    public void setUrl(String url) {
+        this.url = url;
+    }
 }

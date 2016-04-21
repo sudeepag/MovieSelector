@@ -20,6 +20,7 @@ public class RatingData {
     /** the movies uid in firebase */
     private String uid;
     private String review;
+    private String url;
 
     /**
      * constructor for rating data
@@ -158,5 +159,13 @@ public class RatingData {
 
     public void setReview(String review) {
         this.review = review;
+    }
+
+    public String getUrl() {
+        return url;
+    }
+
+    public void setUrl(String url) {
+        this.url = url;
     }
 }
