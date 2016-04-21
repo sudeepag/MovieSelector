@@ -2,6 +2,7 @@ package edu.gatech.logitechs.movieselector.View;
 
 import android.Manifest;
 import android.app.AlertDialog;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -10,6 +11,7 @@ import android.location.Criteria;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
+import android.os.AsyncTask;
 import android.provider.Settings;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.ActivityCompat;
@@ -18,6 +20,7 @@ import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
 import android.util.Log;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
@@ -28,9 +31,13 @@ import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.Marker;
+import com.google.android.gms.maps.model.MarkerOptions;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import edu.gatech.logitechs.movieselector.Controller.Place;
 import edu.gatech.logitechs.movieselector.Controller.PlacesService;
@@ -44,6 +51,11 @@ public class MuveeMaps extends FragmentActivity implements OnMapReadyCallback, L
     private LocationManager m_LocationManager;
     private Location m_Location;
 
+    private String[] m_Places;
+    private String[] m_URL;
+    private Map<String, Marker> markerMap;
+
+    private ListView list;
 
     public final int MY_PERMISSIONS_REQUEST_ACCESS_FINE_LOCATION = 6;
 
@@ -57,7 +69,19 @@ public class MuveeMaps extends FragmentActivity implements OnMapReadyCallback, L
         mapFragment.getMapAsync(this);
 
         items = new ArrayList<>();
-        items.add("No Data");
+        markerMap = new HashMap<>();
+
+        list = (ListView) findViewById(R.id.listView);
+        list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Marker m = markerMap.get(items.get(position));
+                m.showInfoWindow();
+                LatLng markerPosition = m.getPosition();
+
+                mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(markerPosition, 16));
+            }
+        });
 
         updateListView();
 
@@ -66,6 +90,10 @@ public class MuveeMaps extends FragmentActivity implements OnMapReadyCallback, L
         updateLocation();
         m_Location = getLocation();
         zoomToCurrLocation();
+
+        mMap.getUiSettings().setMapToolbarEnabled(true);
+        mMap.getUiSettings().setMyLocationButtonEnabled(false);
+        mMap.getUiSettings().setZoomControlsEnabled(true);
 
         final FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
@@ -81,10 +109,13 @@ public class MuveeMaps extends FragmentActivity implements OnMapReadyCallback, L
     }
 
     private void updateListView() {
+        boolean bPass = (items.size() < 1);
         ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, items);
         adapter.notifyDataSetChanged();
-        ListView list = (ListView) findViewById(R.id.listView);
         list.setAdapter(adapter);
+        if (bPass) {
+            new GetPlaces(this).execute();
+        }
     }
 
     private void updateLocation() {
@@ -96,11 +127,6 @@ public class MuveeMaps extends FragmentActivity implements OnMapReadyCallback, L
             if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION)
                     == PackageManager.PERMISSION_GRANTED) {
                 mMap.setMyLocationEnabled(true);
-                mMap.getUiSettings().setMapToolbarEnabled(true);
-                mMap.getUiSettings().setCompassEnabled(true);
-                mMap.getUiSettings().setMyLocationButtonEnabled(false);
-                mMap.getUiSettings().setZoomControlsEnabled(true);
-
             } else {
                 // Show rationale and request permission.
                 ActivityCompat.requestPermissions(MuveeMaps.this,
@@ -279,9 +305,60 @@ public class MuveeMaps extends FragmentActivity implements OnMapReadyCallback, L
 //        mMap.moveCamera(CameraUpdateFactory.newLatLng(sydney));
     }
 
+    class GetPlaces extends AsyncTask<Void, Void, ArrayList<Place>> {
+        Context context;
+        //private ListView listView;
+        private ProgressDialog bar;
+        public GetPlaces(Context context/*, ListView listView*/) {
+            // TODO Auto-generated constructor stub
+            this.context = context;
+            //this.listView = listView;
+        }
+
+        @Override
+        protected void onPostExecute(ArrayList<Place> result) {
+            // TODO Auto-generated method stub
+            super.onPostExecute(result);
+            bar.dismiss();
+            items.clear();
+            markerMap.clear();
+            //markers.clear();
+            //this.listView.setAdapter(new ArrayAdapter<String>(context, android.R.layout.simple_list_item_1, m_Places));
+            for (int i = 0; i < result.size(); i++) {
+                Marker m = mMap.addMarker(new MarkerOptions()
+                        .title(result.get(i).getName())
+                        .position(new LatLng(result.get(i).getLatitude(), result.get(i).getLongitude()))
+                        //.icon(BitmapDescriptorFactory.fromResource(R.drawable.pin))
+                        .snippet(result.get(i).getVicinity()));
+                items.add(m.getTitle() + ", " + m.getSnippet());
+                markerMap.put(m.getTitle() + ", " + m.getSnippet(), m);
+                //markers.add(m);
+            }
+            updateListView();
+        }
+
+        @Override
+        protected void onPreExecute() {
+            // TODO Auto-generated method stub
+            super.onPreExecute();
+            bar =  new ProgressDialog(context);
+            bar.setIndeterminate(true);
+            bar.setTitle("Loading...");
+            bar.show();
+        }
+
+        @Override
+        protected ArrayList<Place> doInBackground(Void... arg0) {
+            // TODO Auto-generated method stub
+            return findNearLocation();
+            //return null;
+        }
+
+    }
+
     public ArrayList<Place> findNearLocation()   {
 
-        PlacesService service = new PlacesService("AIzaSyCmTPzZzpXu_rgORBjOFMZshx9EZ6xpnTw");
+        PlacesService service = new PlacesService("AIzaSyDWy1BBZPKzuXcEd_aD32Uqu4CipbbMcC0");
         /*
         Here you should call the method find nearest place near to central park new delhi
         then we pass the lat and lang of central park. here you can pass your current location lat and long.
@@ -293,8 +370,8 @@ public class MuveeMaps extends FragmentActivity implements OnMapReadyCallback, L
         if (null != m_Location) {
             findPlaces = service.findPlaces(m_Location.getLatitude(), m_Location.getLongitude(), "cinema");
 
-//            m_Places = new String[findPlaces.size()];
-//            m_URL = new String[findPlaces.size()];
+            m_Places = new String[findPlaces.size()];
+            m_URL = new String[findPlaces.size()];
 
             for (int i = 0; i < findPlaces.size(); i++) {
 
@@ -302,9 +379,8 @@ public class MuveeMaps extends FragmentActivity implements OnMapReadyCallback, L
                 placeDetail.getIcon();
 
                 System.out.println(placeDetail.getName());
-//                m_Places[i] =placeDetail.getName();
-
-//                m_URL[i] =placeDetail.getIcon();
+                m_Places[i] =placeDetail.getName();
+                m_URL[i] =placeDetail.getIcon();
             }
         }
         return (ArrayList<Place>)findPlaces;
