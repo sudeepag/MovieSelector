@@ -153,7 +153,7 @@ public class MuveeDetails extends AppCompatActivity {
 
         reviewText.addTextChangedListener(mTextEditorWatcher);
 
-        new AlertDialog.Builder(MuveeDetails.this).setView(postReviewDialogView)
+        final AlertDialog dialog = new AlertDialog.Builder(MuveeDetails.this).setView(postReviewDialogView)
                 .setTitle("Post a review")
                 .setPositiveButton("Post", new DialogInterface.OnClickListener() {
                     @TargetApi(11)
@@ -166,7 +166,17 @@ public class MuveeDetails extends AppCompatActivity {
                     public void onClick(DialogInterface dialog, int id) {
                         dialog.cancel();
                     }
-                }).show();
+                }).create();
+
+        dialog.setOnShowListener( new DialogInterface.OnShowListener() {
+            @Override
+            public void onShow(DialogInterface arg0) {
+                dialog.getButton(AlertDialog.BUTTON_POSITIVE).setTextColor(getResources().getColor(R.color.colorAlternateAccent));
+                dialog.getButton(AlertDialog.BUTTON_NEGATIVE).setTextColor(getResources().getColor(R.color.colorAlternateAccent));
+
+            }
+        });
+        dialog.show();
     }
 
     /**
@@ -195,6 +205,14 @@ public class MuveeDetails extends AppCompatActivity {
                 .build();
 
         ShareDialog.show(MuveeDetails.this, content);
+    }
+
+    /**
+     * Transition to maps activity
+     * @param view  the parent view
+     */
+    public void goToMap(View view) {
+        
     }
 
     /**
