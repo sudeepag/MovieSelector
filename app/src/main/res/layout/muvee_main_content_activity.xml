@@ -7,7 +7,8 @@
     android:fitsSystemWindows="true"
     android:background="@color/colorBackground"
     android:id="@+id/main_layout"
-    tools:context=".View.MuveeMainActivity">
+    tools:context=".View.MuveeMainActivity"
+    android:layout_marginTop="24dp">
 
     <android.support.design.widget.AppBarLayout
         android:layout_width="match_parent"

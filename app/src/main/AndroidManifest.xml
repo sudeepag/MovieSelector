@@ -106,7 +106,7 @@
         <activity
             android:name=".View.MuveeMaps"
             android:label="@string/title_activity_muvee_maps"
-            android:theme="@style/AppTheme">
+            android:theme="@style/AppTheme.Maps">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="edu.gatech.logitechs.movieselector.View.MuveeDetails" />

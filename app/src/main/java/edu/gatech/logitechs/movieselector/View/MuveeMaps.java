@@ -1,7 +1,9 @@
 package edu.gatech.logitechs.movieselector.View;
 
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
@@ -46,6 +48,16 @@ public class MuveeMaps extends FragmentActivity implements OnMapReadyCallback {
         items.add("simple text aaaaaaa");items.add("simple text aaaaaaa");items.add("simple text aaaaaaa");items.add("simple text aaaaaaa");
 
         updateListView();
+
+        final FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+        fab.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View view) {
+
+            }
+        });
+
     }
 
     public void updateListView() {
