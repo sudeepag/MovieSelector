@@ -5,6 +5,8 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.net.Uri;
+import android.opengl.Visibility;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
@@ -16,12 +18,17 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RatingBar;
 import android.widget.TextView;
 
+import com.facebook.Profile;
 import com.facebook.login.LoginManager;
+import com.facebook.share.model.ShareLinkContent;
+import com.facebook.share.widget.ShareDialog;
 
+import edu.gatech.logitechs.movieselector.Controller.FaceBookManager;
 import edu.gatech.logitechs.movieselector.Controller.MovieManager;
 import edu.gatech.logitechs.movieselector.Controller.UserManager;
 import edu.gatech.logitechs.movieselector.Model.RatingData;
@@ -37,6 +44,12 @@ public class MuveeDetails extends AppCompatActivity {
      * rating data to store the movies rating
      */
     private RatingData ratingMovie;
+
+    /**
+     * textview to store user review;
+     */
+    private TextView tvReview;
+    private Button fbPostButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -62,10 +75,12 @@ public class MuveeDetails extends AppCompatActivity {
 
         ratingMovie = MovieManager.getCurrentMovie();
         ratingBar.setRating((float) ratingMovie.calculateRating(UserManager.getCurrentUser().getMajor()));
-        final TextView detailsReview = (TextView) findViewById(R.id.details_review);
+
+        tvReview = (TextView) findViewById(R.id.details_review);
         if (ratingMovie.getReview() != null && !ratingMovie.getReview().equals("")) {
-            detailsReview.setText(ratingMovie.getReview());
+            tvReview.setText(ratingMovie.getReview());
         }
+
         final FloatingActionButton fabWrite = (FloatingActionButton) findViewById(R.id.fab);
         fabWrite.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -75,6 +90,16 @@ public class MuveeDetails extends AppCompatActivity {
                 postReviewDialog();
             }
         });
+
+        fbPostButton = (Button) findViewById(R.id.button_post_fb);
+
+        if (FaceBookManager.getProfile() != null) {
+            if (ratingMovie.getReview() != null && !ratingMovie.getReview().equals("")) {
+                fbPostButton.setVisibility(View.VISIBLE);
+            }
+        } else {
+            fbPostButton.setVisibility(View.GONE);
+        }
     }
 
     @Override
@@ -97,6 +122,12 @@ public class MuveeDetails extends AppCompatActivity {
         final EditText reviewText = (EditText) postReviewDialogView.findViewById(R.id.review_text);
         final TextView charCount = (TextView) postReviewDialogView.findViewById(R.id.char_count);
 
+        if (ratingMovie.getReview() != null && !ratingMovie.getReview().equals("")) {
+            reviewText.setText(ratingMovie.getReview());
+            charCount.setText(String.valueOf(ratingMovie.getReview().length()));
+            charCount.setTextColor(getResources().getColor(R.color.colorPrimary));
+        }
+
         final TextWatcher mTextEditorWatcher = new TextWatcher() {
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
             }
@@ -106,16 +137,10 @@ public class MuveeDetails extends AppCompatActivity {
 
                 int len = s.length();
                 int color = 0;
-                Log.d("WTF", "changed " + len);
-                if (len == 0) {
-                    color = getResources().getColor(R.color.colorAlternateAccent);
-                }
                 if (len > 0 || len < 255) {
                     color = getResources().getColor(R.color.colorPrimary);
-//                    charCount.setTextColor(getResources().getColor(R.color.colorPrimary));
-                } else if (len == 0){
-                    Log.d("WTF", "FUCK");
-                    charCount.setTextColor(getResources().getColor(R.color.colorAlternateAccent));
+                } else {
+                    color = getResources().getColor(R.color.colorAlternateAccent);
                 }
                 charCount.setTextColor(color);
                 charCount.setText(String.valueOf(len));
@@ -123,11 +148,6 @@ public class MuveeDetails extends AppCompatActivity {
             }
 
             public void afterTextChanged(Editable s) {
-                ratingMovie.setReview(s.toString());
-                final TextView detailsReview = (TextView) findViewById(R.id.details_review);
-                if (!ratingMovie.getReview().equals("")) {
-                    detailsReview.setText(ratingMovie.getReview());
-                }
             }
         };
 
@@ -138,7 +158,7 @@ public class MuveeDetails extends AppCompatActivity {
                 .setPositiveButton("Post", new DialogInterface.OnClickListener() {
                     @TargetApi(11)
                     public void onClick(DialogInterface dialog, int id) {
-                        Log.d("WTF", reviewText.getText().toString());
+                        postReview(reviewText.getText().toString());
                     }
                 })
                 .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
@@ -147,6 +167,34 @@ public class MuveeDetails extends AppCompatActivity {
                         dialog.cancel();
                     }
                 }).show();
+    }
+
+    /**
+     * Posts review to reviews section
+     * @param s the review string
+     */
+    private void postReview(String s) {
+        ratingMovie.setReview(s);
+        if (!ratingMovie.getReview().equals("")) {
+            tvReview.setText(ratingMovie.getReview());
+            fbPostButton.setVisibility(View.VISIBLE);
+        } else {
+            fbPostButton.setVisibility(View.GONE);
+        }
+    }
+
+    /**
+     * Share review to facebook
+     * @param view  the parent view
+     */
+    public void shareReview(View view) {
+        ShareLinkContent content = new ShareLinkContent.Builder()
+                .setContentTitle("Müveé Reviews: " + MovieManager.getCurrentMovie().getTitle())
+                .setContentUrl(Uri.parse("http://www.rottentomatoes.com/m/the_revenant_2015/"))
+                .setContentDescription(tvReview.getText().toString())
+                .build();
+
+        ShareDialog.show(MuveeDetails.this, content);
     }
 
     /**

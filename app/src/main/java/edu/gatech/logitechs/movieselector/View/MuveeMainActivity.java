@@ -20,6 +20,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -37,6 +38,7 @@ import org.w3c.dom.Text;
 import java.util.ArrayList;
 import java.util.List;
 
+import edu.gatech.logitechs.movieselector.Controller.FaceBookManager;
 import edu.gatech.logitechs.movieselector.Controller.MovieManager;
 import edu.gatech.logitechs.movieselector.Controller.UserManager;
 import edu.gatech.logitechs.movieselector.Model.Movie;
@@ -149,12 +151,14 @@ public class MuveeMainActivity extends AppCompatActivity
         prof.setPresetSize(ProfilePictureView.SMALL);
 
         if (Profile.getCurrentProfile() != null) {
-            textHeader.setText(getResources().getString(R.string.app_name) + " | Online | " + Profile.getCurrentProfile().getName());
-            prof.setProfileId(Profile.getCurrentProfile().getId());
+            Profile profile = Profile.getCurrentProfile();
+            FaceBookManager.setProfile(profile);
+            textHeader.setText(getResources().getString(R.string.app_name) + " | Online | " + profile.getName());
+            prof.setProfileId(profile.getId());
+
         } else {
             String name = UserManager.getCurrentUser().getEmail().split("@")[0];
             textHeader.setText(getResources().getString(R.string.app_name) + " | Local | " + name);
-
         }
     }
 

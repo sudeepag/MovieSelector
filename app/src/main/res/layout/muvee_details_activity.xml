@@ -182,6 +182,18 @@
                         android:padding="16dp"
                         android:background="#FFffffff"/>
 
+                    <Button
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="end"
+                        android:layout_margin="8dp"
+                        style="?android:attr/borderlessButtonStyle"
+                        android:textColor="@color/colorAlternateAccent"
+                        android:text="Share"
+                        android:id="@+id/button_post_fb"
+                        android:visibility="gone"
+                        android:onClick="shareReview"/>
+
                 </LinearLayout>
 
             </android.support.v7.widget.CardView>

@@ -23,6 +23,11 @@
             android:theme="@android:style/Theme.Translucent.NoTitleBar"
             android:label="@string/app_name" />
 
+        <provider
+            android:name="com.facebook.FacebookContentProvider"
+            android:authorities="com.facebook.app.FacebookContentProvider1780275615534731"
+            android:exported="true" />
+
         <activity
             android:name=".View.MuveeLogin"
             android:label="@string/app_name"
