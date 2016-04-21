@@ -96,6 +96,11 @@ public class MuveeMaps extends FragmentActivity implements OnMapReadyCallback, L
             if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION)
                     == PackageManager.PERMISSION_GRANTED) {
                 mMap.setMyLocationEnabled(true);
+                mMap.getUiSettings().setMapToolbarEnabled(true);
+                mMap.getUiSettings().setCompassEnabled(true);
+                mMap.getUiSettings().setMyLocationButtonEnabled(false);
+                mMap.getUiSettings().setZoomControlsEnabled(true);
+
             } else {
                 // Show rationale and request permission.
                 ActivityCompat.requestPermissions(MuveeMaps.this,
