@@ -212,7 +212,8 @@ public class MuveeDetails extends AppCompatActivity {
      * @param view  the parent view
      */
     public void goToMap(View view) {
-        
+        final Intent myIntent = new Intent(MuveeDetails.this, MuveeMaps.class);
+        startActivity(myIntent);
     }
 
     /**
