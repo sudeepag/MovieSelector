@@ -166,6 +166,7 @@ public class UserManager {
                             public void onAuthenticated(AuthData authData) {
                                 onAuthenticatedHelper(user, context, authData);
                             }
+
                             public void onAuthenticationError(FirebaseError error) {
                                 runnable.run();
                             }
@@ -173,6 +174,7 @@ public class UserManager {
                 currentUser = user;
                 user.setUid((String) result.get("uid"));
             }
+
             @Override
             public void onError(FirebaseError firebaseError) {
                 runnable.run();
@@ -202,7 +204,7 @@ public class UserManager {
      * @param pass  the user's password
      * @param consumer  Consumer object that acts as completion handler
      */
-    public void authenticateUser(String email, String pass, final Consumer consumer) {
+    public void authenticateUser(final String email, String pass, final Consumer consumer) {
         REF.child("User").authWithPassword(email, pass, new Firebase.AuthResultHandler() {
             @Override
             public void onAuthenticated(final AuthData authData) {
@@ -220,9 +222,6 @@ public class UserManager {
             }
             @Override
             public void onAuthenticationError(FirebaseError firebaseError) {
-                if (firebaseError.getCode() == FirebaseError.INVALID_PASSWORD) {
-
-                }
                 consumer.consume(firebaseError.getMessage());
             }
         });

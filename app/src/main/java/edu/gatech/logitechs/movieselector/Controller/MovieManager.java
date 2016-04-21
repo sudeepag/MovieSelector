@@ -215,13 +215,7 @@ public final class MovieManager {
      */
     public static void updateMovie(RatingData movie) {
         final Map<String, Object> map = new HashMap<>();
-        String key = null;
-        try {
-            key = URLEncoder.encode(movie.getTitle(), "UTF-8");
-        } catch (UnsupportedEncodingException e) {
-            final Logger logger = Logger.getAnonymousLogger();
-            logger.fine(e.getMessage());
-        }
+        String key = movie.getUid();
         map.put("data", movie);
         assert key != null;
         final Firebase movieRef = ref.child(MOVIE_LABEL).child(key);
@@ -235,13 +229,7 @@ public final class MovieManager {
      */
     public static void queryMovieRating(Movie movie, final Runnable aRunnable) {
         currentMovie = null;
-        String key = null;
-        try {
-            key = URLEncoder.encode(movie.getTitle(), "UTF-8");
-        } catch (UnsupportedEncodingException e) {
-            final Logger logger = Logger.getAnonymousLogger();
-            logger.fine(e.getMessage());
-        }
+        String key = movie.getId();
         lastMovie = movie;
         assert key != null;
         ref.child(MOVIE_LABEL).child(key).addChildEventListener(new ChildEventListener() {
