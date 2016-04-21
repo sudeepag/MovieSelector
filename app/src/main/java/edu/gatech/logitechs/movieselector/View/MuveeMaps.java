@@ -71,6 +71,8 @@ public class MuveeMaps extends FragmentActivity implements OnMapReadyCallback, L
         items = new ArrayList<>();
         markerMap = new HashMap<>();
 
+        checkPhoneLocationProvided();
+
         list = (ListView) findViewById(R.id.listView);
         list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -78,14 +80,13 @@ public class MuveeMaps extends FragmentActivity implements OnMapReadyCallback, L
                 Marker m = markerMap.get(items.get(position));
                 m.showInfoWindow();
                 LatLng markerPosition = m.getPosition();
-
                 mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(markerPosition, 16));
             }
         });
 
         updateListView();
 
-        checkPhoneLocationProvided();
+
 
         updateLocation();
         m_Location = getLocation();
@@ -174,7 +175,7 @@ public class MuveeMaps extends FragmentActivity implements OnMapReadyCallback, L
             LatLng target = new LatLng(m_Location.getLatitude(), m_Location.getLongitude());
 //            CameraPosition position = this.mMap.getCameraPosition();
             CameraPosition.Builder builder = new CameraPosition.Builder();
-            builder.zoom(12);
+            builder.zoom(13);
             builder.target(target);
             this.mMap.animateCamera(CameraUpdateFactory.newCameraPosition(builder.build()));
 //            mMap.addMarker(new MarkerOptions().position(new LatLng(m_Location.getLatitude(), m_Location.getLongitude())).title("You are here!").snippet("Consider yourself located"));
@@ -198,7 +199,7 @@ public class MuveeMaps extends FragmentActivity implements OnMapReadyCallback, L
             // notify user
             AlertDialog.Builder dialog = new AlertDialog.Builder(MuveeMaps.this);
             dialog.setTitle("You location required");
-            dialog.setMessage("Your GPS or Network is not enabled");
+            dialog.setMessage("Please enable your location to see the list of our results");
             dialog.setPositiveButton("Open Location Settings", new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface paramDialogInterface, int paramInt) {
@@ -297,7 +298,7 @@ public class MuveeMaps extends FragmentActivity implements OnMapReadyCallback, L
         Location location = getLocation();
         if (location != null) {
             onLocationChanged(location);
-            mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(location.getLatitude(), location.getLongitude()), 12));
+            mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(location.getLatitude(), location.getLongitude()), 13));
         }
 //        // Add a marker in Sydney and move the camera
 //        LatLng sydney = new LatLng(-34, 151);
@@ -330,8 +331,8 @@ public class MuveeMaps extends FragmentActivity implements OnMapReadyCallback, L
                         .position(new LatLng(result.get(i).getLatitude(), result.get(i).getLongitude()))
                         //.icon(BitmapDescriptorFactory.fromResource(R.drawable.pin))
                         .snippet(result.get(i).getVicinity()));
-                items.add(m.getTitle() + ", " + m.getSnippet());
-                markerMap.put(m.getTitle() + ", " + m.getSnippet(), m);
+                items.add(m.getTitle());
+                markerMap.put(m.getTitle(), m);
                 //markers.add(m);
             }
             updateListView();
