@@ -1,5 +1,7 @@
 package edu.gatech.logitechs.movieselector.Controller;
 
+import android.util.Log;
+
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -86,7 +88,7 @@ public class Place {
 
     @Override
     public String toString() {
+        Log.d("Map", "Place: " + "id=" + id + ", icon=" + icon + ", name=" + name + ", latitude=" + latitude + ", longitude=" + longitude + "}");
         return getName() + ", " + getVicinity();
-        //return "Place{" + "id=" + id + ", icon=" + icon + ", name=" + name + ", latitude=" + latitude + ", longitude=" + longitude + '}';
     }
 }

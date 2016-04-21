@@ -228,7 +228,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:id="@+id/cinema_name_tv"
-                        android:text="No cinemas near you :("
+                        android:text="Find cinemas near you"
                         android:textSize="14sp"
                         android:padding="16dp"
                         android:background="#FFffffff"/>
@@ -240,7 +240,7 @@
                         android:layout_margin="8dp"
                         style="?android:attr/borderlessButtonStyle"
                         android:textColor="@color/colorPrimaryLight"
-                        android:text="More"
+                        android:text="Look up"
                         android:id="@+id/button_more_maps"
                         android:onClick="goToMap"/>
 
