@@ -131,7 +131,7 @@
                         android:paddingStart="16dp"
                         android:paddingTop="6dp"
                         android:paddingBottom="6dp"
-                        android:background="#607D8B"/>
+                        android:background="#9C27B0"/>
 
                     <RatingBar
                         android:id="@+id/rating_bar"
@@ -171,7 +171,7 @@
                         android:paddingStart="16dp"
                         android:paddingTop="6dp"
                         android:paddingBottom="6dp"
-                        android:background="#607D8B"/>
+                        android:background="#FF9800"/>
 
                     <TextView
                         android:layout_width="match_parent"
@@ -181,6 +181,68 @@
                         android:textSize="14sp"
                         android:padding="16dp"
                         android:background="#FFffffff"/>
+
+                    <Button
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="end"
+                        android:layout_margin="8dp"
+                        style="?android:attr/borderlessButtonStyle"
+                        android:textColor="#FF9800"
+                        android:text="Share"
+                        android:id="@+id/button_post_fb"
+                        android:visibility="gone"
+                        android:onClick="shareReview"/>
+
+                </LinearLayout>
+
+            </android.support.v7.widget.CardView>
+
+            <android.support.v7.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginEnd="8dp"
+                android:focusable="true"
+                android:clickable="true"
+                android:foreground="?android:attr/selectableItemBackground"
+                android:id="@+id/location_maps_cv" >
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Cinemas"
+                        android:textColor="#FFffffff"
+                        android:textSize="18sp"
+                        android:paddingStart="16dp"
+                        android:paddingTop="6dp"
+                        android:paddingBottom="6dp"
+                        android:background="@color/colorPrimaryLight"/>
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/cinema_name_tv"
+                        android:text="No cinemas near you :("
+                        android:textSize="14sp"
+                        android:padding="16dp"
+                        android:background="#FFffffff"/>
+
+                    <Button
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="end"
+                        android:layout_margin="8dp"
+                        style="?android:attr/borderlessButtonStyle"
+                        android:textColor="@color/colorPrimaryLight"
+                        android:text="More"
+                        android:id="@+id/button_more_maps"
+                        android:onClick="goToMap"/>
 
                 </LinearLayout>
 

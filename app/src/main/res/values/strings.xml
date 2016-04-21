@@ -124,4 +124,5 @@
     <string name="team_name">❤ LogiTechs</string>
     <string name="title_activity_muvee_admin">MuveeAdminActivity</string>
     <string name="title_activity_muvee_admin_user_priv">Edit User Privileges</string>
+    <string name="title_activity_muvee_maps">Cinemas near you</string>
 </resources>
