@@ -85,9 +85,6 @@ public class MuveeMaps extends FragmentActivity implements OnMapReadyCallback, L
         });
 
         updateListView();
-
-
-
         updateLocation();
         m_Location = getLocation();
         zoomToCurrLocation();
@@ -139,10 +136,8 @@ public class MuveeMaps extends FragmentActivity implements OnMapReadyCallback, L
             if (mMap != null) {
                 mMap.setOnMyLocationChangeListener(new GoogleMap.OnMyLocationChangeListener() {
                     @Override
-                    public void onMyLocationChange(Location arg0) {
-                        // TODO Auto-generated method stub
-//                        mMap.addMarker(new MarkerOptions().position(new LatLng(arg0.getLatitude(), arg0.getLongitude())).title("It's Me!"));
-                        m_Location = arg0;
+                    public void onMyLocationChange(Location location) {
+                        m_Location = location;
                     }
                 });
 
@@ -160,25 +155,17 @@ public class MuveeMaps extends FragmentActivity implements OnMapReadyCallback, L
         Criteria criteria = new Criteria();
         String bestProvider = m_LocationManager.getBestProvider(criteria, true);
         Location location = m_LocationManager.getLastKnownLocation(bestProvider);
-//        m_LocationManager.requestLocationUpdates(bestProvider, 20000, 0, this);
-//        m_Map.moveCamera(CameraUpdateFactory.newLatLng(new LatLng(location.getLatitude(), location.getLongitude())));
-//        m_Map.animateCamera(CameraUpdateFactory.zoomTo(14));
         Log.d("Map", (location == null) ? "Location is null" : location.toString());
         return location;
     }
 
     private void zoomToCurrLocation() {
-//        mMap.addMarker(new MarkerOptions().position(new LatLng(0, 0)).title("Marker").snippet("Snippet"));
-//        Criteria criteria = new Criteria();
-//        String provider = m_LocationManager.getBestProvider(criteria, true);
         if (m_Location != null) {
             LatLng target = new LatLng(m_Location.getLatitude(), m_Location.getLongitude());
-//            CameraPosition position = this.mMap.getCameraPosition();
             CameraPosition.Builder builder = new CameraPosition.Builder();
             builder.zoom(13);
             builder.target(target);
             this.mMap.animateCamera(CameraUpdateFactory.newCameraPosition(builder.build()));
-//            mMap.addMarker(new MarkerOptions().position(new LatLng(m_Location.getLatitude(), m_Location.getLongitude())).title("You are here!").snippet("Consider yourself located"));
         }
     }
 
@@ -248,38 +235,19 @@ public class MuveeMaps extends FragmentActivity implements OnMapReadyCallback, L
 
     @Override
     public void onLocationChanged(Location location) {
-//        TextView locationTv = (TextView) findViewById(R.id.Text);
-//        boolean bPass = (items.size() == 0);
-        Log.d("Map", "Location has changed!!");
         m_Location = location;
-//        double latitude = location.getLatitude();
-//        double longitude = location.getLongitude();
-//        if (bPass) {
-//            //new GetPlaces(this).execute();
-//            updateListView();
-//        }
-//        LatLng latLng = new LatLng(latitude, longitude);
-        //m_Map.addMarker(new MarkerOptions().position(latLng));
-//        m_Map.moveCamera(CameraUpdateFactory.newLatLng(latLng));
-//        m_Map.animateCamera(CameraUpdateFactory.zoomTo(14));
-//        locationTv.setText("Latitude:" + latitude + ", Longitude:" + longitude);
     }
 
     @Override
     public void onProviderDisabled(String provider) {
-        // TODO Auto-generated method stub
     }
 
     @Override
     public void onProviderEnabled(String provider) {
-        // TODO Auto-generated method stub
-        Log.d("Map", "Provider enabled: " + provider);
     }
 
     @Override
     public void onStatusChanged(String provider, int status, Bundle extras) {
-        // TODO Auto-generated method stub
-        Log.d("Map", "Status changed: " + status);
     }
 
     /**
@@ -300,40 +268,28 @@ public class MuveeMaps extends FragmentActivity implements OnMapReadyCallback, L
             onLocationChanged(location);
             mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(location.getLatitude(), location.getLongitude()), 13));
         }
-//        // Add a marker in Sydney and move the camera
-//        LatLng sydney = new LatLng(-34, 151);
-//        mMap.addMarker(new MarkerOptions().position(sydney).title("Marker in Sydney"));
-//        mMap.moveCamera(CameraUpdateFactory.newLatLng(sydney));
     }
 
     class GetPlaces extends AsyncTask<Void, Void, ArrayList<Place>> {
         Context context;
-        //private ListView listView;
         private ProgressDialog bar;
-        public GetPlaces(Context context/*, ListView listView*/) {
-            // TODO Auto-generated constructor stub
+        public GetPlaces(Context context) {
             this.context = context;
-            //this.listView = listView;
         }
 
         @Override
         protected void onPostExecute(ArrayList<Place> result) {
-            // TODO Auto-generated method stub
             super.onPostExecute(result);
             bar.dismiss();
             items.clear();
             markerMap.clear();
-            //markers.clear();
-            //this.listView.setAdapter(new ArrayAdapter<String>(context, android.R.layout.simple_list_item_1, m_Places));
             for (int i = 0; i < result.size(); i++) {
                 Marker m = mMap.addMarker(new MarkerOptions()
                         .title(result.get(i).getName())
                         .position(new LatLng(result.get(i).getLatitude(), result.get(i).getLongitude()))
-                        //.icon(BitmapDescriptorFactory.fromResource(R.drawable.pin))
                         .snippet(result.get(i).getVicinity()));
                 items.add(m.getTitle());
                 markerMap.put(m.getTitle(), m);
-                //markers.add(m);
             }
             updateListView();
         }
