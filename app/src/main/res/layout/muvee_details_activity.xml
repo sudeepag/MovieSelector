@@ -178,7 +178,6 @@
                         android:layout_height="wrap_content"
                         android:id="@+id/details_review"
                         android:text="No User reviews added"
-                        android:textSize="14sp"
                         android:padding="16dp"
                         android:background="#FFffffff"/>
 
